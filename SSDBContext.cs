@@ -27,10 +27,6 @@ public class SSDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
-        // Tipos de datos
-        ActividadProyectoTipos(mb);
-        ProyectoTipos(mb);
-
         // Valores por defecto
         ActividadProyectoValoresPorDefecto(mb);
         ActividadRutaProyectoValoresPorDefecto(mb);
