@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Entidades;
 
-namespace Services;
+namespace DB;
 
 public class SSDBContext : DbContext
 {
@@ -70,49 +70,6 @@ public class SSDBContext : DbContext
         SecuenciaRelaciones(mb);
         TablaRelaciones(mb);
         UsuarioRelaciones(mb);
-    }
-
-    // Tipos de datos
-    private void ActividadProyectoTipos(ModelBuilder mb)
-    {
-        mb.Entity<ActividadProyecto>()
-            .Property(p => p.Evaluacion).HasPrecision(2, 1);
-
-        mb.Entity<ActividadProyecto>()
-            .Property(p => p.TotalArticulos).HasPrecision(10, 2);
-
-        mb.Entity<ActividadProyecto>()
-            .Property(p => p.CostoEstimado).HasPrecision(20, 3);
-
-        mb.Entity<ActividadProyecto>()
-            .Property(p => p.TipoCambioCostoEstimado).HasPrecision(20, 3);
-
-        mb.Entity<ActividadProyecto>()
-            .Property(p => p.CostoReal).HasPrecision(20, 3);
-
-        mb.Entity<ActividadProyecto>()
-            .Property(p => p.TipoCambioCostoReal).HasPrecision(20, 3);
-    }
-
-    private void ProyectoTipos(ModelBuilder mb)
-    {
-        mb.Entity<Proyecto>()
-            .Property(p => p.Evaluacion).HasPrecision(2, 1);
-
-        mb.Entity<Proyecto>()
-            .Property(p => p.TotalArticulos).HasPrecision(10, 2);
-
-        mb.Entity<Proyecto>()
-            .Property(p => p.CostoEstimado).HasPrecision(20, 3);
-
-        mb.Entity<Proyecto>()
-            .Property(p => p.TipoCambioCostoEstimado).HasPrecision(20, 3);
-
-        mb.Entity<Proyecto>()
-            .Property(p => p.CostoReal).HasPrecision(20, 3);
-
-        mb.Entity<Proyecto>()
-            .Property(p => p.TipoCambioCostoReal).HasPrecision(20, 3);
     }
 
     // Valores por defecto
@@ -194,10 +151,6 @@ public class SSDBContext : DbContext
     private void ActividadRutaProyectoValoresPorDefecto(ModelBuilder mb)
     {
         mb.Entity<ActividadRutaProyecto>()
-           .Property(c => c.Id)
-           .HasDefaultValueSql("newid()");
-
-        mb.Entity<ActividadRutaProyecto>()
            .Property(c => c.Descripcion)
            .HasDefaultValueSql("''");
 
@@ -278,10 +231,6 @@ public class SSDBContext : DbContext
 
     private void BitacoraProyectoValoresPorDefecto(ModelBuilder mb)
     {
-        mb.Entity<BitacoraProyecto>()
-            .Property(c => c.Id)
-            .HasDefaultValueSql("newid()");
-
         mb.Entity<BitacoraProyecto>()
             .Property(c => c.Fecha)
             .HasDefaultValueSql("getutcdate()");
@@ -610,10 +559,6 @@ public class SSDBContext : DbContext
     private void RegistroGeneralValoresPorDefecto(ModelBuilder mb)
     {
         mb.Entity<RegistroGeneral>()
-            .Property(p => p.Tabla)
-            .HasDefaultValueSql("''");
-
-        mb.Entity<RegistroGeneral>()
             .Property(p => p.Descripcion)
             .HasDefaultValueSql("''");
 
@@ -757,9 +702,6 @@ public class SSDBContext : DbContext
 
         mb.Entity<Personal>()
             .HasIndex(p => new { p.IdPublicacion, p.IdRol }).IsUnique();
-
-        mb.Entity<RegistroGeneral>()
-            .HasIndex(p => p.IdTabla).IsUnique();
 
         mb.Entity<Publicacion>()
             .HasIndex(p => p.Titulo).IsUnique();

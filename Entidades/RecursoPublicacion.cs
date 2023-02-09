@@ -10,7 +10,7 @@ public class RecursoPublicacion
     [Key]
     public Guid Id { get; set; }
     [Column("id_tipo_catalogo")]
-    public Guid IdTipoCatalogo { get; set; }   // Publicacion o Proyecto
+    public int IdTipoCatalogo { get; set; }   // Publicacion o Proyecto
     [Column("id_catalogo")]
     public Guid IdCatalogo { get; set; }        // Id de publicacion o proyecto
     [Column("id_secuencia")]

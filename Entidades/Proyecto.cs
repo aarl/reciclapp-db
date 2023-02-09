@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Entidades;
 
@@ -25,7 +26,7 @@ public class Proyecto
     [Column("no_gustan")]
     public int NoGustan { get; set; }
     [Column("id_estatus_publicacion")]
-    public Guid IdEstatusPublicacion { get; set; }
+    public int IdEstatusPublicacion { get; set; }
     [Column("id_estatus_proyecto")]
     public int IdEstatusProyecto { get; set; }     // 0 = En espera de aprobacion, 10 = Aprobado, 20 = Iniciado, 30 = Con observaciones, 100 = Cerrado, 200 = Vencido, 900 = Rechazado, etc.
     [Column("id_revisada_por")]
@@ -33,7 +34,7 @@ public class Proyecto
     [Column("id_imagen_principal")]
     public Guid IdImagenPrincipal { get; set; }
     [Column("id_tipo_proyecto")]
-    public Guid IdTipoProyecto { get; set; }
+    public int IdTipoProyecto { get; set; }
     [Column("tiempo_estimado")]
     public int TiempoEstimado { get; set; }
     [Column("progreso_estimado")]
@@ -41,6 +42,7 @@ public class Proyecto
     [Column("progreso_real")]
     public int ProgresoReal { get; set; }
     [Column("evaluacion")]
+    [Precision(2, 1)]
     public decimal Evaluacion { get; set; }
     [Column("id_ruta_proyecto")]
     public int IdRutaProyecto { get; set; }
@@ -53,18 +55,23 @@ public class Proyecto
     [Column("fecha_disponible")]
     public DateTime FechaDisponible { get; set; }
     [Column("total_articulos")]
+    [Precision(10, 2)]
     public decimal TotalArticulos { get; set; }
     [Column("costo_estimado")]
+    [Precision(20, 3)]
     public decimal CostoEstimado { get; set; }
     [Column("moneda_costo_estimado")]
     public string MonedaCostoEstimado { get; set; } = "";
     [Column("tipo_cambio_costo_estimado")]
+    [Precision(20, 3)]
     public decimal TipoCambioCostoEstimado { get; set; }
     [Column("costo_real")]
+    [Precision(20, 3)]
     public decimal CostoReal { get; set; }
     [Column("moneda_costo_real")]
     public string MonedaCostoReal { get; set; } = "";
     [Column("tipo_cambio_costo_real")]
+    [Precision(20, 3)]
     public decimal TipoCambioCostoReal { get; set; }
     [Column("id_creador")]
     public Guid IdCreador { get; set; }

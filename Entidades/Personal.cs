@@ -13,7 +13,7 @@ public class Personal
     [Column("fecha")]
     public DateTime Fecha { get; set; } = DateTime.UtcNow;
     [Column("id_rol")]
-    public Guid IdRol { get; set; }
+    public int IdRol { get; set; }
     [Column("id_creador")]
     public Guid IdCreador { get; set; }
     [Column("fecha_creacion")]

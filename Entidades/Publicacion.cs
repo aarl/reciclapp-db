@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Entidades;
 
@@ -38,6 +39,7 @@ public class Publicacion
     [Column("vistas")]
     public int Vistas { get; set; }
     [Column("evaluacion")]
+    [Precision(2, 1)]
     public decimal Evaluacion { get; set; } = 0.0M;
     [Column("ultima_direccion_ip")]
     [MaxLength(20)]
@@ -53,26 +55,33 @@ public class Publicacion
     [Column("fecha_disponible")]
     public DateTime FechaDisponible { get; set; }
     [Column("total_articulos")]
+    [Precision(10, 2)]
     public int TotalArticulos { get; set; } = 0;
     [Column("id_proyecto")]
     public Guid IdProyecto { get; set; }
     [Column("costo_estimado")]
+    [Precision(20, 3)]
     public decimal CostoEstimado { get; set; } = 0.0M;
     [Column("costo_estimado_moneda")]
     [MaxLength(3)]
     public string MonedaCostoEstimado { get; set; } = "";
     [Column("costo_estimado_tipo_cambio")]
+    [Precision(20, 3)]
     public decimal TipoCambioCostoEstimado { get; set; } = 0.0M;
     [Column("costo_real")]
+    [Precision(20, 3)]
     public decimal CostoReal { get; set; } = 0.0M;
     [Column("monto_inversion")]
+    [Precision(20, 3)]
     public decimal MontoInversion { get; set; } = 0.0M;
     [Column("costo_real_traslado")]
+    [Precision(20, 3)]
     public decimal CostoRealTraslado { get; set; } = 0.0M;
     [Column("moneda_costo_real")]
     [MaxLength(3)]
     public string MonedaCostoReal { get; set; } = "";
     [Column("tipo_cambio_costo_real")]
+    [Precision(20, 3)]
     public decimal TipoCambioCostoReal { get; set; } = 0.0M;
     [Column("id_creador")]
     public Guid IdCreador { get; set; }

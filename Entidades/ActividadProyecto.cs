@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Entidades;
 
@@ -17,7 +18,7 @@ public class ActividadProyecto
     [Column("secuencia")]
     public int Secuencia { get; set; } = 1;
     [Column("id_actividad_ruta")]
-    public Guid IdActividadRuta { get; set; }
+    public int IdActividadRuta { get; set; }
     [Column("descripcion")]
     public string Descripcion { get; set; } = "";
     [Column("fecha_inicio")]
@@ -29,7 +30,7 @@ public class ActividadProyecto
     [Column("id_revisor")]
     public Guid IdRevisor { get; set; }
     [Column("id_estatus_publicacion")]
-    public Guid IdEstatusPublicacion { get; set; }
+    public int IdEstatusPublicacion { get; set; }
     [Column("id_estatus_proyecto")]
     public int IdEstatusProyecto { get; set; }
     [Column("id_revisada_por")]
@@ -41,22 +42,28 @@ public class ActividadProyecto
     [Column("progreso_estimado")]
     public int ProgresoEstimado { get; set; }
     [Column("evaluacion")]
+    [Precision(2, 1)]
     public decimal Evaluacion { get; set; }
     [Column("fecha_disponible")]
     public DateTime FechaDisponible { get; set; }
+    [Precision(10, 2)]
     [Column("total_articulos")]
     public decimal TotalArticulos { get; set; }
     [Column("costo_estimado")]
+    [Precision(20, 3)]
     public decimal CostoEstimado { get; set; }
     [Column("moneda_costo_estimado")]
     public string MonedaCostoEstimado { get; set; } = "";
     [Column("tipo_cambio_costo_estimado")]
+    [Precision(20, 3)]
     public decimal TipoCambioCostoEstimado { get; set; }
     [Column("costo_real")]
+    [Precision(20, 3)]
     public decimal CostoReal { get; set; }
     [Column("moneda_costo_real")]
     public string MonedaCostoReal { get; set; } = "";
     [Column("tipo_cambio_costo_real")]
+    [Precision(20, 3)]
     public decimal TipoCambioCostoReal { get; set; }
     [Column("id_creador")]
     public Guid IdCreador { get; set; }
