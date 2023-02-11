@@ -22,7 +22,7 @@ public class RastreoPublicacion
     public long TiempoEstimado { get; set; } = 0;
     [Column("estado_previo")]
     public int EstadoPrevio { get; set; }
-    [Column("siguiente_estado")]
+    [Column("proximo_estado")]
     public int SiguienteEstado { get; set; }
     [Column("comentarios")]
     [MaxLength(100)]
@@ -37,6 +37,8 @@ public class RastreoPublicacion
     public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
     [Column("activo")]
     public bool? Activo { get; set; } = true;
+    [Column("version_api")]
+    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Publicacion? Publicacion { get; set; }

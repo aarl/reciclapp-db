@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace reciclapp.db.Migrations
 {
-    public partial class Tablas_generales_1 : Migration
+    public partial class Campo_version_api : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,17 +21,17 @@ namespace reciclapp.db.Migrations
                     id_actividad_ruta = table.Column<int>(type: "int", nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
                     fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    fecha_finalizacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "null"),
+                    fecha_finalizacion = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "null"),
                     id_ejecutor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_revisor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_estatus_publicacion = table.Column<int>(type: "int", nullable: false),
                     id_estatus_proyecto = table.Column<int>(type: "int", nullable: false),
-                    id_revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    id_revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     id_tipo_actividad = table.Column<int>(type: "int", nullable: false),
                     tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     progreso_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValue: 0m),
-                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "null"),
+                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "null"),
                     total_articulos = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValue: 0m),
                     costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
                     moneda_costo_estimado = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
@@ -44,6 +44,7 @@ namespace reciclapp.db.Migrations
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
                     ProyectoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -65,6 +66,7 @@ namespace reciclapp.db.Migrations
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
                     RutaProyectoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -82,8 +84,9 @@ namespace reciclapp.db.Migrations
                     email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false, defaultValueSql: "''"),
                     clave = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha_registro = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_grupo = table.Column<int>(type: "int", nullable: false),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    id_grupo = table.Column<int>(type: "int", nullable: true),
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -106,7 +109,8 @@ namespace reciclapp.db.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -130,7 +134,8 @@ namespace reciclapp.db.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -151,7 +156,8 @@ namespace reciclapp.db.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -169,6 +175,26 @@ namespace reciclapp.db.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "monedas",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    tipo_cambio = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValue: 0m),
+                    es_local = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "0"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_monedas", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "personal",
                 columns: table => new
                 {
@@ -180,7 +206,8 @@ namespace reciclapp.db.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "null"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -192,7 +219,7 @@ namespace reciclapp.db.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newid()"),
-                    titulo = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
+                    titulo = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "''"),
                     descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
                     fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_gerente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -224,7 +251,8 @@ namespace reciclapp.db.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -270,6 +298,7 @@ namespace reciclapp.db.Migrations
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
                     EstatusPublicacionId = table.Column<int>(type: "int", nullable: true),
                     TipoPublicacionId = table.Column<int>(type: "int", nullable: true),
                     RevisadoPorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -297,13 +326,14 @@ namespace reciclapp.db.Migrations
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     tiempo_estimado = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
                     estado_previo = table.Column<int>(type: "int", nullable: false),
-                    siguiente_estado = table.Column<int>(type: "int", nullable: false),
+                    proximo_estado = table.Column<int>(type: "int", nullable: false),
                     comentarios = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "''"),
                     id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -335,7 +365,8 @@ namespace reciclapp.db.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -343,29 +374,42 @@ namespace reciclapp.db.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "registro_general",
+                name: "secuencias",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_tabla = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
-                    referencia = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "''"),
-                    id_padre = table.Column<int>(type: "int", nullable: true),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    prefijo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, defaultValueSql: "''"),
+                    serie = table.Column<long>(type: "bigint", nullable: false, defaultValue: 1L),
+                    incremento = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_registro_general", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_registro_general_registro_general_id_padre",
-                        column: x => x.id_padre,
-                        principalTable: "registro_general",
-                        principalColumn: "id");
+                    table.PrimaryKey("PK_secuencias", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tablas",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tablas", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -391,30 +435,16 @@ namespace reciclapp.db.Migrations
                     estatus = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
                     verificado = table.Column<int>(type: "int", nullable: false),
                     ultima_ip = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "null"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "null"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "null"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "null"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_usuarios", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_usuarios_registro_general_id_ciudad",
-                        column: x => x.id_ciudad,
-                        principalTable: "registro_general",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_usuarios_registro_general_id_grupo",
-                        column: x => x.id_grupo,
-                        principalTable: "registro_general",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_usuarios_registro_general_id_profesion",
-                        column: x => x.id_profesion,
-                        principalTable: "registro_general",
-                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_usuarios_usuarios_id_creador",
                         column: x => x.id_creador,
@@ -428,59 +458,44 @@ namespace reciclapp.db.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "secuencias",
+                name: "varios",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    prefijo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, defaultValueSql: "''"),
-                    serie = table.Column<long>(type: "bigint", nullable: false, defaultValue: 1L),
-                    incremento = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    id_tabla = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "''"),
+                    referencia = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "''"),
+                    id_padre = table.Column<int>(type: "int", nullable: true),
                     id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
+                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_secuencias", x => x.id);
+                    table.PrimaryKey("PK_varios", x => x.id);
                     table.ForeignKey(
-                        name: "FK_secuencias_usuarios_id_creador",
+                        name: "FK_varios_tablas_id_tabla",
+                        column: x => x.id_tabla,
+                        principalTable: "tablas",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_varios_usuarios_id_creador",
                         column: x => x.id_creador,
                         principalTable: "usuarios",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_secuencias_usuarios_id_modificador",
+                        name: "FK_varios_usuarios_id_modificador",
                         column: x => x.id_modificador,
                         principalTable: "usuarios",
                         principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tablas",
-                columns: table => new
-                {
-                    id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tablas", x => x.id);
                     table.ForeignKey(
-                        name: "FK_tablas_usuarios_id_creador",
-                        column: x => x.id_creador,
-                        principalTable: "usuarios",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_tablas_usuarios_id_modificador",
-                        column: x => x.id_modificador,
-                        principalTable: "usuarios",
+                        name: "FK_varios_varios_id_padre",
+                        column: x => x.id_padre,
+                        principalTable: "varios",
                         principalColumn: "id");
                 });
 
@@ -659,6 +674,22 @@ namespace reciclapp.db.Migrations
                 column: "id_usuario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_monedas_id_creador",
+                table: "monedas",
+                column: "id_creador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_monedas_id_modificador",
+                table: "monedas",
+                column: "id_modificador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_monedas_nombre",
+                table: "monedas",
+                column: "nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_personal_id_creador",
                 table: "personal",
                 column: "id_creador");
@@ -733,6 +764,12 @@ namespace reciclapp.db.Migrations
                 name: "IX_proyectos_id_tipo_proyecto",
                 table: "proyectos",
                 column: "id_tipo_proyecto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_proyectos_titulo",
+                table: "proyectos",
+                column: "titulo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_publicaciones_EstatusPublicacionId",
@@ -826,26 +863,6 @@ namespace reciclapp.db.Migrations
                 column: "id_usuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_registro_general_id_creador",
-                table: "registro_general",
-                column: "id_creador");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_registro_general_id_modificador",
-                table: "registro_general",
-                column: "id_modificador");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_registro_general_id_padre",
-                table: "registro_general",
-                column: "id_padre");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_registro_general_id_tabla",
-                table: "registro_general",
-                column: "id_tabla");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_secuencias_id_creador",
                 table: "secuencias",
                 column: "id_creador");
@@ -902,6 +919,27 @@ namespace reciclapp.db.Migrations
                 columns: new[] { "nombre", "segundo_nombre", "apellido", "segundo_apellido" },
                 unique: true);
 
+            migrationBuilder.CreateIndex(
+                name: "IX_varios_id_creador",
+                table: "varios",
+                column: "id_creador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_varios_id_modificador",
+                table: "varios",
+                column: "id_modificador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_varios_id_padre",
+                table: "varios",
+                column: "id_padre");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_varios_id_tabla_descripcion",
+                table: "varios",
+                columns: new[] { "id_tabla", "descripcion" },
+                unique: true);
+
             migrationBuilder.AddForeignKey(
                 name: "FK_actividades_proyectos_actividades_rutas_proyectos_id_actividad_ruta",
                 table: "actividades_proyectos",
@@ -921,34 +959,6 @@ namespace reciclapp.db.Migrations
                 table: "actividades_proyectos",
                 column: "ProyectoId",
                 principalTable: "proyectos",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_actividades_proyectos_registro_general_id_estatus_proyecto",
-                table: "actividades_proyectos",
-                column: "id_estatus_proyecto",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_actividades_proyectos_registro_general_id_estatus_publicacion",
-                table: "actividades_proyectos",
-                column: "id_estatus_publicacion",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_actividades_proyectos_registro_general_id_ruta_proyecto",
-                table: "actividades_proyectos",
-                column: "id_ruta_proyecto",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_actividades_proyectos_registro_general_id_tipo_actividad",
-                table: "actividades_proyectos",
-                column: "id_tipo_actividad",
-                principalTable: "registro_general",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -987,10 +997,31 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_actividades_rutas_proyectos_registro_general_RutaProyectoId",
-                table: "actividades_rutas_proyectos",
-                column: "RutaProyectoId",
-                principalTable: "registro_general",
+                name: "FK_actividades_proyectos_varios_id_estatus_proyecto",
+                table: "actividades_proyectos",
+                column: "id_estatus_proyecto",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_actividades_proyectos_varios_id_estatus_publicacion",
+                table: "actividades_proyectos",
+                column: "id_estatus_publicacion",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_actividades_proyectos_varios_id_ruta_proyecto",
+                table: "actividades_proyectos",
+                column: "id_ruta_proyecto",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_actividades_proyectos_varios_id_tipo_actividad",
+                table: "actividades_proyectos",
+                column: "id_tipo_actividad",
+                principalTable: "varios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1008,10 +1039,17 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_administradores_registro_general_id_grupo",
+                name: "FK_actividades_rutas_proyectos_varios_RutaProyectoId",
+                table: "actividades_rutas_proyectos",
+                column: "RutaProyectoId",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_administradores_varios_id_grupo",
                 table: "administradores",
                 column: "id_grupo",
-                principalTable: "registro_general",
+                principalTable: "varios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1019,13 +1057,6 @@ namespace reciclapp.db.Migrations
                 table: "bitacoras_proyectos",
                 column: "id_proyecto",
                 principalTable: "proyectos",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_bitacoras_proyectos_registro_general_id_tipo_bitacora",
-                table: "bitacoras_proyectos",
-                column: "id_tipo_bitacora",
-                principalTable: "registro_general",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1047,6 +1078,13 @@ namespace reciclapp.db.Migrations
                 table: "bitacoras_proyectos",
                 column: "id_usuario",
                 principalTable: "usuarios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_bitacoras_proyectos_varios_id_tipo_bitacora",
+                table: "bitacoras_proyectos",
+                column: "id_tipo_bitacora",
+                principalTable: "varios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1092,17 +1130,24 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_monedas_usuarios_id_creador",
+                table: "monedas",
+                column: "id_creador",
+                principalTable: "usuarios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_monedas_usuarios_id_modificador",
+                table: "monedas",
+                column: "id_modificador",
+                principalTable: "usuarios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_personal_publicaciones_id_publicacion",
                 table: "personal",
                 column: "id_publicacion",
                 principalTable: "publicaciones",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_personal_registro_general_id_rol",
-                table: "personal",
-                column: "id_rol",
-                principalTable: "registro_general",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1127,38 +1172,17 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_personal_varios_id_rol",
+                table: "personal",
+                column: "id_rol",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_proyectos_RecursosPublicaciones_id_imagen_principal",
                 table: "proyectos",
                 column: "id_imagen_principal",
                 principalTable: "RecursosPublicaciones",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_proyectos_registro_general_id_estatus_proyecto",
-                table: "proyectos",
-                column: "id_estatus_proyecto",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_proyectos_registro_general_id_estatus_publicacion",
-                table: "proyectos",
-                column: "id_estatus_publicacion",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_proyectos_registro_general_id_ruta_proyecto",
-                table: "proyectos",
-                column: "id_ruta_proyecto",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_proyectos_registro_general_id_tipo_proyecto",
-                table: "proyectos",
-                column: "id_tipo_proyecto",
-                principalTable: "registro_general",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1197,17 +1221,31 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_publicaciones_registro_general_EstatusPublicacionId",
-                table: "publicaciones",
-                column: "EstatusPublicacionId",
-                principalTable: "registro_general",
+                name: "FK_proyectos_varios_id_estatus_proyecto",
+                table: "proyectos",
+                column: "id_estatus_proyecto",
+                principalTable: "varios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_publicaciones_registro_general_TipoPublicacionId",
-                table: "publicaciones",
-                column: "TipoPublicacionId",
-                principalTable: "registro_general",
+                name: "FK_proyectos_varios_id_estatus_publicacion",
+                table: "proyectos",
+                column: "id_estatus_publicacion",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_proyectos_varios_id_ruta_proyecto",
+                table: "proyectos",
+                column: "id_ruta_proyecto",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_proyectos_varios_id_tipo_proyecto",
+                table: "proyectos",
+                column: "id_tipo_proyecto",
+                principalTable: "varios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1232,6 +1270,20 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_publicaciones_varios_EstatusPublicacionId",
+                table: "publicaciones",
+                column: "EstatusPublicacionId",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_publicaciones_varios_TipoPublicacionId",
+                table: "publicaciones",
+                column: "TipoPublicacionId",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_rastreo_publicaciones_usuarios_id_creador",
                 table: "rastreo_publicaciones",
                 column: "id_creador",
@@ -1250,27 +1302,6 @@ namespace reciclapp.db.Migrations
                 table: "rastreo_publicaciones",
                 column: "id_usuario",
                 principalTable: "usuarios",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_RecursosPublicaciones_registro_general_id_estatus_recurso",
-                table: "RecursosPublicaciones",
-                column: "id_estatus_recurso",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_RecursosPublicaciones_registro_general_id_tipo_catalogo",
-                table: "RecursosPublicaciones",
-                column: "id_tipo_catalogo",
-                principalTable: "registro_general",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_RecursosPublicaciones_registro_general_id_tipo_recurso",
-                table: "RecursosPublicaciones",
-                column: "id_tipo_recurso",
-                principalTable: "registro_general",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
@@ -1302,40 +1333,93 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_registro_general_tablas_id_tabla",
-                table: "registro_general",
-                column: "id_tabla",
-                principalTable: "tablas",
+                name: "FK_RecursosPublicaciones_varios_id_estatus_recurso",
+                table: "RecursosPublicaciones",
+                column: "id_estatus_recurso",
+                principalTable: "varios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_registro_general_usuarios_id_creador",
-                table: "registro_general",
+                name: "FK_RecursosPublicaciones_varios_id_tipo_catalogo",
+                table: "RecursosPublicaciones",
+                column: "id_tipo_catalogo",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_RecursosPublicaciones_varios_id_tipo_recurso",
+                table: "RecursosPublicaciones",
+                column: "id_tipo_recurso",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_secuencias_usuarios_id_creador",
+                table: "secuencias",
                 column: "id_creador",
                 principalTable: "usuarios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_registro_general_usuarios_id_modificador",
-                table: "registro_general",
+                name: "FK_secuencias_usuarios_id_modificador",
+                table: "secuencias",
                 column: "id_modificador",
                 principalTable: "usuarios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_tablas_usuarios_id_creador",
+                table: "tablas",
+                column: "id_creador",
+                principalTable: "usuarios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_tablas_usuarios_id_modificador",
+                table: "tablas",
+                column: "id_modificador",
+                principalTable: "usuarios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_usuarios_varios_id_ciudad",
+                table: "usuarios",
+                column: "id_ciudad",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_usuarios_varios_id_grupo",
+                table: "usuarios",
+                column: "id_grupo",
+                principalTable: "varios",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_usuarios_varios_id_profesion",
+                table: "usuarios",
+                column: "id_profesion",
+                principalTable: "varios",
                 principalColumn: "id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_usuarios_registro_general_id_ciudad",
-                table: "usuarios");
+                name: "FK_tablas_usuarios_id_creador",
+                table: "tablas");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_usuarios_registro_general_id_grupo",
-                table: "usuarios");
+                name: "FK_tablas_usuarios_id_modificador",
+                table: "tablas");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_usuarios_registro_general_id_profesion",
-                table: "usuarios");
+                name: "FK_varios_usuarios_id_creador",
+                table: "varios");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_varios_usuarios_id_modificador",
+                table: "varios");
 
             migrationBuilder.DropTable(
                 name: "administradores");
@@ -1345,6 +1429,9 @@ namespace reciclapp.db.Migrations
 
             migrationBuilder.DropTable(
                 name: "comentarios");
+
+            migrationBuilder.DropTable(
+                name: "monedas");
 
             migrationBuilder.DropTable(
                 name: "personal");
@@ -1374,13 +1461,13 @@ namespace reciclapp.db.Migrations
                 name: "secuencias");
 
             migrationBuilder.DropTable(
-                name: "registro_general");
+                name: "usuarios");
+
+            migrationBuilder.DropTable(
+                name: "varios");
 
             migrationBuilder.DropTable(
                 name: "tablas");
-
-            migrationBuilder.DropTable(
-                name: "usuarios");
         }
     }
 }

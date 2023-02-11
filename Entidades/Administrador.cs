@@ -29,6 +29,8 @@ public class Administrador
     public int? IdGrupo { get; set; } = null;
     [Column("activo")]
     public bool? Activo { get; set; } = true;
+    [Column("version_api")]
+    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Varios? Grupo { get; set; }

@@ -10,7 +10,7 @@ public class RecursoPublicacion
     [Key]
     public Guid Id { get; set; }
     [Column("id_tipo_catalogo")]
-    public int IdTipoCatalogo { get; set; }   // Publicacion o Proyecto
+    public int IdTipoCatalogo { get; set; }     // Publicacion o Proyecto
     [Column("id_catalogo")]
     public Guid IdCatalogo { get; set; }        // Id de publicacion o proyecto
     [Column("id_secuencia")]
@@ -41,6 +41,8 @@ public class RecursoPublicacion
     public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
     [Column("activo")]
     public bool? Activo { get; set; } = true;
+    [Column("version_api")]
+    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Varios? TipoCatalogo { get; set; }

@@ -96,6 +96,8 @@ public class Usuario
 
     [Column("activo")]
     public bool? Activo { get; set; } = true;
+    [Column("version_api")]
+    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Varios? Ciudad { get; set; }

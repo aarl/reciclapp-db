@@ -75,6 +75,8 @@ public class ActividadProyecto
     public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
     [Column("activo")]
     public bool? Activo { get; set; } = true;
+    [Column("version_api")]
+    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Varios? RutaProyecto { get; set; }

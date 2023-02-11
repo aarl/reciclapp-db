@@ -14,4 +14,8 @@ public class Interna
     public string Descripcion { get; set; } = "";
     [Column("referencia")]
     public string Referencia { get; set; } = "";
+    [Column("activo")]
+    public bool? Activo { get; set; } = true;
+    [Column("version_api")]
+    public string VersionAPI { get; set; } = "";
 }

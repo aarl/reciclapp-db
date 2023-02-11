@@ -39,10 +39,10 @@ public class SSDBContext : DbContext
         PublicacionValoresPorDefecto(mb);
         RastreoPublicacionValoresPorDefecto(mb);
         RecursoPublicacionValoresPorDefecto(mb);
-        RegistroGeneralValoresPorDefecto(mb);
         SecuenciaValoresPorDefecto(mb);
         TablaValoresPorDefecto(mb);
         UsuarioValoresPorDefecto(mb);
+        VariosValoresPorDefecto(mb);
 
         // Indices
         CrearIndices(mb);
@@ -60,10 +60,10 @@ public class SSDBContext : DbContext
         PublicacionRelaciones(mb);
         RastreoPublicacionRelaciones(mb);
         RecursoPublicacionRelaciones(mb);
-        RegistroGeneralRelaciones(mb);
         SecuenciaRelaciones(mb);
         TablaRelaciones(mb);
         UsuarioRelaciones(mb);
+        VariosRelaciones(mb);
     }
 
     // Valores por defecto
@@ -140,6 +140,10 @@ public class SSDBContext : DbContext
         mb.Entity<ActividadProyecto>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<ActividadProyecto>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void ActividadRutaProyectoValoresPorDefecto(ModelBuilder mb)
@@ -167,6 +171,10 @@ public class SSDBContext : DbContext
         mb.Entity<ActividadRutaProyecto>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<ActividadRutaProyecto>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void AdministradorValoresPorDefecto(ModelBuilder mb)
@@ -194,6 +202,10 @@ public class SSDBContext : DbContext
         mb.Entity<Administrador>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Administrador>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void BitacoraProyectoValoresPorDefecto(ModelBuilder mb)
@@ -213,6 +225,10 @@ public class SSDBContext : DbContext
         mb.Entity<BitacoraProyecto>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<BitacoraProyecto>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void ChatValoresPorDefecto(ModelBuilder mb)
@@ -240,6 +256,10 @@ public class SSDBContext : DbContext
         mb.Entity<Chat>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Chat>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void ComentarioValoresPorDefecto(ModelBuilder mb)
@@ -267,6 +287,10 @@ public class SSDBContext : DbContext
         mb.Entity<Comentario>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Comentario>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void MonedaValoresPorDefecto(ModelBuilder mb)
@@ -290,6 +314,10 @@ public class SSDBContext : DbContext
         mb.Entity<Moneda>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Moneda>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void PersonalValoresPorDefecto(ModelBuilder mb)
@@ -317,6 +345,10 @@ public class SSDBContext : DbContext
         mb.Entity<Personal>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Personal>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void ProyectoValoresPorDefecto(ModelBuilder mb)
@@ -404,6 +436,10 @@ public class SSDBContext : DbContext
         mb.Entity<Proyecto>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Proyecto>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void PublicacionValoresPorDefecto(ModelBuilder mb)
@@ -443,6 +479,10 @@ public class SSDBContext : DbContext
         mb.Entity<Publicacion>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void RastreoPublicacionValoresPorDefecto(ModelBuilder mb)
@@ -474,6 +514,10 @@ public class SSDBContext : DbContext
         mb.Entity<RastreoPublicacion>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<RastreoPublicacion>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void RecursoPublicacionValoresPorDefecto(ModelBuilder mb)
@@ -509,29 +553,10 @@ public class SSDBContext : DbContext
         mb.Entity<RecursoPublicacion>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
-    }
 
-    private void RegistroGeneralValoresPorDefecto(ModelBuilder mb)
-    {
-        mb.Entity<Varios>()
-            .Property(p => p.Descripcion)
+        mb.Entity<RecursoPublicacion>()
+            .Property(c => c.VersionAPI)
             .HasDefaultValueSql("''");
-
-        mb.Entity<Varios>()
-            .Property(p => p.Referencia)
-            .HasDefaultValueSql("''");
-
-        mb.Entity<Varios>()
-             .Property(c => c.FechaCreacion)
-             .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Varios>()
-            .Property(c => c.FechaModificacion)
-            .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Varios>()
-            .Property(p => p.Activo)
-            .HasDefaultValueSql("1");
     }
 
     private void SecuenciaValoresPorDefecto(ModelBuilder mb)
@@ -559,6 +584,10 @@ public class SSDBContext : DbContext
         mb.Entity<Secuencia>()
             .Property(p => p.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Secuencia>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void TablaValoresPorDefecto(ModelBuilder mb)
@@ -578,6 +607,10 @@ public class SSDBContext : DbContext
         mb.Entity<Tabla>()
             .Property(p => p.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Tabla>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     private void UsuarioValoresPorDefecto(ModelBuilder mb)
@@ -653,6 +686,37 @@ public class SSDBContext : DbContext
         mb.Entity<Usuario>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
+
+        mb.Entity<Usuario>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
+    }
+
+    private void VariosValoresPorDefecto(ModelBuilder mb)
+    {
+        mb.Entity<Varios>()
+            .Property(p => p.Descripcion)
+            .HasDefaultValueSql("''");
+
+        mb.Entity<Varios>()
+            .Property(p => p.Referencia)
+            .HasDefaultValueSql("''");
+
+        mb.Entity<Varios>()
+             .Property(c => c.FechaCreacion)
+             .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Varios>()
+            .Property(c => c.FechaModificacion)
+            .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Varios>()
+            .Property(p => p.Activo)
+            .HasDefaultValueSql("1");
+
+        mb.Entity<Varios>()
+            .Property(c => c.VersionAPI)
+            .HasDefaultValueSql("''");
     }
 
     // Indices
@@ -679,6 +743,9 @@ public class SSDBContext : DbContext
         mb.Entity<Personal>()
             .HasIndex(p => new { p.IdPublicacion, p.IdRol }).IsUnique();
 
+        mb.Entity<Proyecto>()
+            .HasIndex(c => c.Titulo).IsUnique();
+
         mb.Entity<Publicacion>()
             .HasIndex(p => p.Titulo).IsUnique();
 
@@ -689,7 +756,7 @@ public class SSDBContext : DbContext
             .HasIndex(p => p.Email).IsUnique();
 
         mb.Entity<Varios>()
-            .HasIndex(p => new { p.Tabla, p.Descripcion }).IsUnique();
+            .HasIndex(p => new { p.IdTabla, p.Descripcion }).IsUnique();
     }
 
     // Relaciones
@@ -1077,33 +1144,6 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
     }
 
-    private void RegistroGeneralRelaciones(ModelBuilder mb)
-    {
-        mb.Entity<Varios>()
-            .HasOne(p => p.Tabla)
-            .WithMany()
-            .HasForeignKey(p => p.IdTabla)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<Varios>()
-            .HasOne(p => p.Padre)
-            .WithMany()
-            .HasForeignKey(p => p.IdPadre)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<Varios>()
-            .HasOne(p => p.Creador)
-            .WithMany()
-            .HasForeignKey(p => p.IdCreador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<Varios>()
-            .HasOne(p => p.Modificador)
-            .WithMany()
-            .HasForeignKey(p => p.IdModificador)
-            .OnDelete(DeleteBehavior.NoAction);
-    }
-
     private void SecuenciaRelaciones(ModelBuilder mb)
     {
         mb.Entity<Secuencia>()
@@ -1170,6 +1210,33 @@ public class SSDBContext : DbContext
             .HasMany(p => p.Comentarios)
             .WithOne(p => p.Usuario)
             .HasForeignKey(p => p.IdUsuario)
+            .OnDelete(DeleteBehavior.NoAction);
+    }
+
+    private void VariosRelaciones(ModelBuilder mb)
+    {
+        mb.Entity<Varios>()
+            .HasOne(p => p.Tabla)
+            .WithMany()
+            .HasForeignKey(p => p.IdTabla)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Varios>()
+            .HasOne(p => p.Padre)
+            .WithMany()
+            .HasForeignKey(p => p.IdPadre)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Varios>()
+            .HasOne(p => p.Creador)
+            .WithMany()
+            .HasForeignKey(p => p.IdCreador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Varios>()
+            .HasOne(p => p.Modificador)
+            .WithMany()
+            .HasForeignKey(p => p.IdModificador)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }
