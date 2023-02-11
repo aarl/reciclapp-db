@@ -89,13 +89,13 @@ public class Proyecto
     [JsonIgnore]
     public virtual Usuario? Revisor { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? EstatusPublicacion { get; set; }
+    public virtual Varios? EstatusPublicacion { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? EstatusProyecto { get; set; }
+    public virtual Varios? EstatusProyecto { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? TipoProyecto { get; set; }
+    public virtual Varios? TipoProyecto { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? RutaProyecto { get; set; }
+    public virtual Varios? RutaProyecto { get; set; }
     [JsonIgnore]
     public virtual Usuario? RevisadaPor { get; set; }
     [JsonIgnore]

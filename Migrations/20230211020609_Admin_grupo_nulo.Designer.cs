@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace reciclapp.db.Migrations
 {
     [DbContext(typeof(SSDBContext))]
-    [Migration("20230209134534_Tablas_generales_1")]
-    partial class Tablas_generales_1
+    [Migration("20230211020609_Admin_grupo_nulo")]
+    partial class Admin_grupo_nulo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -326,8 +326,8 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("fecha_registro")
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<Guid>("IdGrupo")
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<int?>("IdGrupo")
+                        .HasColumnType("int")
                         .HasColumnName("id_grupo");
 
                     b.Property<string>("Nombre")
@@ -357,72 +357,6 @@ namespace reciclapp.db.Migrations
                         .IsUnique();
 
                     b.ToTable("administradores");
-                });
-
-            modelBuilder.Entity("Entidades.Articulo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id")
-                        .HasDefaultValueSql("newid()");
-
-                    b.Property<bool?>("Activo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasColumnName("activo")
-                        .HasDefaultValueSql("1");
-
-                    b.Property<Guid?>("CreadorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_creacion")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<DateTime>("FechaModificacion")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_modificacion")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
-
-                    b.Property<Guid>("IdModificador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
-
-                    b.Property<Guid?>("ModificadorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RutaFoto")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ruta_foto")
-                        .HasDefaultValueSql("''");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreadorId");
-
-                    b.HasIndex("Descripcion")
-                        .IsUnique();
-
-                    b.HasIndex("ModificadorId");
-
-                    b.ToTable("articulos");
                 });
 
             modelBuilder.Entity("Entidades.BitacoraProyecto", b =>
@@ -642,70 +576,6 @@ namespace reciclapp.db.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("comentarios");
-                });
-
-            modelBuilder.Entity("Entidades.Grupo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id")
-                        .HasDefaultValueSql("newid()");
-
-                    b.Property<bool?>("Activo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasColumnName("activo")
-                        .HasDefaultValueSql("1");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
-
-                    b.Property<bool?>("EsAdministrador")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasColumnName("es_administrador")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_creacion")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<DateTime>("FechaModificacion")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_modificacion")
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<Guid?>("IdCreador")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador")
-                        .HasDefaultValueSql("null");
-
-                    b.Property<Guid?>("IdModificador")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador")
-                        .HasDefaultValueSql("null");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Descripcion")
-                        .IsUnique();
-
-                    b.HasIndex("IdCreador");
-
-                    b.HasIndex("IdModificador");
-
-                    b.ToTable("grupos");
                 });
 
             modelBuilder.Entity("Entidades.Personal", b =>
@@ -1601,9 +1471,6 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("segundo_apellido")
                         .HasDefaultValueSql("''");
 
-                    b.Property<int?>("CiudadId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Clave")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -1656,25 +1523,25 @@ namespace reciclapp.db.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_ciudad");
 
-                    b.Property<Guid?>("IdCreador")
+                    b.Property<Guid>("IdCreador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_creador")
                         .HasDefaultValueSql("null");
 
-                    b.Property<Guid>("IdGrupo")
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<int>("IdGrupo")
+                        .HasColumnType("int")
                         .HasColumnName("id_grupo");
 
-                    b.Property<Guid?>("IdModificador")
+                    b.Property<Guid>("IdModificador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_modificador")
                         .HasDefaultValueSql("null");
 
-                    b.Property<Guid?>("IdProfesion")
+                    b.Property<int?>("IdProfesion")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasColumnName("id_profesion")
                         .HasDefaultValueSql("null");
 
@@ -1708,9 +1575,6 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("perfil")
                         .HasDefaultValueSql("''");
 
-                    b.Property<int?>("ProfesionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -1738,10 +1602,10 @@ namespace reciclapp.db.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CiudadId");
-
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("IdCiudad");
 
                     b.HasIndex("IdCreador");
 
@@ -1749,7 +1613,7 @@ namespace reciclapp.db.Migrations
 
                     b.HasIndex("IdModificador");
 
-                    b.HasIndex("ProfesionId");
+                    b.HasIndex("IdProfesion");
 
                     b.HasIndex("Nombre", "Nombre2", "Apellido", "Apellido2")
                         .IsUnique();
@@ -1879,28 +1743,12 @@ namespace reciclapp.db.Migrations
 
             modelBuilder.Entity("Entidades.Administrador", b =>
                 {
-                    b.HasOne("Entidades.Grupo", "Grupo")
+                    b.HasOne("Entidades.RegistroGeneral", "Grupo")
                         .WithMany()
                         .HasForeignKey("IdGrupo")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Grupo");
-                });
-
-            modelBuilder.Entity("Entidades.Articulo", b =>
-                {
-                    b.HasOne("Entidades.Usuario", "Creador")
-                        .WithMany()
-                        .HasForeignKey("CreadorId");
-
-                    b.HasOne("Entidades.Usuario", "Modificador")
-                        .WithMany()
-                        .HasForeignKey("ModificadorId");
-
-                    b.Navigation("Creador");
-
-                    b.Navigation("Modificador");
                 });
 
             modelBuilder.Entity("Entidades.BitacoraProyecto", b =>
@@ -2019,23 +1867,6 @@ namespace reciclapp.db.Migrations
                     b.Navigation("Modificador");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("Entidades.Grupo", b =>
-                {
-                    b.HasOne("Entidades.Usuario", "Creador")
-                        .WithMany()
-                        .HasForeignKey("IdCreador")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Entidades.Usuario", "Modificador")
-                        .WithMany()
-                        .HasForeignKey("IdModificador")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Creador");
-
-                    b.Navigation("Modificador");
                 });
 
             modelBuilder.Entity("Entidades.Personal", b =>
@@ -2373,27 +2204,32 @@ namespace reciclapp.db.Migrations
                 {
                     b.HasOne("Entidades.RegistroGeneral", "Ciudad")
                         .WithMany()
-                        .HasForeignKey("CiudadId");
+                        .HasForeignKey("IdCiudad")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
 
                     b.HasOne("Entidades.Usuario", "Creador")
                         .WithMany()
                         .HasForeignKey("IdCreador")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Entidades.Grupo", "Grupo")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("IdGrupo")
                         .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Entidades.RegistroGeneral", "Grupo")
+                        .WithMany()
+                        .HasForeignKey("IdGrupo")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
                         .IsRequired();
 
                     b.HasOne("Entidades.Usuario", "Modificador")
                         .WithMany()
                         .HasForeignKey("IdModificador")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Entidades.RegistroGeneral", "Profesion")
                         .WithMany()
-                        .HasForeignKey("ProfesionId");
+                        .HasForeignKey("IdProfesion")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("Ciudad");
 
@@ -2414,11 +2250,6 @@ namespace reciclapp.db.Migrations
             modelBuilder.Entity("Entidades.Comentario", b =>
                 {
                     b.Navigation("Citas");
-                });
-
-            modelBuilder.Entity("Entidades.Grupo", b =>
-                {
-                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("Entidades.Proyecto", b =>

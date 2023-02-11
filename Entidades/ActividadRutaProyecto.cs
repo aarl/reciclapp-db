@@ -28,7 +28,7 @@ public class ActividadRutaProyecto
     public bool? Activo { get; set; } = true;
 
     [JsonIgnore]
-    public virtual RegistroGeneral? RutaProyecto { get; set; }
+    public virtual Varios? RutaProyecto { get; set; }
     [JsonIgnore]
     public virtual Usuario? Creador { get; set; }
     [JsonIgnore]

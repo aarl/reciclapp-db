@@ -63,13 +63,13 @@ public class Usuario
     public string Email2 { get; set; } = "";
 
     [Column("id_profesion")]
-    public Guid? IdProfesion { get; set; }
+    public int? IdProfesion { get; set; }
 
     [Column("max_publicaciones")]
     public int MaximoPublicaciones { get; set; } = 0;
 
     [Column("id_grupo")]
-    public Guid IdGrupo { get; set; }
+    public int IdGrupo { get; set; }
 
     [Column("estatus")]
     [MaxLength(2)]
@@ -83,13 +83,13 @@ public class Usuario
     public string UltimaIP { get; set; } = "";
 
     [Column("id_creador")]
-    public Guid? IdCreador { get; set; }
+    public Guid IdCreador { get; set; }
 
     [Column("fecha_creacion")]
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
     [Column("id_modificador")]
-    public Guid? IdModificador { get; set; }
+    public Guid IdModificador { get; set; }
 
     [Column("fecha_modificacion")]
     public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
@@ -98,11 +98,11 @@ public class Usuario
     public bool? Activo { get; set; } = true;
 
     [JsonIgnore]
-    public virtual RegistroGeneral? Ciudad { get; set; }
+    public virtual Varios? Ciudad { get; set; }
     [JsonIgnore]
-    public virtual Grupo? Grupo { get; set; }
+    public virtual Varios? Grupo { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? Profesion { get; set; }
+    public virtual Varios? Profesion { get; set; }
     [JsonIgnore]
     public virtual Usuario? Creador { get; set; }
     [JsonIgnore]

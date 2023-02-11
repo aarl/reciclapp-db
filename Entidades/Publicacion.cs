@@ -95,9 +95,9 @@ public class Publicacion
     public bool? Activo { get; set; } = true;
 
     [JsonIgnore]
-    public virtual RegistroGeneral? EstatusPublicacion { get; set; }
+    public virtual Varios? EstatusPublicacion { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? TipoPublicacion { get; set; }
+    public virtual Varios? TipoPublicacion { get; set; }
     [JsonIgnore]
     public virtual Usuario? RevisadoPor { get; set; }
     [JsonIgnore]

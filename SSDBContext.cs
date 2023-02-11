@@ -8,20 +8,19 @@ public class SSDBContext : DbContext
     public DbSet<ActividadProyecto> ActividadesProyectos { get; set; } = null!;
     public DbSet<ActividadRutaProyecto> ActividadesRutasProyectos { get; set; } = null!;
     public DbSet<Administrador> Administradores { get; set; } = null!;
-    public DbSet<Articulo> Articulos { get; set; } = null!;
     public DbSet<BitacoraProyecto> BitacorasProyectos { get; set; } = null!;
     public DbSet<Chat> Chats { get; set; } = null!;
     public DbSet<Comentario> Comentarios { get; set; } = null!;
-    public DbSet<Grupo> Grupos { get; set; } = null!;
+    public DbSet<Moneda> Monedas { get; set; } = null!;
     public DbSet<Personal> Personal { get; set; } = null!;
     public DbSet<Proyecto> Proyectos { get; set; } = null!;
     public DbSet<Publicacion> Publicaciones { get; set; } = null!;
     public DbSet<RastreoPublicacion> RastreoPublicaciones { get; set; } = null!;
     public DbSet<RecursoPublicacion> RecursosPublicaciones { get; set; } = null!;
-    public DbSet<RegistroGeneral> RegistrosGenerales { get; set; } = null!;
     public DbSet<Secuencia> Secuencias { get; set; } = null!;
     public DbSet<Tabla> Tablas { get; set; } = null!;
     public DbSet<Usuario> Usuarios { get; set; } = null!;
+    public DbSet<Varios> Varias { get; set; } = null!;
 
     public SSDBContext(DbContextOptions<SSDBContext> options) : base(options) { }
 
@@ -31,11 +30,10 @@ public class SSDBContext : DbContext
         ActividadProyectoValoresPorDefecto(mb);
         ActividadRutaProyectoValoresPorDefecto(mb);
         AdministradorValoresPorDefecto(mb);
-        ArticuloValoresPorDefecto(mb);
         BitacoraProyectoValoresPorDefecto(mb);
         ChatValoresPorDefecto(mb);
         ComentarioValoresPorDefecto(mb);
-        GrupoValoresPorDefecto(mb);
+        MonedaValoresPorDefecto(mb);
         PersonalValoresPorDefecto(mb);
         ProyectoValoresPorDefecto(mb);
         PublicacionValoresPorDefecto(mb);
@@ -56,7 +54,7 @@ public class SSDBContext : DbContext
         BitacoraProyectoRelaciones(mb);
         ChatRelaciones(mb);
         ComentarioRelaciones(mb);
-        GrupoRelaciones(mb);
+        MonedaRelaciones(mb);
         PersonalRelaciones(mb);
         ProyectoRelaciones(mb);
         PublicacionRelaciones(mb);
@@ -198,33 +196,6 @@ public class SSDBContext : DbContext
             .HasDefaultValueSql("1");
     }
 
-    private void ArticuloValoresPorDefecto(ModelBuilder mb)
-    {
-        mb.Entity<Articulo>()
-            .Property(c => c.Id)
-            .HasDefaultValueSql("newid()");
-
-        mb.Entity<Articulo>()
-            .Property(c => c.Descripcion)
-            .HasDefaultValueSql("''");
-
-        mb.Entity<Articulo>()
-            .Property(c => c.RutaFoto)
-            .HasDefaultValueSql("''");
-
-        mb.Entity<Articulo>()
-            .Property(c => c.FechaCreacion)
-            .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Articulo>()
-            .Property(c => c.FechaModificacion)
-            .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Articulo>()
-            .Property(c => c.Activo)
-            .HasDefaultValueSql("1");
-    }
-
     private void BitacoraProyectoValoresPorDefecto(ModelBuilder mb)
     {
         mb.Entity<BitacoraProyecto>()
@@ -298,37 +269,25 @@ public class SSDBContext : DbContext
             .HasDefaultValueSql("1");
     }
 
-    private void GrupoValoresPorDefecto(ModelBuilder mb)
+    private void MonedaValoresPorDefecto(ModelBuilder mb)
     {
-        mb.Entity<Grupo>()
-            .Property(c => c.Id)
-            .HasDefaultValueSql("newid()");
+        mb.Entity<Moneda>()
+            .Property(c => c.TipoCambio)
+            .HasDefaultValue(0.0);
 
-        mb.Entity<Grupo>()
-            .Property(c => c.Descripcion)
-            .HasDefaultValueSql("''");
+        mb.Entity<Moneda>()
+           .Property(c => c.FechaCreacion)
+           .HasDefaultValueSql("getutcdate()");
 
-        mb.Entity<Grupo>()
-             .Property(c => c.EsAdministrador)
-             .HasDefaultValueSql("0");
+        mb.Entity<Moneda>()
+           .Property(c => c.FechaModificacion)
+           .HasDefaultValueSql("getutcdate()");
 
-        mb.Entity<Grupo>()
-            .Property(c => c.IdCreador)
-            .HasDefaultValueSql("null");
+        mb.Entity<Moneda>()
+            .Property(c => c.EsLocal)
+            .HasDefaultValueSql("0");
 
-        mb.Entity<Grupo>()
-            .Property(c => c.IdModificador)
-            .HasDefaultValueSql("null");
-
-        mb.Entity<Grupo>()
-             .Property(c => c.FechaCreacion)
-             .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Grupo>()
-            .Property(c => c.FechaModificacion)
-            .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Grupo>()
+        mb.Entity<Moneda>()
             .Property(c => c.Activo)
             .HasDefaultValueSql("1");
     }
@@ -554,15 +513,23 @@ public class SSDBContext : DbContext
 
     private void RegistroGeneralValoresPorDefecto(ModelBuilder mb)
     {
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
             .Property(p => p.Descripcion)
             .HasDefaultValueSql("''");
 
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
             .Property(p => p.Referencia)
             .HasDefaultValueSql("''");
 
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
+             .Property(c => c.FechaCreacion)
+             .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Varios>()
+            .Property(c => c.FechaModificacion)
+            .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Varios>()
             .Property(p => p.Activo)
             .HasDefaultValueSql("1");
     }
@@ -582,6 +549,14 @@ public class SSDBContext : DbContext
            .HasDefaultValue(1);
 
         mb.Entity<Secuencia>()
+             .Property(c => c.FechaCreacion)
+             .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Secuencia>()
+            .Property(c => c.FechaModificacion)
+            .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Secuencia>()
             .Property(p => p.Activo)
             .HasDefaultValueSql("1");
     }
@@ -591,6 +566,14 @@ public class SSDBContext : DbContext
         mb.Entity<Tabla>()
            .Property(c => c.Descripcion)
            .HasDefaultValueSql("''");
+
+        mb.Entity<Tabla>()
+             .Property(c => c.FechaCreacion)
+             .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Tabla>()
+            .Property(c => c.FechaModificacion)
+            .HasDefaultValueSql("getutcdate()");
 
         mb.Entity<Tabla>()
             .Property(p => p.Activo)
@@ -684,14 +667,11 @@ public class SSDBContext : DbContext
         mb.Entity<Administrador>()
             .HasIndex(p => p.Email).IsUnique();
 
-        mb.Entity<Articulo>()
-            .HasIndex(p => p.Descripcion).IsUnique();
-
         mb.Entity<Chat>()
             .HasIndex(p => p.Titulo).IsUnique();
 
-        mb.Entity<Grupo>()
-           .HasIndex(p => p.Descripcion).IsUnique();
+        mb.Entity<Moneda>()
+            .HasIndex(p => p.Nombre).IsUnique();
 
         mb.Entity<Personal>()
            .HasKey(c => new { c.IdPublicacion, c.IdUsuario });
@@ -707,6 +687,9 @@ public class SSDBContext : DbContext
 
         mb.Entity<Usuario>()
             .HasIndex(p => p.Email).IsUnique();
+
+        mb.Entity<Varios>()
+            .HasIndex(p => new { p.Tabla, p.Descripcion }).IsUnique();
     }
 
     // Relaciones
@@ -884,21 +867,15 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
     }
 
-    private void GrupoRelaciones(ModelBuilder mb)
+    private void MonedaRelaciones(ModelBuilder mb)
     {
-        mb.Entity<Grupo>()
-            .HasMany(p => p.Usuarios)
-            .WithOne(p => p.Grupo)
-            .HasForeignKey(p => p.IdGrupo)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<Grupo>()
+        mb.Entity<Moneda>()
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
-        mb.Entity<Grupo>()
+        mb.Entity<Moneda>()
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
@@ -1102,25 +1079,25 @@ public class SSDBContext : DbContext
 
     private void RegistroGeneralRelaciones(ModelBuilder mb)
     {
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
             .HasOne(p => p.Tabla)
             .WithMany()
             .HasForeignKey(p => p.IdTabla)
             .OnDelete(DeleteBehavior.NoAction);
 
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
             .HasOne(p => p.Padre)
             .WithMany()
             .HasForeignKey(p => p.IdPadre)
             .OnDelete(DeleteBehavior.NoAction);
 
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
-        mb.Entity<RegistroGeneral>()
+        mb.Entity<Varios>()
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
@@ -1160,10 +1137,22 @@ public class SSDBContext : DbContext
     private void UsuarioRelaciones(ModelBuilder mb)
     {
         mb.Entity<Usuario>()
-            .HasMany(p => p.Comentarios)
-            .WithOne(p => p.Usuario)
-            .HasForeignKey(p => p.IdUsuario)
-            .OnDelete(DeleteBehavior.NoAction);
+          .HasOne(p => p.Ciudad)
+          .WithMany()
+          .HasForeignKey(p => p.IdCiudad)
+          .OnDelete(DeleteBehavior.ClientNoAction);
+
+        mb.Entity<Usuario>()
+          .HasOne(p => p.Grupo)
+          .WithMany()
+          .HasForeignKey(p => p.IdGrupo)
+          .OnDelete(DeleteBehavior.ClientNoAction);
+
+        mb.Entity<Usuario>()
+          .HasOne(p => p.Profesion)
+          .WithMany()
+          .HasForeignKey(p => p.IdProfesion)
+          .OnDelete(DeleteBehavior.ClientNoAction);
 
         mb.Entity<Usuario>()
             .HasOne(p => p.Creador)
@@ -1175,6 +1164,12 @@ public class SSDBContext : DbContext
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Usuario>()
+            .HasMany(p => p.Comentarios)
+            .WithOne(p => p.Usuario)
+            .HasForeignKey(p => p.IdUsuario)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

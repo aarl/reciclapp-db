@@ -40,7 +40,7 @@ public class BitacoraProyecto
     [JsonIgnore]
     public Usuario? Usuario { get; set; }
     [JsonIgnore]
-    public RegistroGeneral? TipoBitacora { get; set; }
+    public Varios? TipoBitacora { get; set; }
     [JsonIgnore]
     public virtual Usuario? Creador { get; set; }
     [JsonIgnore]

@@ -4,17 +4,22 @@ using System.Text.Json.Serialization;
 
 namespace Entidades;
 
-[Table("grupos")]
-public class Grupo
+[Table("varios")]
+public class Varios
 {
     [Column("id")]
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int Id { get; set; }
+    [Column("id_tabla")]
+    [MaxLength(10)]
+    public string IdTabla { get; set; } = "";
     [Column("descripcion")]
-    [MaxLength(100, ErrorMessage = "La descripción del grupo no debe exceder los 100 caracteres")]
     public string Descripcion { get; set; } = "";
-    [Column("es_administrador")]
-    public bool? EsAdministrador { get; set; } = false;
+    [Column("referencia")]
+    [MaxLength(50)]
+    public string Referencia { get; set; } = "";
+    [Column("id_padre")]
+    public int? IdPadre { get; set; } = null;
     [Column("id_creador")]
     public Guid? IdCreador { get; set; }
     [Column("fecha_creacion")]
@@ -27,10 +32,11 @@ public class Grupo
     public bool? Activo { get; set; } = true;
 
     [JsonIgnore]
+    public virtual Tabla? Tabla { get; set; }
+    [JsonIgnore]
+    public virtual Varios? Padre { get; set; }
+    [JsonIgnore]
     public virtual Usuario? Creador { get; set; }
     [JsonIgnore]
     public virtual Usuario? Modificador { get; set; }
-    [JsonIgnore]
-    public virtual ICollection<Usuario>? Usuarios { get; set; }
-
 }

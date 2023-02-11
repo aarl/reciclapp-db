@@ -43,15 +43,15 @@ public class RecursoPublicacion
     public bool? Activo { get; set; } = true;
 
     [JsonIgnore]
-    public virtual RegistroGeneral? TipoCatalogo { get; set; }
+    public virtual Varios? TipoCatalogo { get; set; }
     [JsonIgnore]
     public virtual Secuencia? Secuencia { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? TipoRecurso { get; set; }
+    public virtual Varios? TipoRecurso { get; set; }
     [JsonIgnore]
     public virtual Usuario? Usuario { get; set; }
     [JsonIgnore]
-    public virtual RegistroGeneral? EstatusRecurso { get; set; }
+    public virtual Varios? EstatusRecurso { get; set; }
     [JsonIgnore]
     public virtual Usuario? Creador { get; set; }
     [JsonIgnore]
