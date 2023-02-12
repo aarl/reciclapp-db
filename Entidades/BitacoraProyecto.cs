@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace Entidades;
 
 [Table("bitacoras_proyectos")]
-public class BitacoraProyecto
+public class BitacoraProyecto : Entidad
 {
     [Column("id")]
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,18 +22,6 @@ public class BitacoraProyecto
     public int IdTipoBitacora { get; set; }
     [Column("comentarios")]
     public string Comentarios { get; set; } = "";
-    [Column("id_creador")]
-    public Guid IdCreador { get; set; }
-    [Column("fecha_creacion")]
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-    [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
-    [Column("fecha_modificacion")]
-    public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
-    [Column("activo")]
-    public bool? Activo { get; set; } = true;
-    [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public Proyecto? Proyecto { get; set; }
@@ -43,8 +31,4 @@ public class BitacoraProyecto
     public Usuario? Usuario { get; set; }
     [JsonIgnore]
     public Varios? TipoBitacora { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Creador { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Modificador { get; set; }
 }

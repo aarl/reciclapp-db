@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("proyectos")]
-public class Proyecto
+public class Proyecto : Entidad
 {
     [Column("id")]
     [Key]
@@ -60,31 +60,19 @@ public class Proyecto
     [Column("costo_estimado")]
     [Precision(20, 3)]
     public decimal CostoEstimado { get; set; }
-    [Column("moneda_costo_estimado")]
-    public string MonedaCostoEstimado { get; set; } = "";
+    [Column("id_moneda_costo_estimado")]
+    public string IdMonedaCostoEstimado { get; set; } = "";
     [Column("tipo_cambio_costo_estimado")]
     [Precision(20, 3)]
     public decimal TipoCambioCostoEstimado { get; set; }
     [Column("costo_real")]
     [Precision(20, 3)]
     public decimal CostoReal { get; set; }
-    [Column("moneda_costo_real")]
-    public string MonedaCostoReal { get; set; } = "";
+    [Column("id_moneda_costo_real")]
+    public string IdMonedaCostoReal { get; set; } = "";
     [Column("tipo_cambio_costo_real")]
     [Precision(20, 3)]
     public decimal TipoCambioCostoReal { get; set; }
-    [Column("id_creador")]
-    public Guid IdCreador { get; set; }
-    [Column("fecha_creacion")]
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-    [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
-    [Column("fecha_modificacion")]
-    public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
-    [Column("activo")]
-    public bool? Activo { get; set; } = true;
-    [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Usuario? Gerente { get; set; }
@@ -103,9 +91,10 @@ public class Proyecto
     [JsonIgnore]
     public virtual RecursoPublicacion? ImagenPrincipal { get; set; }
     [JsonIgnore]
-    public virtual Usuario? Creador { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Modificador { get; set; }
-    [JsonIgnore]
     public virtual ICollection<ActividadProyecto>? ActividadesProyecto { get; set; }
+    [JsonIgnore]
+    public virtual Moneda? MonedaCostoEstimado { get; set; }
+    [JsonIgnore]
+    public virtual Moneda? MonedaCostoReal { get; set; }
+
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Entidades;
 
@@ -22,6 +23,7 @@ public class Persona : Entidad
     [EmailAddress]
     [MaxLength(300)]
     public string Email { get; set; } = "";
+    [JsonIgnore]
     [Column("clave")]
     [MaxLength(256)]
     public string Clave { get; set; } = "";

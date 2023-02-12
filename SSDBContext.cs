@@ -406,7 +406,7 @@ public class SSDBContext : DbContext
            .HasDefaultValue(0.0);
 
         mb.Entity<Proyecto>()
-           .Property(c => c.MonedaCostoEstimado)
+           .Property(c => c.IdMonedaCostoEstimado)
            .HasDefaultValueSql("''");
 
         mb.Entity<Proyecto>()
@@ -418,7 +418,7 @@ public class SSDBContext : DbContext
            .HasDefaultValue(0.0);
 
         mb.Entity<Proyecto>()
-           .Property(c => c.MonedaCostoReal)
+           .Property(c => c.IdMonedaCostoReal)
            .HasDefaultValueSql("''");
 
         mb.Entity<Proyecto>()
@@ -793,6 +793,18 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<ActividadProyecto>()
+            .HasOne(p => p.MonedaCostoEstimado)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoEstimado)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<ActividadProyecto>()
+            .HasOne(p => p.MonedaCostoReal)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoReal)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<ActividadProyecto>()
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
@@ -832,6 +844,12 @@ public class SSDBContext : DbContext
     private void ActividadRutaProyectoRelaciones(ModelBuilder mb)
     {
         mb.Entity<ActividadRutaProyecto>()
+            .HasOne(p => p.RutaProyecto)
+            .WithMany()
+            .HasForeignKey(p => p.IdRutaProyecto)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<ActividadRutaProyecto>()
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
@@ -851,6 +869,18 @@ public class SSDBContext : DbContext
           .WithMany()
           .HasForeignKey(p => p.IdGrupo)
           .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Administrador>()
+            .HasOne(p => p.Creador)
+            .WithMany()
+            .HasForeignKey(p => p.IdCreador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Administrador>()
+            .HasOne(p => p.Modificador)
+            .WithMany()
+            .HasForeignKey(p => p.IdModificador)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     private void BitacoraProyectoRelaciones(ModelBuilder mb)
@@ -898,6 +928,12 @@ public class SSDBContext : DbContext
             .HasMany(p => p.Comentarios)
             .WithOne(p => p.Chat)
             .HasForeignKey(p => p.IdChat)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Chat>()
+            .HasOne(p => p.Publicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdPublicacion)
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Chat>()
@@ -1049,6 +1085,18 @@ public class SSDBContext : DbContext
             .WithOne()
             .HasForeignKey(p => p.IdProyecto)
             .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Proyecto>()
+            .HasOne(p => p.MonedaCostoEstimado)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoEstimado)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Proyecto>()
+            .HasOne(p => p.MonedaCostoReal)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoReal)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     private void PublicacionRelaciones(ModelBuilder mb)
@@ -1057,6 +1105,42 @@ public class SSDBContext : DbContext
             .HasMany(p => p.Chats)
             .WithOne(p => p.Publicacion)
             .HasForeignKey(p => p.IdPublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.EstatusPublicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdEstatusPublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.Proyecto)
+            .WithMany()
+            .HasForeignKey(p => p.IdProyecto)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.RevisadoPor)
+            .WithMany()
+            .HasForeignKey(p => p.IdRevisadoPor)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.TipoPublicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdTipoPublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.MonedaCostoEstimado)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoEstimado)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.MonedaCostoReal)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoReal)
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Publicacion>()

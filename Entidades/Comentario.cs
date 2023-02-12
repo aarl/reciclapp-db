@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace Entidades;
 
 [Table("comentarios")]
-public class Comentario
+public class Comentario : Entidad
 {
     [Column("id")]
     [Key]
@@ -20,27 +20,11 @@ public class Comentario
     public string Texto { get; set; } = "";
     [Column("id_comentario")]
     public Guid? IdComentario { get; set; }
-    [Column("id_creador")]
-    public Guid IdCreador { get; set; }
-    [Column("fecha_creacion")]
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-    [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
-    [Column("fecha_modificacion")]
-    public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
-    [Column("activo")]
-    public bool? Activo { get; set; } = true;
-    [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Chat? Chat { get; set; }
     [JsonIgnore]
     public virtual Usuario? Usuario { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Creador { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Modificador { get; set; }
     [JsonIgnore]
     public virtual ICollection<Comentario>? Citas { get; set; }
 }

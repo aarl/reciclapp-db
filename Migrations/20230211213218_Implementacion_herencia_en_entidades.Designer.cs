@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace reciclapp.db.Migrations
 {
     [DbContext(typeof(SSDBContext))]
-    [Migration("20230211171652_Prueba_herencia")]
-    partial class Prueba_herencia
+    [Migration("20230211213218_Implementacion_herencia_en_entidades")]
+    partial class Implementacion_herencia_en_entidades
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,8 +102,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_actividad_ruta");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEjecutor")
                         .HasColumnType("uniqueidentifier")
@@ -266,8 +265,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -307,76 +305,6 @@ namespace reciclapp.db.Migrations
                     b.ToTable("actividades_rutas_proyectos");
                 });
 
-            modelBuilder.Entity("Entidades.Admin", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id");
-
-                    b.Property<bool?>("Activo")
-                        .HasColumnType("bit")
-                        .HasColumnName("activo");
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("apellido");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
-                        .HasColumnName("email");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_creacion");
-
-                    b.Property<DateTime>("FechaModificacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_modificacion");
-
-                    b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("IdGrupo")
-                        .HasColumnType("int")
-                        .HasColumnName("id_grupo");
-
-                    b.Property<Guid>("IdModificador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nombre");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("telefono");
-
-                    b.Property<string>("VersionAPI")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("version_api");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCreador");
-
-                    b.HasIndex("IdGrupo");
-
-                    b.HasIndex("IdModificador");
-
-                    b.ToTable("admin");
-                });
-
             modelBuilder.Entity("Entidades.Administrador", b =>
                 {
                     b.Property<Guid>("Id")
@@ -391,10 +319,20 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("activo")
                         .HasDefaultValueSql("1");
 
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("apellido");
+
                     b.Property<string>("Clave")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
                         .HasColumnName("clave");
+
+                    b.Property<Guid?>("CreadorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -404,15 +342,33 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("email")
                         .HasDefaultValueSql("''");
 
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("fecha_creacion");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("fecha_modificacion");
+
                     b.Property<DateTime>("FechaRegistro")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha_registro")
                         .HasDefaultValueSql("getutcdate()");
 
+                    b.Property<Guid>("IdCreador")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("IdGrupo")
                         .HasColumnType("int")
                         .HasColumnName("id_grupo");
+
+                    b.Property<Guid>("IdModificador")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id_modificador");
+
+                    b.Property<Guid?>("ModificadorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -425,8 +381,8 @@ namespace reciclapp.db.Migrations
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("telefono")
                         .HasDefaultValueSql("''");
 
@@ -439,10 +395,14 @@ namespace reciclapp.db.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreadorId");
+
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.HasIndex("IdGrupo");
+
+                    b.HasIndex("ModificadorId");
 
                     b.HasIndex("Nombre")
                         .IsUnique();
@@ -493,8 +453,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_actividad_proyecto");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -569,8 +528,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -650,8 +608,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_comentario");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -722,8 +679,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -798,7 +754,6 @@ namespace reciclapp.db.Migrations
                     b.Property<Guid>("IdCreador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador")
                         .HasDefaultValueSql("null");
 
                     b.Property<Guid>("IdModificador")
@@ -919,8 +874,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("gustan");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("IdEstatusProyecto")
                         .HasColumnType("int")
@@ -1153,8 +1107,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("gustan");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEstatusPublicacion")
                         .HasColumnType("uniqueidentifier")
@@ -1330,8 +1283,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -1416,8 +1368,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_catalogo");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("IdEstatusRecurso")
                         .HasColumnType("int")
@@ -1516,8 +1467,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -1591,11 +1541,10 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("fecha_modificacion")
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                    b.Property<Guid>("IdCreador")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("IdModificador")
+                    b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_modificador");
 
@@ -1615,149 +1564,6 @@ namespace reciclapp.db.Migrations
                     b.ToTable("tablas");
                 });
 
-            modelBuilder.Entity("Entidades.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id");
-
-                    b.Property<bool?>("Activo")
-                        .HasColumnType("bit")
-                        .HasColumnName("activo");
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("apellido");
-
-                    b.Property<string>("Apellido2")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("segundo_apellido");
-
-                    b.Property<string>("Clave")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("clave");
-
-                    b.Property<string>("Direccion")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
-                        .HasColumnName("direccion");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("Email2")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("email2");
-
-                    b.Property<string>("Estatus")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
-                        .HasColumnName("estatus");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_creacion");
-
-                    b.Property<DateTime>("FechaModificacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_modificacion");
-
-                    b.Property<int>("IdCiudad")
-                        .HasColumnType("int")
-                        .HasColumnName("id_ciudad");
-
-                    b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("IdGrupo")
-                        .HasColumnType("int")
-                        .HasColumnName("id_grupo");
-
-                    b.Property<Guid>("IdModificador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
-
-                    b.Property<int?>("IdProfesion")
-                        .HasColumnType("int")
-                        .HasColumnName("id_profesion");
-
-                    b.Property<int>("MaximoPublicaciones")
-                        .HasColumnType("int")
-                        .HasColumnName("max_publicaciones");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nombre");
-
-                    b.Property<string>("Nombre2")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("segundo_nombre");
-
-                    b.Property<string>("Perfil")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("perfil");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("telefono");
-
-                    b.Property<string>("Telefono2")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("telefono2");
-
-                    b.Property<string>("UltimaIP")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("ultima_ip");
-
-                    b.Property<int>("Verificado")
-                        .HasColumnType("int")
-                        .HasColumnName("verificado");
-
-                    b.Property<string>("VersionAPI")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("version_api");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCiudad");
-
-                    b.HasIndex("IdCreador");
-
-                    b.HasIndex("IdGrupo");
-
-                    b.HasIndex("IdModificador");
-
-                    b.HasIndex("IdProfesion");
-
-                    b.ToTable("user");
-                });
-
             modelBuilder.Entity("Entidades.Usuario", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1775,8 +1581,8 @@ namespace reciclapp.db.Migrations
                     b.Property<string>("Apellido")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("apellido")
                         .HasDefaultValueSql("''");
 
@@ -1805,8 +1611,8 @@ namespace reciclapp.db.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
                         .HasColumnName("email")
                         .HasDefaultValueSql("''");
 
@@ -1843,7 +1649,6 @@ namespace reciclapp.db.Migrations
                     b.Property<Guid>("IdCreador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador")
                         .HasDefaultValueSql("null");
 
                     b.Property<int>("IdGrupo")
@@ -1871,8 +1676,8 @@ namespace reciclapp.db.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("nombre")
                         .HasDefaultValueSql("''");
 
@@ -1980,8 +1785,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -2145,13 +1949,11 @@ namespace reciclapp.db.Migrations
                     b.Navigation("RutaProyecto");
                 });
 
-            modelBuilder.Entity("Entidades.Admin", b =>
+            modelBuilder.Entity("Entidades.Administrador", b =>
                 {
                     b.HasOne("Entidades.Usuario", "Creador")
                         .WithMany()
-                        .HasForeignKey("IdCreador")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("CreadorId");
 
                     b.HasOne("Entidades.Varios", "Grupo")
                         .WithMany()
@@ -2160,25 +1962,13 @@ namespace reciclapp.db.Migrations
 
                     b.HasOne("Entidades.Usuario", "Modificador")
                         .WithMany()
-                        .HasForeignKey("IdModificador")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ModificadorId");
 
                     b.Navigation("Creador");
 
                     b.Navigation("Grupo");
 
                     b.Navigation("Modificador");
-                });
-
-            modelBuilder.Entity("Entidades.Administrador", b =>
-                {
-                    b.HasOne("Entidades.Varios", "Grupo")
-                        .WithMany()
-                        .HasForeignKey("IdGrupo")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Grupo");
                 });
 
             modelBuilder.Entity("Entidades.BitacoraProyecto", b =>
@@ -2605,35 +2395,6 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Usuario", "Creador")
                         .WithMany()
                         .HasForeignKey("IdCreador")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Entidades.Usuario", "Modificador")
-                        .WithMany()
-                        .HasForeignKey("IdModificador")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Creador");
-
-                    b.Navigation("Modificador");
-                });
-
-            modelBuilder.Entity("Entidades.User", b =>
-                {
-                    b.HasOne("Entidades.Varios", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("IdCiudad")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Entidades.Usuario", "Creador")
-                        .WithMany()
-                        .HasForeignKey("IdCreador")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Entidades.Varios", "Grupo")
-                        .WithMany()
-                        .HasForeignKey("IdGrupo")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -2643,20 +2404,9 @@ namespace reciclapp.db.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Entidades.Varios", "Profesion")
-                        .WithMany()
-                        .HasForeignKey("IdProfesion")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Ciudad");
-
                     b.Navigation("Creador");
 
-                    b.Navigation("Grupo");
-
                     b.Navigation("Modificador");
-
-                    b.Navigation("Profesion");
                 });
 
             modelBuilder.Entity("Entidades.Usuario", b =>

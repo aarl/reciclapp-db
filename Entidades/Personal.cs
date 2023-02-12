@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Entidades;
 
 [Table("personal")]
-public class Personal
+public class Personal : Entidad
 {
     [Column("id_publicacion")]
     public Guid IdPublicacion { get; set; }
@@ -14,18 +14,6 @@ public class Personal
     public DateTime Fecha { get; set; } = DateTime.UtcNow;
     [Column("id_rol")]
     public int IdRol { get; set; }
-    [Column("id_creador")]
-    public Guid IdCreador { get; set; }
-    [Column("fecha_creacion")]
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-    [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
-    [Column("fecha_modificacion")]
-    public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
-    [Column("activo")]
-    public bool? Activo { get; set; } = true;
-    [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Publicacion? Publicacion { get; set; }
@@ -33,8 +21,4 @@ public class Personal
     public virtual Usuario? Usuario { get; set; }
     [JsonIgnore]
     public virtual Varios? Rol { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Creador { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Modificador { get; set; }
 }

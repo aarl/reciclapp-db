@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("publicaciones")]
-public class Publicacion
+public class Publicacion : Entidad
 {
     [Column("id")]
     [Key]
@@ -62,9 +62,9 @@ public class Publicacion
     [Column("costo_estimado")]
     [Precision(20, 3)]
     public decimal CostoEstimado { get; set; } = 0.0M;
-    [Column("costo_estimado_moneda")]
+    [Column("id_costo_estimado_moneda")]
     [MaxLength(3)]
-    public string MonedaCostoEstimado { get; set; } = "";
+    public string IdMonedaCostoEstimado { get; set; } = "";
     [Column("costo_estimado_tipo_cambio")]
     [Precision(20, 3)]
     public decimal TipoCambioCostoEstimado { get; set; } = 0.0M;
@@ -77,24 +77,12 @@ public class Publicacion
     [Column("costo_real_traslado")]
     [Precision(20, 3)]
     public decimal CostoRealTraslado { get; set; } = 0.0M;
-    [Column("moneda_costo_real")]
+    [Column("id_moneda_costo_real")]
     [MaxLength(3)]
-    public string MonedaCostoReal { get; set; } = "";
+    public string IdMonedaCostoReal { get; set; } = "";
     [Column("tipo_cambio_costo_real")]
     [Precision(20, 3)]
     public decimal TipoCambioCostoReal { get; set; } = 0.0M;
-    [Column("id_creador")]
-    public Guid IdCreador { get; set; }
-    [Column("fecha_creacion")]
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-    [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
-    [Column("fecha_modificacion")]
-    public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
-    [Column("activo")]
-    public bool? Activo { get; set; } = true;
-    [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Varios? EstatusPublicacion { get; set; }
@@ -105,9 +93,9 @@ public class Publicacion
     [JsonIgnore]
     public virtual Proyecto? Proyecto { get; set; }
     [JsonIgnore]
-    public virtual Usuario? Creador { get; set; }
+    public virtual Moneda? MonedaCostoEstimado { get; set; }
     [JsonIgnore]
-    public virtual Usuario? Modificador { get; set; }
+    public virtual Moneda? MonedaCostoReal { get; set; }
     [JsonIgnore]
     public virtual ICollection<Chat>? Chats { get; set; }
     [JsonIgnore]

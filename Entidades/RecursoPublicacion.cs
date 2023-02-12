@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Entidades;
 
-public class RecursoPublicacion
+public class RecursoPublicacion : Entidad
 {
     [Column("id")]
     [Key]
@@ -31,18 +31,6 @@ public class RecursoPublicacion
     public DateTime? FechaExpiracion { get; set; } = null;
     [Column("tamano")]
     public long Tamaño { get; set; } = 0;
-    [Column("id_creador")]
-    public Guid IdCreador { get; set; }
-    [Column("fecha_creacion")]
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-    [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
-    [Column("fecha_modificacion")]
-    public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
-    [Column("activo")]
-    public bool? Activo { get; set; } = true;
-    [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
 
     [JsonIgnore]
     public virtual Varios? TipoCatalogo { get; set; }
@@ -54,8 +42,4 @@ public class RecursoPublicacion
     public virtual Usuario? Usuario { get; set; }
     [JsonIgnore]
     public virtual Varios? EstatusRecurso { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Creador { get; set; }
-    [JsonIgnore]
-    public virtual Usuario? Modificador { get; set; }
 }
