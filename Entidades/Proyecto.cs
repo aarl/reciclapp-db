@@ -46,14 +46,14 @@ public class Proyecto : Entidad
     public decimal Evaluacion { get; set; }
     [Column("id_ruta_proyecto")]
     public int IdRutaProyecto { get; set; }
-    [Column("fase_actual")]
-    public int FaseActual { get; set; }
-    [Column("fase_anterior")]
-    public int FaseAnterior { get; set; }
-    [Column("fase_siguiente")]
-    public int FaseSiguiente { get; set; }
+    // [Column("id_fase_actual")]
+    // public int IdFaseActual { get; set; }
+    [Column("id_fase_anterior")]
+    public int IdFaseAnterior { get; set; }
+    [Column("id_fase_siguiente")]
+    public int IdFaseSiguiente { get; set; }
     [Column("fecha_disponible")]
-    public DateTime FechaDisponible { get; set; }
+    public DateTime? FechaDisponible { get; set; }
     [Column("total_articulos")]
     [Precision(10, 2)]
     public decimal TotalArticulos { get; set; }
@@ -86,6 +86,10 @@ public class Proyecto : Entidad
     public virtual Varios? TipoProyecto { get; set; }
     [JsonIgnore]
     public virtual Varios? RutaProyecto { get; set; }
+    [JsonIgnore]
+    public virtual Varios? FaseAnterior { get; set; }
+    [JsonIgnore]
+    public virtual Varios? FaseSiguiente { get; set; }
     [JsonIgnore]
     public virtual Usuario? RevisadaPor { get; set; }
     [JsonIgnore]

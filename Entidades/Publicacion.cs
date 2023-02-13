@@ -18,42 +18,50 @@ public class Publicacion : Entidad
     public string Descripcion { get; set; } = "";
     [Column("fecha")]
     public DateTime Fecha { get; set; } = DateTime.UtcNow;
+    [Column("consecutivo")]
+    public int Consecutivo { get; set; } = 1;       // Tomar de tabla 'secuencias'
+    [Column("publicador")]
+    public Guid IdPublicador { get; set; }
     [Column("gustan")]
     public int Gustan { get; set; } = 0;
     [Column("no_gustan")]
     public int NoGustan { get; set; } = 0;
     [Column("id_estatus_publicacion")]
-    public Guid IdEstatusPublicacion { get; set; }
+    public int IdEstatusPublicacion { get; set; }
+    [Column("id_fase_publicacion")]
+    public int IdFasePublicacion { get; set; }       // 0 = iniciada, 10 = Subida, 20 = En revision, 30 = Con observaciones, 100 = Aprobada, 200 = Vencida, etc.
     [Column("id_tipo_publicacion")]
-    public Guid IdTipoPublicacion { get; set; }
-    [Column("fase")]
-    public int Fase { get; set; } = 0;  // 0 = iniciada, 10 = Subida, 20 = En revision, 30 = Con observaciones, 100 = Aprobada, 200 = Vencida, etc.
+    public int IdTipoPublicacion { get; set; }
+    [Column("id_clase_publicacion")]
+    public int IdClasePublicacion { get; set; }
     [Column("revisada_por")]
-    public Guid IdRevisadoPor { get; set; }
-    [Column("imagen_principal")]
+    public Guid IdRevisadaPor { get; set; }
+    [Column("id_imagen_principal")]
     public Guid IdImagenPrincipal { get; set; }
     [Column("tiempo_estimado")]
     public int TiempoEstimado { get; set; } = 0;
     [Column("posicionamiento")]
     public int Posicionamiento { get; set; } = 0;
+    [Column("secuencia")]
+    public int Secuencia { get; set; }
     [Column("vistas")]
     public int Vistas { get; set; }
     [Column("evaluacion")]
     [Precision(2, 1)]
     public decimal Evaluacion { get; set; } = 0.0M;
-    [Column("ultima_direccion_ip")]
+    [Column("direccion_ip_creacion")]
     [MaxLength(20)]
-    public string UltimaDireccionIP { get; set; } = "";
+    public string DireccionIPCreacion { get; set; } = "";
     [Column("dispositivo")]
     public string Dispositivo { get; set; } = "";
     [Column("direccion")]
     [MaxLength(200)]
     public string Direccion { get; set; } = "";
-    [Column("direccion_referencias")]
+    [Column("referencias_direccion")]
     [MaxLength(100)]
-    public string DireccionReferencias { get; set; } = "";
+    public string ReferenciasDireccion { get; set; } = "";
     [Column("fecha_disponible")]
-    public DateTime FechaDisponible { get; set; }
+    public DateTime? FechaDisponible { get; set; }
     [Column("total_articulos")]
     [Precision(10, 2)]
     public int TotalArticulos { get; set; } = 0;
@@ -62,10 +70,10 @@ public class Publicacion : Entidad
     [Column("costo_estimado")]
     [Precision(20, 3)]
     public decimal CostoEstimado { get; set; } = 0.0M;
-    [Column("id_costo_estimado_moneda")]
+    [Column("id_moneda_costo_estimado")]
     [MaxLength(3)]
     public string IdMonedaCostoEstimado { get; set; } = "";
-    [Column("costo_estimado_tipo_cambio")]
+    [Column("tipo_cambio_costo_estimado")]
     [Precision(20, 3)]
     public decimal TipoCambioCostoEstimado { get; set; } = 0.0M;
     [Column("costo_real")]
@@ -85,11 +93,17 @@ public class Publicacion : Entidad
     public decimal TipoCambioCostoReal { get; set; } = 0.0M;
 
     [JsonIgnore]
+    public virtual Usuario? Publicador { get; set; }
+    [JsonIgnore]
     public virtual Varios? EstatusPublicacion { get; set; }
+    [JsonIgnore]
+    public virtual Varios? FasePublicacion { get; set; }
     [JsonIgnore]
     public virtual Varios? TipoPublicacion { get; set; }
     [JsonIgnore]
-    public virtual Usuario? RevisadoPor { get; set; }
+    public virtual Varios? ClasePublicacion { get; set; }
+    [JsonIgnore]
+    public virtual Usuario? RevisadaPor { get; set; }
     [JsonIgnore]
     public virtual Proyecto? Proyecto { get; set; }
     [JsonIgnore]

@@ -37,8 +37,10 @@ public class Usuario : Persona
     [Column("estatus")]
     [MaxLength(2)]
     public string Estatus { get; set; } = "";
-    [Column("verificado")]
-    public int Verificado { get; set; } = 0;      // 0 = Normal, 1 = Verificado
+    [Column("id_tipo_usuario")]
+    public int IdTipoUsuario { get; set; } = 0;      // 0 = Normal, 1 = Verificado
+    [Column("id_rol")]
+    public int IdRol { get; set; }      // Publicador, evaluador, proyectista, orfebre, etc...
     [Column("ultima_ip")]
     [MaxLength(20)]
     public string UltimaIP { get; set; } = "";
@@ -49,6 +51,10 @@ public class Usuario : Persona
     public virtual Varios? Grupo { get; set; }
     [JsonIgnore]
     public virtual Varios? Profesion { get; set; }
+    [JsonIgnore]
+    public virtual Varios? Tipousuario { get; set; }
+    [JsonIgnore]
+    public virtual Varios? Rol { get; set; }
     [JsonIgnore]
     public virtual ICollection<Comentario>? Comentarios { get; set; }
     [JsonIgnore]

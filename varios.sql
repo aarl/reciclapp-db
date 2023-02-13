@@ -26,7 +26,7 @@ values
 insert into tablas
     (id, descripcion, id_creador, id_modificador)
 values
-    ('T-ACTPRY', 'Tabla de actividades por proyecto', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4');
+    ('T-ACTVPRY', 'Tabla de actividades por proyecto', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4');
 insert into tablas
     (id, descripcion, id_creador, id_modificador)
 values
@@ -70,7 +70,7 @@ values
 insert into tablas
     (id, descripcion, id_creador, id_modificador)
 values
-    ('T-SECUENS', 'Tabla de secuencias', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4');
+    ('T-SECUEN', 'Tabla de secuencias', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4', '135d7f81-0b3e-4176-aef6-c07b9d5d60a4');
 insert into tablas
     (id, descripcion, id_creador, id_modificador)
 values

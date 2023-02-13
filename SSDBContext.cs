@@ -110,7 +110,7 @@ public class SSDBContext : DbContext
            .HasDefaultValue(0.0);
 
         mb.Entity<ActividadProyecto>()
-           .Property(c => c.MonedaCostoEstimado)
+           .Property(c => c.IdMonedaCostoEstimado)
            .HasDefaultValueSql("''");
 
         mb.Entity<ActividadProyecto>()
@@ -122,7 +122,7 @@ public class SSDBContext : DbContext
            .HasDefaultValue(0.0);
 
         mb.Entity<ActividadProyecto>()
-           .Property(c => c.MonedaCostoReal)
+           .Property(c => c.IdMonedaCostoReal)
            .HasDefaultValueSql("''");
 
         mb.Entity<ActividadProyecto>()
@@ -469,8 +469,64 @@ public class SSDBContext : DbContext
             .HasDefaultValue(0);
 
         mb.Entity<Publicacion>()
+            .Property(c => c.TiempoEstimado)
+            .HasDefaultValue(0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.Posicionamiento)
+            .HasDefaultValue(0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.Vistas)
+            .HasDefaultValue(0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.Evaluacion)
+            .HasDefaultValue(0.0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.DireccionIPCreacion)
+            .HasDefaultValueSql("''");
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.Direccion)
+            .HasDefaultValueSql("''");
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.ReferenciasDireccion)
+            .HasDefaultValueSql("''");
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.TotalArticulos)
+            .HasDefaultValue(0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.CostoEstimado)
+            .HasDefaultValue(0.0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.TipoCambioCostoEstimado)
+            .HasDefaultValue(0.0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.CostoReal)
+            .HasDefaultValue(0.0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.MontoInversion)
+            .HasDefaultValue(0.0);
+
+        mb.Entity<Publicacion>()
              .Property(c => c.FechaCreacion)
              .HasDefaultValueSql("getutcdate()");
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.CostoRealTraslado)
+            .HasDefaultValue(0.0);
+
+        mb.Entity<Publicacion>()
+            .Property(c => c.TipoCambioCostoReal)
+            .HasDefaultValue(0.0);
 
         mb.Entity<Publicacion>()
             .Property(c => c.FechaModificacion)
@@ -1033,6 +1089,18 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Proyecto>()
+            .HasOne(p => p.FaseAnterior)
+            .WithMany()
+            .HasForeignKey(p => p.IdFaseAnterior)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Proyecto>()
+            .HasOne(p => p.FaseSiguiente)
+            .WithMany()
+            .HasForeignKey(p => p.IdFaseSiguiente)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Proyecto>()
             .HasOne(p => p.EstatusPublicacion)
             .WithMany()
             .HasForeignKey(p => p.IdEstatusPublicacion)
@@ -1108,9 +1176,27 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Publicacion>()
+            .HasOne(p => p.Publicador)
+            .WithMany()
+            .HasForeignKey(p => p.IdPublicador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
             .HasOne(p => p.EstatusPublicacion)
             .WithMany()
             .HasForeignKey(p => p.IdEstatusPublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.FasePublicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdFasePublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.ClasePublicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdClasePublicacion)
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Publicacion>()
@@ -1120,9 +1206,9 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Publicacion>()
-            .HasOne(p => p.RevisadoPor)
+            .HasOne(p => p.RevisadaPor)
             .WithMany()
-            .HasForeignKey(p => p.IdRevisadoPor)
+            .HasForeignKey(p => p.IdRevisadaPor)
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Publicacion>()
@@ -1159,6 +1245,36 @@ public class SSDBContext : DbContext
     private void RastreoPublicacionRelaciones(ModelBuilder mb)
     {
         mb.Entity<RastreoPublicacion>()
+            .HasOne(p => p.Publicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdPublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<RastreoPublicacion>()
+            .HasOne(p => p.FasePublicacion)
+            .WithMany()
+            .HasForeignKey(p => p.IdFasePublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<RastreoPublicacion>()
+            .HasOne(p => p.FaseAnterior)
+            .WithMany()
+            .HasForeignKey(p => p.IdFaseAnterior)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<RastreoPublicacion>()
+            .HasOne(p => p.FaseSiguiente)
+            .WithMany()
+            .HasForeignKey(p => p.IdFaseSiguiente)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<RastreoPublicacion>()
+            .HasOne(p => p.Usuario)
+            .WithMany()
+            .HasForeignKey(p => p.IdUsuario)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<RastreoPublicacion>()
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
@@ -1169,18 +1285,6 @@ public class SSDBContext : DbContext
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
             .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<RastreoPublicacion>()
-            .HasOne(p => p.Publicacion)
-            .WithMany()
-            .HasForeignKey(p => p.IdPublicacion)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<RastreoPublicacion>()
-            .HasOne(p => p.Usuario)
-            .WithMany()
-            .HasForeignKey(p => p.IdUsuario)
-            .OnDelete(DeleteBehavior.NoAction);
     }
 
     private void RecursoPublicacionRelaciones(ModelBuilder mb)
@@ -1189,12 +1293,6 @@ public class SSDBContext : DbContext
             .HasOne(p => p.TipoCatalogo)
             .WithMany()
             .HasForeignKey(p => p.IdTipoCatalogo)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<RecursoPublicacion>()
-            .HasOne(p => p.Secuencia)
-            .WithMany()
-            .HasForeignKey(p => p.IdSecuencia)
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<RecursoPublicacion>()
@@ -1276,6 +1374,12 @@ public class SSDBContext : DbContext
           .HasOne(p => p.Profesion)
           .WithMany()
           .HasForeignKey(p => p.IdProfesion)
+          .OnDelete(DeleteBehavior.ClientNoAction);
+
+        mb.Entity<Usuario>()
+          .HasOne(p => p.Rol)
+          .WithMany()
+          .HasForeignKey(p => p.IdRol)
           .OnDelete(DeleteBehavior.ClientNoAction);
 
         mb.Entity<Usuario>()

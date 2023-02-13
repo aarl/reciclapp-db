@@ -16,7 +16,6 @@ public class ActividadRutaProyecto : Entidad
     public string Descripcion { get; set; } = "";
     [Column("secuencia")]
     public int Secuencia { get; set; } = 1;
-    [Column("id_creador")]
 
     [JsonIgnore]
     public virtual Varios? RutaProyecto { get; set; }
