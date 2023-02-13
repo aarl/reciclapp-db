@@ -5,11 +5,12 @@ namespace Entidades;
 
 public class Entidad
 {
-    public Guid IdCreador { get; set; }
+    [Column("id_creador")]
+    public Guid? IdCreador { get; set; }
     [Column("fecha_creacion")]
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     [Column("id_modificador")]
-    public Guid IdModificador { get; set; }
+    public Guid? IdModificador { get; set; }
     [Column("fecha_modificacion")]
     public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
     [Column("activo")]

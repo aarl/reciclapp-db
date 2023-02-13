@@ -7,7 +7,6 @@ public class SSDBContext : DbContext
 {
     public DbSet<ActividadProyecto> ActividadesProyectos { get; set; } = null!;
     public DbSet<ActividadRutaProyecto> ActividadesRutasProyectos { get; set; } = null!;
-    public DbSet<Administrador> Administradores { get; set; } = null!;
     public DbSet<BitacoraProyecto> BitacorasProyectos { get; set; } = null!;
     public DbSet<Chat> Chats { get; set; } = null!;
     public DbSet<Comentario> Comentarios { get; set; } = null!;
@@ -29,7 +28,6 @@ public class SSDBContext : DbContext
         // Valores por defecto
         ActividadProyectoValoresPorDefecto(mb);
         ActividadRutaProyectoValoresPorDefecto(mb);
-        AdministradorValoresPorDefecto(mb);
         BitacoraProyectoValoresPorDefecto(mb);
         ChatValoresPorDefecto(mb);
         ComentarioValoresPorDefecto(mb);
@@ -50,7 +48,6 @@ public class SSDBContext : DbContext
         // Relaciones
         ActividadProyectoRelaciones(mb);
         ActividadRutaProyectoRelaciones(mb);
-        AdministradorRelaciones(mb);
         BitacoraProyectoRelaciones(mb);
         ChatRelaciones(mb);
         ComentarioRelaciones(mb);
@@ -173,37 +170,6 @@ public class SSDBContext : DbContext
             .HasDefaultValueSql("1");
 
         mb.Entity<ActividadRutaProyecto>()
-            .Property(c => c.VersionAPI)
-            .HasDefaultValueSql("''");
-    }
-
-    private void AdministradorValoresPorDefecto(ModelBuilder mb)
-    {
-        mb.Entity<Administrador>()
-           .Property(c => c.Id)
-           .HasDefaultValueSql("newid()");
-
-        mb.Entity<Administrador>()
-            .Property(c => c.Nombre)
-            .HasDefaultValueSql("''");
-
-        mb.Entity<Administrador>()
-            .Property(c => c.Telefono)
-            .HasDefaultValueSql("''");
-
-        mb.Entity<Administrador>()
-             .Property(c => c.Email)
-             .HasDefaultValueSql("''");
-
-        mb.Entity<Administrador>()
-            .Property(c => c.FechaRegistro)
-            .HasDefaultValueSql("getutcdate()");
-
-        mb.Entity<Administrador>()
-            .Property(c => c.Activo)
-            .HasDefaultValueSql("1");
-
-        mb.Entity<Administrador>()
             .Property(c => c.VersionAPI)
             .HasDefaultValueSql("''");
     }
@@ -696,6 +662,10 @@ public class SSDBContext : DbContext
             .HasDefaultValueSql("''");
 
         mb.Entity<Usuario>()
+            .Property(c => c.IdCiudad)
+            .HasDefaultValueSql("null");
+
+        mb.Entity<Usuario>()
             .Property(c => c.Direccion)
             .HasDefaultValueSql("''");
 
@@ -722,6 +692,18 @@ public class SSDBContext : DbContext
         mb.Entity<Usuario>()
             .Property(c => c.IdProfesion)
             .HasDefaultValueSql("null");
+
+        mb.Entity<Usuario>()
+            .Property(c => c.Estatus)
+            .HasDefaultValueSql("''");
+
+        mb.Entity<Usuario>()
+            .Property(c => c.IdRol)
+            .HasDefaultValueSql("null");
+
+        mb.Entity<Usuario>()
+            .Property(c => c.UltimaIP)
+            .HasDefaultValueSql("''");
 
         mb.Entity<Usuario>()
             .Property(c => c.IdCreador)
@@ -780,12 +762,6 @@ public class SSDBContext : DbContext
     {
         mb.Entity<ActividadRutaProyecto>()
             .HasIndex(p => p.Descripcion).IsUnique();
-
-        mb.Entity<Administrador>()
-            .HasIndex(p => p.Nombre).IsUnique();
-
-        mb.Entity<Administrador>()
-            .HasIndex(p => p.Email).IsUnique();
 
         mb.Entity<Chat>()
             .HasIndex(p => p.Titulo).IsUnique();
@@ -912,27 +888,6 @@ public class SSDBContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<ActividadRutaProyecto>()
-            .HasOne(p => p.Modificador)
-            .WithMany()
-            .HasForeignKey(p => p.IdModificador)
-            .OnDelete(DeleteBehavior.NoAction);
-    }
-
-    private void AdministradorRelaciones(ModelBuilder mb)
-    {
-        mb.Entity<Administrador>()
-          .HasOne(p => p.Grupo)
-          .WithMany()
-          .HasForeignKey(p => p.IdGrupo)
-          .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<Administrador>()
-            .HasOne(p => p.Creador)
-            .WithMany()
-            .HasForeignKey(p => p.IdCreador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        mb.Entity<Administrador>()
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)

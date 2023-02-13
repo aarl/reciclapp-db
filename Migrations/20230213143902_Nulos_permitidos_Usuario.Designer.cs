@@ -4,6 +4,7 @@ using DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace reciclapp.db.Migrations
 {
     [DbContext(typeof(SSDBContext))]
-    partial class SSDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230213143902_Nulos_permitidos_Usuario")]
+    partial class Nulos_permitidos_Usuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,8 +102,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_actividad_ruta");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEjecutor")
                         .HasColumnType("uniqueidentifier")
@@ -268,8 +269,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -349,8 +349,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_actividad_proyecto");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -425,8 +424,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -506,8 +504,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_comentario");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -578,8 +575,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -654,7 +650,6 @@ namespace reciclapp.db.Migrations
                     b.Property<Guid?>("IdCreador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador")
                         .HasDefaultValueSql("null");
 
                     b.Property<Guid?>("IdModificador")
@@ -763,8 +758,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("gustan");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("IdEstatusProyecto")
                         .HasColumnType("int")
@@ -1026,8 +1020,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_clase_publicacion");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("IdEstatusPublicacion")
                         .HasColumnType("int")
@@ -1224,8 +1217,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("IdFaseAnterior")
                         .HasColumnType("int")
@@ -1324,8 +1316,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_catalogo");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("IdEstatusRecurso")
                         .HasColumnType("int")
@@ -1422,8 +1413,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -1498,8 +1488,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
@@ -1583,11 +1572,9 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Estatus")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)")
-                        .HasColumnName("estatus")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("estatus");
 
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
@@ -1610,7 +1597,6 @@ namespace reciclapp.db.Migrations
                     b.Property<Guid?>("IdCreador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador")
                         .HasDefaultValueSql("null");
 
                     b.Property<int?>("IdGrupo")
@@ -1635,7 +1621,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_rol")
                         .HasDefaultValueSql("null");
 
-                    b.Property<int?>("IdTipoUsuario")
+                    b.Property<int>("IdTipoUsuario")
                         .HasColumnType("int")
                         .HasColumnName("id_tipo_usuario");
 
@@ -1689,11 +1675,9 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("UltimaIP")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
-                        .HasColumnName("ultima_ip")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("ultima_ip");
 
                     b.Property<string>("VersionAPI")
                         .IsRequired()
@@ -1762,8 +1746,7 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdModificador")
                         .HasColumnType("uniqueidentifier")
