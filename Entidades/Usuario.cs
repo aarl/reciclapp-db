@@ -18,10 +18,10 @@ public class Usuario : Entidad
     public string Apellido { get; set; } = "";
     [Column("segundo_nombre")]
     [MaxLength(50, ErrorMessage = "El segundo nombre no debe exceder los 50 caracteres")]
-    public string Nombre2 { get; set; } = "";
+    public string SegundoNombre { get; set; } = "";
     [Column("segundo_apellido")]
     [MaxLength(50, ErrorMessage = "El segundo apellido no debe exceder los 50 caracteres")]
-    public string Apellido2 { get; set; } = "";
+    public string SegundoApellido { get; set; } = "";
     [Column("perfil")]
     [MaxLength(200, ErrorMessage = "La descripción del perfil no debe exceder los 200 caracteres")]
     public string Perfil { get; set; } = "";

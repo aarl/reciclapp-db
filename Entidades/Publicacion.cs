@@ -19,8 +19,8 @@ public class Publicacion : Entidad
     [Column("fecha")]
     public DateTime Fecha { get; set; } = DateTime.UtcNow;
     [Column("consecutivo")]
-    public int Consecutivo { get; set; } = 1;       // Tomar de tabla 'secuencias'
-    [Column("publicador")]
+    public long Consecutivo { get; set; } = 1;       // Tomar de tabla 'secuencias'
+    [Column("id_publicador")]
     public Guid IdPublicador { get; set; }
     [Column("gustan")]
     public int Gustan { get; set; } = 0;
@@ -64,7 +64,7 @@ public class Publicacion : Entidad
     public DateTime? FechaDisponible { get; set; }
     [Column("total_articulos")]
     [Precision(10, 2)]
-    public int TotalArticulos { get; set; } = 0;
+    public decimal TotalArticulos { get; set; } = 0;
     [Column("id_proyecto")]
     public Guid IdProyecto { get; set; }
     [Column("costo_estimado")]
@@ -104,6 +104,8 @@ public class Publicacion : Entidad
     public virtual Varios? ClasePublicacion { get; set; }
     [JsonIgnore]
     public virtual Usuario? RevisadaPor { get; set; }
+    [JsonIgnore]
+    public virtual RecursoPublicacion? ImagenPrincipal { get; set; }
     [JsonIgnore]
     public virtual Proyecto? Proyecto { get; set; }
     [JsonIgnore]

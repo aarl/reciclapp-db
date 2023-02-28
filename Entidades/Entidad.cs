@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Entidades;
 
-public class Entidad
+public abstract class Entidad
 {
     [Column("id_creador")]
     public Guid? IdCreador { get; set; }

@@ -646,7 +646,7 @@ public class SSDBContext : DbContext
             .HasDefaultValueSql("''");
 
         mb.Entity<Usuario>()
-            .Property(c => c.Nombre2)
+            .Property(c => c.SegundoNombre)
             .HasDefaultValueSql("''");
 
         mb.Entity<Usuario>()
@@ -654,7 +654,7 @@ public class SSDBContext : DbContext
             .HasDefaultValueSql("''");
 
         mb.Entity<Usuario>()
-            .Property(c => c.Apellido2)
+            .Property(c => c.SegundoApellido)
             .HasDefaultValueSql("''");
 
         mb.Entity<Usuario>()
@@ -781,8 +781,11 @@ public class SSDBContext : DbContext
         mb.Entity<Publicacion>()
             .HasIndex(p => p.Titulo).IsUnique();
 
+        mb.Entity<Secuencia>()
+            .HasIndex(p => p.Prefijo).IsUnique();
+
         mb.Entity<Usuario>()
-            .HasIndex(p => new { p.Nombre, p.Nombre2, p.Apellido, p.Apellido2 }).IsUnique();
+            .HasIndex(p => new { p.Nombre, p.SegundoNombre, p.Apellido, p.SegundoApellido }).IsUnique();
 
         mb.Entity<Usuario>()
             .HasIndex(p => p.Email).IsUnique();
@@ -1164,6 +1167,12 @@ public class SSDBContext : DbContext
             .HasOne(p => p.RevisadaPor)
             .WithMany()
             .HasForeignKey(p => p.IdRevisadaPor)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<Publicacion>()
+            .HasOne(p => p.ImagenPrincipal)
+            .WithMany()
+            .HasForeignKey(p => p.IdImagenPrincipal)
             .OnDelete(DeleteBehavior.NoAction);
 
         mb.Entity<Publicacion>()

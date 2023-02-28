@@ -7,7 +7,7 @@ namespace Entidades;
 [Table("rastreo_publicaciones")]
 public class RastreoPublicacion : Entidad
 {
-    [Column("Id")]
+    [Column("id")]
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
     [Column("id_publicacion")]
