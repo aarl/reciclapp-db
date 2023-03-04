@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace reciclapp.db.Migrations
 {
     [DbContext(typeof(SSDBContext))]
-    [Migration("20230222185558_Inicial")]
-    partial class Inicial
+    [Migration("20230303200843_Creacion_db")]
+    partial class Creacion_db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,29 +43,27 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_estimado");
+                        .HasColumnName("costo_estimado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("CostoReal")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_real");
+                        .HasColumnName("costo_real")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("descripcion");
 
                     b.Property<decimal>("Evaluacion")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(2, 1)
                         .HasColumnType("decimal(2,1)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("evaluacion");
+                        .HasColumnName("evaluacion")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
@@ -77,19 +75,17 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha_disponible")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<DateTime?>("FechaFinalizacion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha_finalizacion")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<DateTime>("FechaInicio")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasColumnName("fecha_inicio")
-                        .HasDefaultValueSql("getutcdate()");
+                        .HasColumnName("fecha_inicio");
 
                     b.Property<DateTime>("FechaModificacion")
                         .ValueGeneratedOnAdd()
@@ -102,12 +98,16 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_actividad_ruta");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
-                    b.Property<Guid>("IdEjecutor")
+                    b.Property<Guid?>("IdEjecutor")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_ejecutor");
+                        .HasColumnName("id_ejecutor")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdEstatusProyecto")
                         .HasColumnType("int")
@@ -118,34 +118,38 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_estatus_publicacion");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<string>("IdMonedaCostoEstimado")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)")
-                        .HasColumnName("id_moneda_costo_estimado")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("id_moneda_costo_estimado");
 
                     b.Property<string>("IdMonedaCostoReal")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)")
-                        .HasColumnName("id_moneda_costo_real")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("id_moneda_costo_real");
 
                     b.Property<Guid>("IdProyecto")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_proyecto");
 
                     b.Property<Guid?>("IdRevisadaPor")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_revisada_por");
+                        .HasColumnName("id_revisada_por")
+                        .HasDefaultValueSql("NULL");
 
-                    b.Property<Guid>("IdRevisor")
+                    b.Property<Guid?>("IdRevisor")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_revisor");
+                        .HasColumnName("id_revisor")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdRutaProyecto")
                         .HasColumnType("int")
@@ -158,11 +162,8 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("ProgresoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("progreso_estimado");
-
-                    b.Property<Guid?>("ProyectoId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("progreso_estimado")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("Secuencia")
                         .HasColumnType("int")
@@ -171,34 +172,35 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("TiempoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("tiempo_estimado");
+                        .HasColumnName("tiempo_estimado")
+                        .HasDefaultValueSql("0");
 
                     b.Property<decimal>("TipoCambioCostoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio_costo_estimado");
+                        .HasColumnName("tipo_cambio_costo_estimado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("TipoCambioCostoReal")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio_costo_real");
+                        .HasColumnName("tipo_cambio_costo_real")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("TotalArticulos")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("total_articulos");
+                        .HasColumnName("total_articulos")
+                        .HasDefaultValueSql("1");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -230,8 +232,6 @@ namespace reciclapp.db.Migrations
 
                     b.HasIndex("IdTipoActividad");
 
-                    b.HasIndex("ProyectoId");
-
                     b.ToTable("actividades_proyectos");
                 });
 
@@ -253,6 +253,7 @@ namespace reciclapp.db.Migrations
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("descripcion")
                         .HasDefaultValueSql("''");
@@ -284,13 +285,14 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("Secuencia")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1)
-                        .HasColumnName("secuencia");
+                        .HasColumnName("secuencia")
+                        .HasDefaultValueSql("1");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -351,12 +353,16 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_actividad_proyecto");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid>("IdProyecto")
                         .HasColumnType("uniqueidentifier")
@@ -370,10 +376,11 @@ namespace reciclapp.db.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_usuario");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -440,16 +447,15 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)")
-                        .HasColumnName("titulo")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("titulo");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -503,9 +509,11 @@ namespace reciclapp.db.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_chat");
 
-                    b.Property<Guid?>("IdComentario")
+                    b.Property<Guid?>("IdCita")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_comentario");
+                        .HasColumnName("id_cita")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdCreador")
                         .HasColumnType("uniqueidentifier")
@@ -521,15 +529,14 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Texto")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("comentario")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("texto");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -537,7 +544,7 @@ namespace reciclapp.db.Migrations
 
                     b.HasIndex("IdChat");
 
-                    b.HasIndex("IdComentario");
+                    b.HasIndex("IdCita");
 
                     b.HasIndex("IdCreador");
 
@@ -597,13 +604,14 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio");
+                        .HasColumnName("tipo_cambio")
+                        .HasDefaultValueSql("0.0");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -657,22 +665,23 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_creador")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_modificador")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdRol")
                         .HasColumnType("int")
                         .HasColumnName("id_rol");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -710,29 +719,27 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_estimado");
+                        .HasColumnName("costo_estimado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("CostoReal")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_real");
+                        .HasColumnName("costo_real")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("descripcion");
 
                     b.Property<decimal>("Evaluacion")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(2, 1)
                         .HasColumnType("decimal(2,1)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("evaluacion");
+                        .HasColumnName("evaluacion")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
@@ -744,13 +751,11 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha_disponible")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<DateTime>("FechaInicio")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasColumnName("fecha_inicio")
-                        .HasDefaultValueSql("getutcdate()");
+                        .HasColumnName("fecha_inicio");
 
                     b.Property<DateTime>("FechaModificacion")
                         .ValueGeneratedOnAdd()
@@ -761,12 +766,14 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("Gustan")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("gustan");
+                        .HasColumnName("gustan")
+                        .HasDefaultValueSql("0");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdEstatusProyecto")
                         .HasColumnType("int")
@@ -776,47 +783,55 @@ namespace reciclapp.db.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_estatus_publicacion");
 
-                    b.Property<int>("IdFaseAnterior")
+                    b.Property<int?>("IdFaseAnterior")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id_fase_anterior");
+                        .HasColumnName("id_fase_anterior")
+                        .HasDefaultValueSql("NULL");
 
-                    b.Property<int>("IdFaseSiguiente")
+                    b.Property<int?>("IdFaseSiguiente")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id_fase_siguiente");
+                        .HasColumnName("id_fase_siguiente")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid>("IdGerente")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_gerente");
 
-                    b.Property<Guid>("IdImagenPrincipal")
+                    b.Property<Guid?>("IdImagenPrincipal")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_imagen_principal");
+                        .HasColumnName("id_imagen_principal")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<string>("IdMonedaCostoEstimado")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)")
-                        .HasColumnName("id_moneda_costo_estimado")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("id_moneda_costo_estimado");
 
                     b.Property<string>("IdMonedaCostoReal")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)")
-                        .HasColumnName("id_moneda_costo_real")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("id_moneda_costo_real");
 
                     b.Property<Guid>("IdRevisadaPor")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_revisada_por");
 
-                    b.Property<Guid>("IdRevisor")
+                    b.Property<Guid?>("IdRevisor")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_revisor");
+                        .HasColumnName("id_revisor")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdRutaProyecto")
                         .HasColumnType("int")
@@ -829,59 +844,59 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("NoGustan")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("no_gustan");
+                        .HasColumnName("no_gustan")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("ProgresoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("progreso_estimado");
+                        .HasColumnName("progreso_estimado")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("ProgresoReal")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("progreso_real");
+                        .HasColumnName("progreso_real")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("TiempoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("tiempo_estimado");
+                        .HasColumnName("tiempo_estimado")
+                        .HasDefaultValueSql("0");
 
                     b.Property<decimal>("TipoCambioCostoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio_costo_estimado");
+                        .HasColumnName("tipo_cambio_costo_estimado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("TipoCambioCostoReal")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio_costo_real");
+                        .HasColumnName("tipo_cambio_costo_real")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("titulo")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("titulo");
 
                     b.Property<decimal>("TotalArticulos")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("total_articulos");
+                        .HasColumnName("total_articulos")
+                        .HasDefaultValueSql("1");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -943,29 +958,27 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_estimado");
+                        .HasColumnName("costo_estimado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("CostoReal")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_real");
+                        .HasColumnName("costo_real")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("CostoRealTraslado")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("costo_real_traslado");
+                        .HasColumnName("costo_real_traslado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("descripcion");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -975,7 +988,7 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("direccion")
                         .HasDefaultValueSql("''");
 
-                    b.Property<string>("DireccionIPCreacion")
+                    b.Property<string>("DireccionIpCreacion")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
@@ -985,15 +998,16 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Dispositivo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(1)
+                        .HasColumnType("nvarchar(1)")
                         .HasColumnName("dispositivo");
 
                     b.Property<decimal>("Evaluacion")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(2, 1)
                         .HasColumnType("decimal(2,1)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("evaluacion");
+                        .HasColumnName("evaluacion")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<DateTime>("Fecha")
                         .ValueGeneratedOnAdd()
@@ -1008,8 +1022,10 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<DateTime?>("FechaDisponible")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasColumnName("fecha_disponible");
+                        .HasColumnName("fecha_disponible")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<DateTime>("FechaModificacion")
                         .ValueGeneratedOnAdd()
@@ -1020,16 +1036,18 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("Gustan")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("gustan");
+                        .HasColumnName("gustan")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("IdClasePublicacion")
                         .HasColumnType("int")
                         .HasColumnName("id_clase_publicacion");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdEstatusPublicacion")
                         .HasColumnType("int")
@@ -1039,13 +1057,17 @@ namespace reciclapp.db.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_fase_publicacion");
 
-                    b.Property<Guid>("IdImagenPrincipal")
+                    b.Property<Guid?>("IdImagenPrincipal")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_imagen_principal");
+                        .HasColumnName("id_imagen_principal")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<string>("IdMonedaCostoEstimado")
                         .IsRequired()
@@ -1059,17 +1081,21 @@ namespace reciclapp.db.Migrations
                         .HasColumnType("nvarchar(3)")
                         .HasColumnName("id_moneda_costo_real");
 
-                    b.Property<Guid>("IdProyecto")
+                    b.Property<Guid?>("IdProyecto")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_proyecto");
+                        .HasColumnName("id_proyecto")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid>("IdPublicador")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("publicador");
+                        .HasColumnName("id_publicador");
 
-                    b.Property<Guid>("IdRevisadaPor")
+                    b.Property<Guid?>("IdRevisadaPor")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("revisada_por");
+                        .HasColumnName("id_revisada_por")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdTipoPublicacion")
                         .HasColumnType("int")
@@ -1079,20 +1105,20 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("monto_inversion");
+                        .HasColumnName("monto_inversion")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<int>("NoGustan")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("no_gustan");
+                        .HasColumnName("no_gustan")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("Posicionamiento")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("posicionamiento");
+                        .HasColumnName("posicionamiento")
+                        .HasDefaultValueSql("0");
 
                     b.Property<string>("ReferenciasDireccion")
                         .IsRequired()
@@ -1109,50 +1135,48 @@ namespace reciclapp.db.Migrations
                     b.Property<int>("TiempoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("tiempo_estimado");
+                        .HasColumnName("tiempo_estimado")
+                        .HasDefaultValueSql("0");
 
                     b.Property<decimal>("TipoCambioCostoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio_costo_estimado");
+                        .HasColumnName("tipo_cambio_costo_estimado")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<decimal>("TipoCambioCostoReal")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(20, 3)
                         .HasColumnType("decimal(20,3)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("tipo_cambio_costo_real");
+                        .HasColumnName("tipo_cambio_costo_real")
+                        .HasDefaultValueSql("0.0");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
-                        .HasColumnName("titulo")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("titulo");
 
                     b.Property<int>("TotalArticulos")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(10, 2)
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("total_articulos");
+                        .HasColumnName("total_articulos")
+                        .HasDefaultValueSql("0");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
                     b.Property<int>("Vistas")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("vistas");
+                        .HasColumnName("vistas")
+                        .HasDefaultValueSql("0");
 
                     b.HasKey("Id");
 
@@ -1163,6 +1187,8 @@ namespace reciclapp.db.Migrations
                     b.HasIndex("IdEstatusPublicacion");
 
                     b.HasIndex("IdFasePublicacion");
+
+                    b.HasIndex("IdImagenPrincipal");
 
                     b.HasIndex("IdModificador");
 
@@ -1189,7 +1215,7 @@ namespace reciclapp.db.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("Id");
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -1226,24 +1252,32 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
-                    b.Property<int>("IdFaseAnterior")
+                    b.Property<int?>("IdFaseAnterior")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id_fase_anterior");
+                        .HasColumnName("id_fase_anterior")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdFasePublicacion")
                         .HasColumnType("int")
                         .HasColumnName("id_fase_publicacion");
 
-                    b.Property<int>("IdFaseSiguiente")
+                    b.Property<int?>("IdFaseSiguiente")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id_fase_siguiente");
+                        .HasColumnName("id_fase_siguiente")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid>("IdPublicacion")
                         .HasColumnType("uniqueidentifier")
@@ -1256,13 +1290,14 @@ namespace reciclapp.db.Migrations
                     b.Property<long>("TiempoEstimado")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("tiempo_estimado");
+                        .HasColumnName("tiempo_estimado")
+                        .HasDefaultValueSql("0");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -1312,8 +1347,10 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<DateTime?>("FechaExpiracion")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasColumnName("fecha_expiracion");
+                        .HasColumnName("fecha_expiracion")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<DateTime>("FechaModificacion")
                         .ValueGeneratedOnAdd()
@@ -1326,16 +1363,20 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("id_catalogo");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdEstatusRecurso")
                         .HasColumnType("int")
                         .HasColumnName("id_estatus_recurso");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("IdTipoCatalogo")
                         .HasColumnType("int")
@@ -1351,31 +1392,31 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nombre")
-                        .HasDefaultValueSql("''");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("nombre");
 
                     b.Property<int>("Orden")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1)
-                        .HasColumnName("orden");
+                        .HasColumnName("orden")
+                        .HasDefaultValueSql("1");
 
                     b.Property<int>("Secuencia")
                         .HasColumnType("int")
                         .HasColumnName("secuencia");
 
-                    b.Property<long>("Tamaño")
+                    b.Property<long>("Tamano")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("tamano");
+                        .HasColumnName("tamano")
+                        .HasDefaultValueSql("0");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -1424,37 +1465,40 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int>("Incremento")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1)
-                        .HasColumnName("incremento");
+                        .HasColumnName("incremento")
+                        .HasDefaultValueSql("1");
 
                     b.Property<string>("Prefijo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)")
-                        .HasColumnName("prefijo")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("prefijo");
 
                     b.Property<long>("Serie")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("serie");
+                        .HasColumnName("serie")
+                        .HasDefaultValueSql("1");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -1463,6 +1507,9 @@ namespace reciclapp.db.Migrations
                     b.HasIndex("IdCreador");
 
                     b.HasIndex("IdModificador");
+
+                    b.HasIndex("Prefijo")
+                        .IsUnique();
 
                     b.ToTable("secuencias");
                 });
@@ -1482,10 +1529,8 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("descripcion");
 
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
@@ -1500,17 +1545,22 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -1539,19 +1589,9 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasColumnName("apellido")
-                        .HasDefaultValueSql("''");
-
-                    b.Property<string>("Apellido2")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("segundo_apellido")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("apellido");
 
                     b.Property<string>("Clave")
                         .IsRequired()
@@ -1561,19 +1601,15 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)")
-                        .HasColumnName("direccion")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("direccion");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)")
-                        .HasColumnName("email")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("email");
 
                     b.Property<string>("Email2")
                         .IsRequired()
@@ -1604,16 +1640,14 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<int?>("IdCiudad")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id_ciudad")
-                        .HasDefaultValueSql("null");
+                        .HasColumnName("id_ciudad");
 
                     b.Property<Guid?>("IdCreador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_creador")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int?>("IdGrupo")
                         .HasColumnType("int")
@@ -1623,45 +1657,35 @@ namespace reciclapp.db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id_modificador")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int?>("IdProfesion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_profesion")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int?>("IdRol")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_rol")
-                        .HasDefaultValueSql("null");
+                        .HasDefaultValueSql("NULL");
 
-                    b.Property<int?>("IdTipoUsuario")
+                    b.Property<int>("IdTipoUsuario")
                         .HasColumnType("int")
                         .HasColumnName("id_tipo_usuario");
 
                     b.Property<int>("MaximoPublicaciones")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("max_publicaciones");
+                        .HasColumnName("maximo_publicaciones")
+                        .HasDefaultValueSql("0");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasColumnName("nombre")
-                        .HasDefaultValueSql("''");
-
-                    b.Property<string>("Nombre2")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("segundo_nombre")
-                        .HasDefaultValueSql("''");
+                        .HasColumnName("nombre");
 
                     b.Property<string>("Perfil")
                         .IsRequired()
@@ -1671,25 +1695,37 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("perfil")
                         .HasDefaultValueSql("''");
 
-                    b.Property<string>("Telefono")
+                    b.Property<string>("SegundoApellido")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("telefono")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("segundo_apellido")
                         .HasDefaultValueSql("''");
 
+                    b.Property<string>("SegundoNombre")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("segundo_nombre")
+                        .HasDefaultValueSql("''");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("telefono");
+
                     b.Property<string>("Telefono2")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("telefono2")
                         .HasDefaultValueSql("''");
 
-                    b.Property<int?>("TipousuarioId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UltimaIP")
+                    b.Property<string>("UltimaIp")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
@@ -1697,10 +1733,11 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("ultima_ip")
                         .HasDefaultValueSql("''");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -1721,9 +1758,9 @@ namespace reciclapp.db.Migrations
 
                     b.HasIndex("IdRol");
 
-                    b.HasIndex("TipousuarioId");
+                    b.HasIndex("IdTipoUsuario");
 
-                    b.HasIndex("Nombre", "Nombre2", "Apellido", "Apellido2")
+                    b.HasIndex("Nombre", "SegundoNombre", "Apellido", "SegundoApellido")
                         .IsUnique();
 
                     b.ToTable("usuarios");
@@ -1746,10 +1783,9 @@ namespace reciclapp.db.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("descripcion")
-                        .HasDefaultValueSql("''");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("descripcion");
 
                     b.Property<DateTime>("FechaCreacion")
                         .ValueGeneratedOnAdd()
@@ -1764,16 +1800,22 @@ namespace reciclapp.db.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_creador");
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id_modificador");
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<int?>("IdPadre")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id_padre");
+                        .HasColumnName("id_padre")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<string>("IdTabla")
                         .IsRequired()
@@ -1789,10 +1831,11 @@ namespace reciclapp.db.Migrations
                         .HasColumnName("referencia")
                         .HasDefaultValueSql("''");
 
-                    b.Property<string>("VersionAPI")
+                    b.Property<string>("VersionApi")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("version_api")
                         .HasDefaultValueSql("''");
 
@@ -1808,6 +1851,74 @@ namespace reciclapp.db.Migrations
                         .IsUnique();
 
                     b.ToTable("varios");
+                });
+
+            modelBuilder.Entity("Entidades.VersionApi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool?>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasColumnName("activo")
+                        .HasDefaultValueSql("1");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("fecha_creacion")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("fecha_modificacion")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<Guid?>("IdCreador")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id_creador")
+                        .HasDefaultValueSql("NULL");
+
+                    b.Property<Guid?>("IdModificador")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id_modificador")
+                        .HasDefaultValueSql("NULL");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasColumnName("version");
+
+                    b.Property<string>("VersionApi")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasColumnName("version_api")
+                        .HasDefaultValueSql("''");
+
+                    b.Property<DateTime>("VigenteDesde")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("vigente_desde")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCreador");
+
+                    b.HasIndex("IdModificador");
+
+                    b.ToTable("versiones_api");
                 });
 
             modelBuilder.Entity("Entidades.ActividadProyecto", b =>
@@ -1826,8 +1937,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Usuario", "Ejecutor")
                         .WithMany()
                         .HasForeignKey("IdEjecutor")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "EstatusProyecto")
                         .WithMany()
@@ -1858,8 +1968,8 @@ namespace reciclapp.db.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Entidades.Proyecto", null)
-                        .WithMany("ActividadesProyecto")
+                    b.HasOne("Entidades.Proyecto", "Proyecto")
+                        .WithMany()
                         .HasForeignKey("IdProyecto")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -1872,8 +1982,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Usuario", "Revisor")
                         .WithMany()
                         .HasForeignKey("IdRevisor")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "RutaProyecto")
                         .WithMany()
@@ -1886,10 +1995,6 @@ namespace reciclapp.db.Migrations
                         .HasForeignKey("IdTipoActividad")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("Entidades.Proyecto", "Proyecto")
-                        .WithMany()
-                        .HasForeignKey("ProyectoId");
 
                     b.Navigation("ActividadRuta");
 
@@ -2005,7 +2110,7 @@ namespace reciclapp.db.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Publicacion", "Publicacion")
-                        .WithMany("Chats")
+                        .WithMany()
                         .HasForeignKey("IdPublicacion")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2020,14 +2125,14 @@ namespace reciclapp.db.Migrations
             modelBuilder.Entity("Entidades.Comentario", b =>
                 {
                     b.HasOne("Entidades.Chat", "Chat")
-                        .WithMany("Comentarios")
+                        .WithMany()
                         .HasForeignKey("IdChat")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Entidades.Comentario", null)
-                        .WithMany("Citas")
-                        .HasForeignKey("IdComentario")
+                    b.HasOne("Entidades.Comentario", "Cita")
+                        .WithMany()
+                        .HasForeignKey("IdCita")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Creador")
@@ -2041,12 +2146,14 @@ namespace reciclapp.db.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Usuario")
-                        .WithMany("Comentarios")
+                        .WithMany()
                         .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Chat");
+
+                    b.Navigation("Cita");
 
                     b.Navigation("Creador");
 
@@ -2085,7 +2192,7 @@ namespace reciclapp.db.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Publicacion", "Publicacion")
-                        .WithMany("UsuariosLink")
+                        .WithMany()
                         .HasForeignKey("IdPublicacion")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2097,7 +2204,7 @@ namespace reciclapp.db.Migrations
                         .IsRequired();
 
                     b.HasOne("Entidades.Usuario", "Usuario")
-                        .WithMany("PublicacionesLink")
+                        .WithMany()
                         .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2135,14 +2242,12 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Varios", "FaseAnterior")
                         .WithMany()
                         .HasForeignKey("IdFaseAnterior")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "FaseSiguiente")
                         .WithMany()
                         .HasForeignKey("IdFaseSiguiente")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Gerente")
                         .WithMany()
@@ -2153,8 +2258,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.RecursoPublicacion", "ImagenPrincipal")
                         .WithMany()
                         .HasForeignKey("IdImagenPrincipal")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Modificador")
                         .WithMany()
@@ -2182,8 +2286,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Usuario", "Revisor")
                         .WithMany()
                         .HasForeignKey("IdRevisor")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "RutaProyecto")
                         .WithMany()
@@ -2251,6 +2354,11 @@ namespace reciclapp.db.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Entidades.RecursoPublicacion", "ImagenPrincipal")
+                        .WithMany()
+                        .HasForeignKey("IdImagenPrincipal")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Entidades.Usuario", "Modificador")
                         .WithMany()
                         .HasForeignKey("IdModificador")
@@ -2271,8 +2379,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Proyecto", "Proyecto")
                         .WithMany()
                         .HasForeignKey("IdProyecto")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Publicador")
                         .WithMany()
@@ -2283,8 +2390,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Usuario", "RevisadaPor")
                         .WithMany()
                         .HasForeignKey("IdRevisadaPor")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "TipoPublicacion")
                         .WithMany()
@@ -2299,6 +2405,8 @@ namespace reciclapp.db.Migrations
                     b.Navigation("EstatusPublicacion");
 
                     b.Navigation("FasePublicacion");
+
+                    b.Navigation("ImagenPrincipal");
 
                     b.Navigation("Modificador");
 
@@ -2325,8 +2433,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Varios", "FaseAnterior")
                         .WithMany()
                         .HasForeignKey("IdFaseAnterior")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "FasePublicacion")
                         .WithMany()
@@ -2337,8 +2444,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Varios", "FaseSiguiente")
                         .WithMany()
                         .HasForeignKey("IdFaseSiguiente")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Modificador")
                         .WithMany()
@@ -2460,7 +2566,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Varios", "Ciudad")
                         .WithMany()
                         .HasForeignKey("IdCiudad")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Creador")
                         .WithMany()
@@ -2470,7 +2576,7 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Varios", "Grupo")
                         .WithMany()
                         .HasForeignKey("IdGrupo")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Usuario", "Modificador")
                         .WithMany()
@@ -2480,16 +2586,18 @@ namespace reciclapp.db.Migrations
                     b.HasOne("Entidades.Varios", "Profesion")
                         .WithMany()
                         .HasForeignKey("IdProfesion")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Entidades.Varios", "Rol")
                         .WithMany()
                         .HasForeignKey("IdRol")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Entidades.Varios", "Tipousuario")
+                    b.HasOne("Entidades.Varios", "TipoUsuario")
                         .WithMany()
-                        .HasForeignKey("TipousuarioId");
+                        .HasForeignKey("IdTipoUsuario")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Ciudad");
 
@@ -2503,7 +2611,7 @@ namespace reciclapp.db.Migrations
 
                     b.Navigation("Rol");
 
-                    b.Navigation("Tipousuario");
+                    b.Navigation("TipoUsuario");
                 });
 
             modelBuilder.Entity("Entidades.Varios", b =>
@@ -2538,33 +2646,21 @@ namespace reciclapp.db.Migrations
                     b.Navigation("Tabla");
                 });
 
-            modelBuilder.Entity("Entidades.Chat", b =>
+            modelBuilder.Entity("Entidades.VersionApi", b =>
                 {
-                    b.Navigation("Comentarios");
-                });
+                    b.HasOne("Entidades.Usuario", "Creador")
+                        .WithMany()
+                        .HasForeignKey("IdCreador")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity("Entidades.Comentario", b =>
-                {
-                    b.Navigation("Citas");
-                });
+                    b.HasOne("Entidades.Usuario", "Modificador")
+                        .WithMany()
+                        .HasForeignKey("IdModificador")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity("Entidades.Proyecto", b =>
-                {
-                    b.Navigation("ActividadesProyecto");
-                });
+                    b.Navigation("Creador");
 
-            modelBuilder.Entity("Entidades.Publicacion", b =>
-                {
-                    b.Navigation("Chats");
-
-                    b.Navigation("UsuariosLink");
-                });
-
-            modelBuilder.Entity("Entidades.Usuario", b =>
-                {
-                    b.Navigation("Comentarios");
-
-                    b.Navigation("PublicacionesLink");
+                    b.Navigation("Modificador");
                 });
 #pragma warning restore 612, 618
         }

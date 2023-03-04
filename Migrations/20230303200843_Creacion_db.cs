@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace reciclapp.db.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Creacion_db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,33 +19,32 @@ namespace reciclapp.db.Migrations
                     id_ruta_proyecto = table.Column<int>(type: "int", nullable: false),
                     secuencia = table.Column<int>(type: "int", nullable: false),
                     id_actividad_ruta = table.Column<int>(type: "int", nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
-                    fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    fecha_finalizacion = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "null"),
-                    id_ejecutor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    id_revisor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_finalizacion = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "NULL"),
+                    id_ejecutor = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    id_revisor = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     id_estatus_publicacion = table.Column<int>(type: "int", nullable: false),
                     id_estatus_proyecto = table.Column<int>(type: "int", nullable: false),
-                    id_revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     id_tipo_actividad = table.Column<int>(type: "int", nullable: false),
-                    tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    progreso_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValue: 0m),
-                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "null"),
-                    total_articulos = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValue: 0m),
-                    costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    id_moneda_costo_estimado = table.Column<string>(type: "nvarchar(3)", nullable: false, defaultValueSql: "''"),
-                    tipo_cambio_costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    id_moneda_costo_real = table.Column<string>(type: "nvarchar(3)", nullable: false, defaultValueSql: "''"),
-                    tipo_cambio_costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    ProyectoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    progreso_estimado = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValueSql: "0.0"),
+                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "NULL"),
+                    total_articulos = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValueSql: "1"),
+                    costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_moneda_costo_estimado = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    tipo_cambio_costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_moneda_costo_real = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    tipo_cambio_costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -59,14 +58,14 @@ namespace reciclapp.db.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     id_ruta_proyecto = table.Column<int>(type: "int", nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "''"),
-                    secuencia = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    descripcion = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false, defaultValueSql: "''"),
+                    secuencia = table.Column<int>(type: "int", nullable: false, defaultValueSql: "1"),
                     id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -85,12 +84,12 @@ namespace reciclapp.db.Migrations
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_tipo_bitacora = table.Column<int>(type: "int", nullable: false),
                     comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -108,14 +107,14 @@ namespace reciclapp.db.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newid()"),
                     id_publicacion = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    titulo = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false, defaultValueSql: "''"),
+                    titulo = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -130,14 +129,14 @@ namespace reciclapp.db.Migrations
                     id_chat = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    comentario = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
-                    id_comentario = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    texto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    id_cita = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -148,8 +147,8 @@ namespace reciclapp.db.Migrations
                         principalTable: "chats",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_comentarios_comentarios_id_comentario",
-                        column: x => x.id_comentario,
+                        name: "FK_comentarios_comentarios_id_cita",
+                        column: x => x.id_cita,
                         principalTable: "comentarios",
                         principalColumn: "id");
                 });
@@ -160,14 +159,14 @@ namespace reciclapp.db.Migrations
                 {
                     id = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     nombre = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    tipo_cambio = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValue: 0m),
+                    tipo_cambio = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValueSql: "0.0"),
                     es_local = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "0"),
                     id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -182,12 +181,12 @@ namespace reciclapp.db.Migrations
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_rol = table.Column<int>(type: "int", nullable: false),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "null"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "null"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -199,39 +198,39 @@ namespace reciclapp.db.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newid()"),
-                    titulo = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "''"),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
-                    fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    titulo = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     id_gerente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    id_revisor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    gustan = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    no_gustan = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    id_revisor = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    gustan = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    no_gustan = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
                     id_estatus_publicacion = table.Column<int>(type: "int", nullable: false),
                     id_estatus_proyecto = table.Column<int>(type: "int", nullable: false),
                     id_revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    id_imagen_principal = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    id_imagen_principal = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     id_tipo_proyecto = table.Column<int>(type: "int", nullable: false),
-                    tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    progreso_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    progreso_real = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValue: 0m),
+                    tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    progreso_estimado = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    progreso_real = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValueSql: "0.0"),
                     id_ruta_proyecto = table.Column<int>(type: "int", nullable: false),
-                    id_fase_anterior = table.Column<int>(type: "int", nullable: false),
-                    id_fase_siguiente = table.Column<int>(type: "int", nullable: false),
-                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "null"),
-                    total_articulos = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValue: 0m),
-                    costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    id_moneda_costo_estimado = table.Column<string>(type: "nvarchar(3)", nullable: false, defaultValueSql: "''"),
-                    tipo_cambio_costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    id_moneda_costo_real = table.Column<string>(type: "nvarchar(3)", nullable: false, defaultValueSql: "''"),
-                    tipo_cambio_costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_fase_anterior = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
+                    id_fase_siguiente = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
+                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "NULL"),
+                    total_articulos = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false, defaultValueSql: "1"),
+                    costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_moneda_costo_estimado = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    tipo_cambio_costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_moneda_costo_real = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    tipo_cambio_costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -253,45 +252,45 @@ namespace reciclapp.db.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newid()"),
-                    titulo = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "''"),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
+                    titulo = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     consecutivo = table.Column<int>(type: "int", nullable: false),
-                    publicador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    gustan = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    no_gustan = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    id_publicador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    gustan = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    no_gustan = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
                     id_estatus_publicacion = table.Column<int>(type: "int", nullable: false),
                     id_fase_publicacion = table.Column<int>(type: "int", nullable: false),
                     id_tipo_publicacion = table.Column<int>(type: "int", nullable: false),
                     id_clase_publicacion = table.Column<int>(type: "int", nullable: false),
-                    revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    id_imagen_principal = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    posicionamiento = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    id_revisada_por = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    id_imagen_principal = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    tiempo_estimado = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    posicionamiento = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
                     secuencia = table.Column<int>(type: "int", nullable: false),
-                    vistas = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValue: 0m),
+                    vistas = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    evaluacion = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false, defaultValueSql: "0.0"),
                     direccion_ip_creacion = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, defaultValueSql: "''"),
-                    dispositivo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dispositivo = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: false),
                     direccion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "''"),
                     referencias_direccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "''"),
-                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    total_articulos = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false, defaultValue: 0),
-                    id_proyecto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
+                    fecha_disponible = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "NULL"),
+                    total_articulos = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    id_proyecto = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
                     id_moneda_costo_estimado = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    tipo_cambio_costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    monto_inversion = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    costo_real_traslado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
+                    tipo_cambio_costo_estimado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    monto_inversion = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    costo_real_traslado = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
                     id_moneda_costo_real = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    tipo_cambio_costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValue: 0m),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    tipo_cambio_costo_real = table.Column<decimal>(type: "decimal(20,3)", precision: 20, scale: 3, nullable: false, defaultValueSql: "0.0"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -317,26 +316,26 @@ namespace reciclapp.db.Migrations
                 name: "rastreo_publicaciones",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     id_publicacion = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_fase_publicacion = table.Column<int>(type: "int", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    tiempo_estimado = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
-                    id_fase_anterior = table.Column<int>(type: "int", nullable: false),
-                    id_fase_siguiente = table.Column<int>(type: "int", nullable: false),
+                    tiempo_estimado = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "0"),
+                    id_fase_anterior = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
+                    id_fase_siguiente = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
                     comentarios = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "''"),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_rastreo_publicaciones", x => x.Id);
+                    table.PrimaryKey("PK_rastreo_publicaciones", x => x.id);
                     table.ForeignKey(
                         name: "FK_rastreo_publicaciones_publicaciones_id_publicacion",
                         column: x => x.id_publicacion,
@@ -355,17 +354,17 @@ namespace reciclapp.db.Migrations
                     id_tipo_recurso = table.Column<int>(type: "int", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    orden = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
+                    orden = table.Column<int>(type: "int", nullable: false, defaultValueSql: "1"),
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     id_estatus_recurso = table.Column<int>(type: "int", nullable: false),
-                    fecha_expiracion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    tamano = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    fecha_expiracion = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "NULL"),
+                    tamano = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "0"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -378,15 +377,15 @@ namespace reciclapp.db.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    prefijo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, defaultValueSql: "''"),
-                    serie = table.Column<long>(type: "bigint", nullable: false, defaultValue: 1L),
-                    incremento = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    prefijo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    serie = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "1"),
+                    incremento = table.Column<int>(type: "int", nullable: false, defaultValueSql: "1"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -398,13 +397,13 @@ namespace reciclapp.db.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''"),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -416,32 +415,31 @@ namespace reciclapp.db.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newid()"),
-                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "''"),
-                    apellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "''"),
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    apellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "''"),
                     segundo_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "''"),
                     perfil = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "''"),
-                    direccion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false, defaultValueSql: "''"),
-                    id_ciudad = table.Column<int>(type: "int", nullable: true, defaultValueSql: "null"),
-                    telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, defaultValueSql: "''"),
-                    telefono2 = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true, defaultValueSql: "''"),
-                    email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false, defaultValueSql: "''"),
+                    direccion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    id_ciudad = table.Column<int>(type: "int", nullable: true),
+                    telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    telefono2 = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, defaultValueSql: "''"),
+                    email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     clave = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     email2 = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false, defaultValueSql: "''"),
-                    id_profesion = table.Column<int>(type: "int", nullable: true, defaultValueSql: "null"),
-                    max_publicaciones = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    id_profesion = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
+                    maximo_publicaciones = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
                     id_grupo = table.Column<int>(type: "int", nullable: true),
                     estatus = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false, defaultValueSql: "''"),
-                    id_tipo_usuario = table.Column<int>(type: "int", nullable: true),
-                    id_rol = table.Column<int>(type: "int", nullable: true, defaultValueSql: "null"),
+                    id_tipo_usuario = table.Column<int>(type: "int", nullable: false),
+                    id_rol = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
                     ultima_ip = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, defaultValueSql: "''"),
-                    TipousuarioId = table.Column<int>(type: "int", nullable: true),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "null"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "null"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -465,15 +463,15 @@ namespace reciclapp.db.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     id_tabla = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "''"),
+                    descripcion = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     referencia = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "''"),
-                    id_padre = table.Column<int>(type: "int", nullable: true),
-                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_padre = table.Column<int>(type: "int", nullable: true, defaultValueSql: "NULL"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
                     fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
-                    version_api = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "''")
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
                 },
                 constraints: table =>
                 {
@@ -497,6 +495,36 @@ namespace reciclapp.db.Migrations
                         name: "FK_varios_varios_id_padre",
                         column: x => x.id_padre,
                         principalTable: "varios",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "versiones_api",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    version = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    vigente_desde = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    id_creador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    id_modificador = table.Column<Guid>(type: "uniqueidentifier", nullable: true, defaultValueSql: "NULL"),
+                    fecha_modificacion = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
+                    activo = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "1"),
+                    version_api = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValueSql: "''")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_versiones_api", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_versiones_api_usuarios_id_creador",
+                        column: x => x.id_creador,
+                        principalTable: "usuarios",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_versiones_api_usuarios_id_modificador",
+                        column: x => x.id_modificador,
+                        principalTable: "usuarios",
                         principalColumn: "id");
                 });
 
@@ -564,11 +592,6 @@ namespace reciclapp.db.Migrations
                 name: "IX_actividades_proyectos_id_tipo_actividad",
                 table: "actividades_proyectos",
                 column: "id_tipo_actividad");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_actividades_proyectos_ProyectoId",
-                table: "actividades_proyectos",
-                column: "ProyectoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_actividades_rutas_proyectos_descripcion",
@@ -648,9 +671,9 @@ namespace reciclapp.db.Migrations
                 column: "id_chat");
 
             migrationBuilder.CreateIndex(
-                name: "IX_comentarios_id_comentario",
+                name: "IX_comentarios_id_cita",
                 table: "comentarios",
-                column: "id_comentario");
+                column: "id_cita");
 
             migrationBuilder.CreateIndex(
                 name: "IX_comentarios_id_creador",
@@ -806,6 +829,11 @@ namespace reciclapp.db.Migrations
                 column: "id_fase_publicacion");
 
             migrationBuilder.CreateIndex(
+                name: "IX_publicaciones_id_imagen_principal",
+                table: "publicaciones",
+                column: "id_imagen_principal");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_publicaciones_id_modificador",
                 table: "publicaciones",
                 column: "id_modificador");
@@ -826,19 +854,19 @@ namespace reciclapp.db.Migrations
                 column: "id_proyecto");
 
             migrationBuilder.CreateIndex(
+                name: "IX_publicaciones_id_publicador",
+                table: "publicaciones",
+                column: "id_publicador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_publicaciones_id_revisada_por",
+                table: "publicaciones",
+                column: "id_revisada_por");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_publicaciones_id_tipo_publicacion",
                 table: "publicaciones",
                 column: "id_tipo_publicacion");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_publicaciones_publicador",
-                table: "publicaciones",
-                column: "publicador");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_publicaciones_revisada_por",
-                table: "publicaciones",
-                column: "revisada_por");
 
             migrationBuilder.CreateIndex(
                 name: "IX_publicaciones_titulo",
@@ -922,6 +950,12 @@ namespace reciclapp.db.Migrations
                 column: "id_modificador");
 
             migrationBuilder.CreateIndex(
+                name: "IX_secuencias_prefijo",
+                table: "secuencias",
+                column: "prefijo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tablas_id_creador",
                 table: "tablas",
                 column: "id_creador");
@@ -968,15 +1002,15 @@ namespace reciclapp.db.Migrations
                 column: "id_rol");
 
             migrationBuilder.CreateIndex(
+                name: "IX_usuarios_id_tipo_usuario",
+                table: "usuarios",
+                column: "id_tipo_usuario");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_usuarios_nombre_segundo_nombre_apellido_segundo_apellido",
                 table: "usuarios",
                 columns: new[] { "nombre", "segundo_nombre", "apellido", "segundo_apellido" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_usuarios_TipousuarioId",
-                table: "usuarios",
-                column: "TipousuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_varios_id_creador",
@@ -998,6 +1032,16 @@ namespace reciclapp.db.Migrations
                 table: "varios",
                 columns: new[] { "id_tabla", "descripcion" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_versiones_api_id_creador",
+                table: "versiones_api",
+                column: "id_creador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_versiones_api_id_modificador",
+                table: "versiones_api",
+                column: "id_modificador");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_actividades_proyectos_actividades_rutas_proyectos_id_actividad_ruta",
@@ -1024,13 +1068,6 @@ namespace reciclapp.db.Migrations
                 name: "FK_actividades_proyectos_proyectos_id_proyecto",
                 table: "actividades_proyectos",
                 column: "id_proyecto",
-                principalTable: "proyectos",
-                principalColumn: "id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_actividades_proyectos_proyectos_ProyectoId",
-                table: "actividades_proyectos",
-                column: "ProyectoId",
                 principalTable: "proyectos",
                 principalColumn: "id");
 
@@ -1329,6 +1366,13 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_publicaciones_recursos_publicaciones_id_imagen_principal",
+                table: "publicaciones",
+                column: "id_imagen_principal",
+                principalTable: "recursos_publicaciones",
+                principalColumn: "id");
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_publicaciones_usuarios_id_creador",
                 table: "publicaciones",
                 column: "id_creador",
@@ -1343,16 +1387,16 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_publicaciones_usuarios_publicador",
+                name: "FK_publicaciones_usuarios_id_publicador",
                 table: "publicaciones",
-                column: "publicador",
+                column: "id_publicador",
                 principalTable: "usuarios",
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_publicaciones_usuarios_revisada_por",
+                name: "FK_publicaciones_usuarios_id_revisada_por",
                 table: "publicaciones",
-                column: "revisada_por",
+                column: "id_revisada_por",
                 principalTable: "usuarios",
                 principalColumn: "id");
 
@@ -1525,9 +1569,9 @@ namespace reciclapp.db.Migrations
                 principalColumn: "id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_usuarios_varios_TipousuarioId",
+                name: "FK_usuarios_varios_id_tipo_usuario",
                 table: "usuarios",
-                column: "TipousuarioId",
+                column: "id_tipo_usuario",
                 principalTable: "varios",
                 principalColumn: "id");
         }
@@ -1564,6 +1608,9 @@ namespace reciclapp.db.Migrations
 
             migrationBuilder.DropTable(
                 name: "secuencias");
+
+            migrationBuilder.DropTable(
+                name: "versiones_api");
 
             migrationBuilder.DropTable(
                 name: "actividades_proyectos");

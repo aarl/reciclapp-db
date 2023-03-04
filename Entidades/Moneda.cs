@@ -9,15 +9,21 @@ namespace Entidades;
 public class Moneda : Entidad
 {
     [Column("id")]
-    [MaxLength(3)]
     [Key]
+    [MaxLength(3)]
     public string Id { get; set; } = "";
+
     [Column("nombre")]
     [MaxLength(20)]
     public string Nombre { get; set; } = "";
+
     [Column("tipo_cambio")]
     [Precision(10, 2)]
     public decimal TipoCambio { get; set; } = 0.0M;
+
     [Column("es_local")]
-    public Boolean? EsLocal { get; set; } = false;
+    public bool? EsLocal { get; set; } = false;
+
+
+
 }

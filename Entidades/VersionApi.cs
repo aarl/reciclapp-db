@@ -5,22 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Entidades;
 
-[Table("secuencias")]
-public class Secuencia : Entidad
+[Table("versiones_api")]
+public class VersionApi : Entidad
 {
 	[Column("id")]
 	[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public int Id { get; set; }
 
-	[Column("prefijo")]
-	[MaxLength(10)]
-	public string Prefijo { get; set; } = "";
+	[Column("version")]
+	[MaxLength(15)]
+	public string Version { get; set; } = "";
 
-	[Column("serie")]
-	public long Serie { get; set; } = 1;
-
-	[Column("incremento")]
-	public int Incremento { get; set; } = 1;
+	[Column("vigente_desde")]
+	public DateTime VigenteDesde { get; set; } = DateTime.UtcNow;
 
 
 

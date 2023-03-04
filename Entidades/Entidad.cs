@@ -1,9 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Entidades;
 
-public abstract class Entidad
+public class Entidad
 {
     [Column("id_creador")]
     public Guid? IdCreador { get; set; }
@@ -16,7 +17,8 @@ public abstract class Entidad
     [Column("activo")]
     public bool? Activo { get; set; } = true;
     [Column("version_api")]
-    public string VersionAPI { get; set; } = "";
+    [MaxLength(15)]
+    public string VersionApi { get; set; } = "";
 
     [JsonIgnore]
     public virtual Usuario? Creador { get; set; }
