@@ -9,6 +9,10 @@ internal class MonedaConfig : IEntityTypeConfiguration<Moneda>
     public void Configure(EntityTypeBuilder<Moneda> builder)
     {
         builder
+           .Property(c => c.Nombre)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.TipoCambio)
            .HasDefaultValueSql("0.0");
 

@@ -8,21 +8,21 @@ namespace Entidades;
 [Table("monedas")]
 public class Moneda : Entidad
 {
-    [Column("id")]
-    [Key]
-    [MaxLength(3)]
-    public string Id { get; set; } = "";
+	[Column("id")]
+	[Key]
+	[MaxLength(3)]
+	public string Id { get; set; } = "";
 
-    [Column("nombre")]
-    [MaxLength(20)]
-    public string Nombre { get; set; } = "";
+	[Column("nombre")]
+	[MaxLength(20)]
+	public string Nombre { get; set; } = "";
 
-    [Column("tipo_cambio")]
-    [Precision(10, 2)]
-    public decimal TipoCambio { get; set; } = 0.0M;
+	[Column("tipo_cambio")]
+	[Precision(10, 2)]
+	public decimal TipoCambio { get; set; } = 0.0M;
 
-    [Column("es_local")]
-    public bool? EsLocal { get; set; } = false;
+	[Column("es_local")]
+	public bool? EsLocal { get; set; } = false;
 
 
 

@@ -28,10 +28,10 @@ public class RastreoPublicacion : Entidad
 	public long TiempoEstimado { get; set; } = 0;
 
 	[Column("id_fase_anterior")]
-	public int? IdFaseAnterior { get; set; } = null;
+	public int? IdFaseAnterior { get; set; }
 
 	[Column("id_fase_siguiente")]
-	public int? IdFaseSiguiente { get; set; } = null;
+	public int? IdFaseSiguiente { get; set; }
 
 	[Column("comentarios")]
 	[MaxLength(100)]

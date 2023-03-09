@@ -19,7 +19,7 @@ public class ActividadProyecto : Entidad
 	public int IdRutaProyecto { get; set; }
 
 	[Column("secuencia")]
-	public int Secuencia { get; set; }
+	public int Secuencia { get; set; } = 1;
 
 	[Column("id_actividad_ruta")]
 	public int IdActividadRuta { get; set; }
@@ -28,16 +28,16 @@ public class ActividadProyecto : Entidad
 	public string Descripcion { get; set; } = "";
 
 	[Column("fecha_inicio")]
-	public DateTime FechaInicio { get; set; }
+	public DateTime FechaInicio { get; set; } = DateTime.UtcNow;
 
 	[Column("fecha_finalizacion")]
-	public DateTime? FechaFinalizacion { get; set; } = null;
+	public DateTime? FechaFinalizacion { get; set; }
 
 	[Column("id_ejecutor")]
-	public Guid? IdEjecutor { get; set; } = null;
+	public Guid? IdEjecutor { get; set; }
 
 	[Column("id_revisor")]
-	public Guid? IdRevisor { get; set; } = null;
+	public Guid? IdRevisor { get; set; }
 
 	[Column("id_estatus_publicacion")]
 	public int IdEstatusPublicacion { get; set; }
@@ -46,7 +46,7 @@ public class ActividadProyecto : Entidad
 	public int IdEstatusProyecto { get; set; }
 
 	[Column("id_revisada_por")]
-	public Guid? IdRevisadaPor { get; set; } = null;
+	public Guid? IdRevisadaPor { get; set; }
 
 	[Column("id_tipo_actividad")]
 	public int IdTipoActividad { get; set; }
@@ -62,7 +62,7 @@ public class ActividadProyecto : Entidad
 	public decimal Evaluacion { get; set; } = 0.0M;
 
 	[Column("fecha_disponible")]
-	public DateTime? FechaDisponible { get; set; } = null;
+	public DateTime? FechaDisponible { get; set; }
 
 	[Column("total_articulos")]
 	[Precision(10, 2)]

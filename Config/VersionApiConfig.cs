@@ -9,6 +9,10 @@ internal class VersionApiConfig : IEntityTypeConfiguration<VersionApi>
     public void Configure(EntityTypeBuilder<VersionApi> builder)
     {
         builder
+           .Property(c => c.Version)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.VigenteDesde)
            .HasDefaultValueSql("getutcdate()");
 

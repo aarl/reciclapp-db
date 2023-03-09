@@ -46,7 +46,7 @@ public class SSDBContext : DbContext
             .HasIndex(p => p.Nombre).IsUnique();
 
         mb.Entity<Personal>()
-           .HasKey(c => new { c.IdPublicacion, c.IdUsuario });
+           .HasIndex(c => new { c.IdPublicacion, c.IdUsuario }).IsUnique();
 
         mb.Entity<Personal>()
             .HasIndex(p => new { p.IdPublicacion, p.IdRol }).IsUnique();

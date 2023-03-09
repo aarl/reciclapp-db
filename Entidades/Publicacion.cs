@@ -23,7 +23,7 @@ public class Publicacion : Entidad
 	public DateTime Fecha { get; set; } = DateTime.UtcNow;
 
 	[Column("consecutivo")]
-	public int Consecutivo { get; set; }
+	public long Consecutivo { get; set; } = 1;
 
 	[Column("id_publicador")]
 	public Guid IdPublicador { get; set; }
@@ -47,10 +47,10 @@ public class Publicacion : Entidad
 	public int IdClasePublicacion { get; set; }
 
 	[Column("id_revisada_por")]
-	public Guid? IdRevisadaPor { get; set; } = null;
+	public Guid? IdRevisadaPor { get; set; }
 
 	[Column("id_imagen_principal")]
-	public Guid? IdImagenPrincipal { get; set; } = null;
+	public Guid? IdImagenPrincipal { get; set; }
 
 	[Column("tiempo_estimado")]
 	public int TiempoEstimado { get; set; } = 0;
@@ -59,7 +59,7 @@ public class Publicacion : Entidad
 	public int Posicionamiento { get; set; } = 0;
 
 	[Column("secuencia")]
-	public int Secuencia { get; set; }
+	public int Secuencia { get; set; } = 1;
 
 	[Column("vistas")]
 	public int Vistas { get; set; } = 0;
@@ -85,13 +85,14 @@ public class Publicacion : Entidad
 	public string ReferenciasDireccion { get; set; } = "";
 
 	[Column("fecha_disponible")]
-	public DateTime? FechaDisponible { get; set; } = null;
+	public DateTime? FechaDisponible { get; set; }
 
 	[Column("total_articulos")]
-	public int TotalArticulos { get; set; } = 0;
+	[Precision(10, 2)]
+	public decimal TotalArticulos { get; set; } = 0M;
 
 	[Column("id_proyecto")]
-	public Guid? IdProyecto { get; set; } = null;
+	public Guid? IdProyecto { get; set; }
 
 	[Column("costo_estimado")]
 	[Precision(20, 3)]

@@ -20,13 +20,13 @@ public class Proyecto : Entidad
 	public string Descripcion { get; set; } = "";
 
 	[Column("fecha_inicio")]
-	public DateTime FechaInicio { get; set; }
+	public DateTime FechaInicio { get; set; } = DateTime.UtcNow;
 
 	[Column("id_gerente")]
 	public Guid IdGerente { get; set; }
 
 	[Column("id_revisor")]
-	public Guid? IdRevisor { get; set; } = null;
+	public Guid? IdRevisor { get; set; }
 
 	[Column("gustan")]
 	public int Gustan { get; set; } = 0;
@@ -41,10 +41,10 @@ public class Proyecto : Entidad
 	public int IdEstatusProyecto { get; set; }
 
 	[Column("id_revisada_por")]
-	public Guid IdRevisadaPor { get; set; }
+	public Guid? IdRevisadaPor { get; set; }
 
 	[Column("id_imagen_principal")]
-	public Guid? IdImagenPrincipal { get; set; } = null;
+	public Guid? IdImagenPrincipal { get; set; }
 
 	[Column("id_tipo_proyecto")]
 	public int IdTipoProyecto { get; set; }
@@ -66,13 +66,13 @@ public class Proyecto : Entidad
 	public int IdRutaProyecto { get; set; }
 
 	[Column("id_fase_anterior")]
-	public int? IdFaseAnterior { get; set; } = null;
+	public int? IdFaseAnterior { get; set; }
 
 	[Column("id_fase_siguiente")]
-	public int? IdFaseSiguiente { get; set; } = null;
+	public int? IdFaseSiguiente { get; set; }
 
 	[Column("fecha_disponible")]
-	public DateTime? FechaDisponible { get; set; } = null;
+	public DateTime? FechaDisponible { get; set; }
 
 	[Column("total_articulos")]
 	[Precision(10, 2)]

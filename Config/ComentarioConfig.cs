@@ -17,8 +17,8 @@ internal class ComentarioConfig : IEntityTypeConfiguration<Comentario>
            .HasDefaultValueSql("getutcdate()");
 
         builder
-           .Property(c => c.IdCita)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.Texto)
+           .HasDefaultValueSql("''");
 
         builder
            .Property(c => c.FechaCreacion)
@@ -49,6 +49,12 @@ internal class ComentarioConfig : IEntityTypeConfiguration<Comentario>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
+            .HasOne(p => p.Usuario)
+            .WithMany()
+            .HasForeignKey(p => p.IdUsuario)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
@@ -58,12 +64,6 @@ internal class ComentarioConfig : IEntityTypeConfiguration<Comentario>
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.Usuario)
-            .WithMany()
-            .HasForeignKey(p => p.IdUsuario)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

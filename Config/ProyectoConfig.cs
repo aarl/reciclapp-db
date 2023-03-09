@@ -13,8 +13,16 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
            .HasDefaultValueSql("newid()");
 
         builder
-           .Property(c => c.IdRevisor)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.Titulo)
+           .HasDefaultValueSql("''");
+
+        builder
+           .Property(c => c.Descripcion)
+           .HasDefaultValueSql("''");
+
+        builder
+           .Property(c => c.FechaInicio)
+           .HasDefaultValueSql("getutcdate()");
 
         builder
            .Property(c => c.Gustan)
@@ -23,10 +31,6 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
         builder
            .Property(c => c.NoGustan)
            .HasDefaultValueSql("0");
-
-        builder
-           .Property(c => c.IdImagenPrincipal)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.TiempoEstimado)
@@ -43,18 +47,6 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
         builder
            .Property(c => c.Evaluacion)
            .HasDefaultValueSql("0.0");
-
-        builder
-           .Property(c => c.IdFaseAnterior)
-           .HasDefaultValueSql("NULL");
-
-        builder
-           .Property(c => c.IdFaseSiguiente)
-           .HasDefaultValueSql("NULL");
-
-        builder
-           .Property(c => c.FechaDisponible)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.TotalArticulos)
@@ -77,16 +69,8 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
            .HasDefaultValueSql("0.0");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -119,15 +103,21 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Creador)
-            .WithMany()
-            .HasForeignKey(p => p.IdCreador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.Gerente)
             .WithMany()
             .HasForeignKey(p => p.IdGerente)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Revisor)
+            .WithMany()
+            .HasForeignKey(p => p.IdRevisor)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Creador)
+            .WithMany()
+            .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
@@ -143,12 +133,6 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Revisor)
-            .WithMany()
-            .HasForeignKey(p => p.IdRevisor)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.EstatusProyecto)
             .WithMany()
             .HasForeignKey(p => p.IdEstatusProyecto)
@@ -161,18 +145,6 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.RutaProyecto)
-            .WithMany()
-            .HasForeignKey(p => p.IdRutaProyecto)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.TipoProyecto)
-            .WithMany()
-            .HasForeignKey(p => p.IdTipoProyecto)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.FaseAnterior)
             .WithMany()
             .HasForeignKey(p => p.IdFaseAnterior)
@@ -182,6 +154,18 @@ internal class ProyectoConfig : IEntityTypeConfiguration<Proyecto>
             .HasOne(p => p.FaseSiguiente)
             .WithMany()
             .HasForeignKey(p => p.IdFaseSiguiente)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.RutaProyecto)
+            .WithMany()
+            .HasForeignKey(p => p.IdRutaProyecto)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.TipoProyecto)
+            .WithMany()
+            .HasForeignKey(p => p.IdTipoProyecto)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -25,7 +25,7 @@ public class Comentario : Entidad
 	public string Texto { get; set; } = "";
 
 	[Column("id_cita")]
-	public Guid? IdCita { get; set; } = null;
+	public Guid? IdCita { get; set; }
 
 
 	[JsonIgnore]

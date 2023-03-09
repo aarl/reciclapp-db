@@ -13,6 +13,10 @@ internal class ChatConfig : IEntityTypeConfiguration<Chat>
            .HasDefaultValueSql("newid()");
 
         builder
+           .Property(c => c.Titulo)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Fecha)
            .HasDefaultValueSql("getutcdate()");
 

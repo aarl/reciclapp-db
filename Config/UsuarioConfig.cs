@@ -25,16 +25,16 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
            .HasDefaultValueSql("''");
 
         builder
+           .Property(c => c.Direccion)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Telefono2)
            .HasDefaultValueSql("''");
 
         builder
            .Property(c => c.Email2)
            .HasDefaultValueSql("''");
-
-        builder
-           .Property(c => c.IdProfesion)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.MaximoPublicaciones)
@@ -45,24 +45,12 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
            .HasDefaultValueSql("''");
 
         builder
-           .Property(c => c.IdRol)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.UltimaIp)
            .HasDefaultValueSql("''");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -89,12 +77,6 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.TipoUsuario)
-            .WithMany()
-            .HasForeignKey(p => p.IdTipoUsuario)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.Ciudad)
             .WithMany()
             .HasForeignKey(p => p.IdCiudad)
@@ -104,6 +86,12 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
             .HasOne(p => p.Grupo)
             .WithMany()
             .HasForeignKey(p => p.IdGrupo)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.TipoUsuario)
+            .WithMany()
+            .HasForeignKey(p => p.IdTipoUsuario)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

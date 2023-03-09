@@ -9,24 +9,16 @@ internal class VariosConfig : IEntityTypeConfiguration<Varios>
     public void Configure(EntityTypeBuilder<Varios> builder)
     {
         builder
+           .Property(c => c.Descripcion)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Referencia)
            .HasDefaultValueSql("''");
 
         builder
-           .Property(c => c.IdPadre)
-           .HasDefaultValueSql("NULL");
-
-        builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)

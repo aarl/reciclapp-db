@@ -13,16 +13,12 @@ internal class BitacoraProyectoConfig : IEntityTypeConfiguration<BitacoraProyect
            .HasDefaultValueSql("getutcdate()");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.Comentarios)
+           .HasDefaultValueSql("''");
 
         builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -49,6 +45,12 @@ internal class BitacoraProyectoConfig : IEntityTypeConfiguration<BitacoraProyect
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
+            .HasOne(p => p.Usuario)
+            .WithMany()
+            .HasForeignKey(p => p.IdUsuario)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
@@ -58,12 +60,6 @@ internal class BitacoraProyectoConfig : IEntityTypeConfiguration<BitacoraProyect
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.Usuario)
-            .WithMany()
-            .HasForeignKey(p => p.IdUsuario)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

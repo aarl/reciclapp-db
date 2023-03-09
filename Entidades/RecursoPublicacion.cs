@@ -19,7 +19,7 @@ public class RecursoPublicacion : Entidad
 	public Guid IdCatalogo { get; set; }
 
 	[Column("secuencia")]
-	public int Secuencia { get; set; }
+	public int Secuencia { get; set; } = 1;
 
 	[Column("id_tipo_recurso")]
 	public int IdTipoRecurso { get; set; }
@@ -41,7 +41,7 @@ public class RecursoPublicacion : Entidad
 	public int IdEstatusRecurso { get; set; }
 
 	[Column("fecha_expiracion")]
-	public DateTime? FechaExpiracion { get; set; } = null;
+	public DateTime? FechaExpiracion { get; set; }
 
 	[Column("tamano")]
 	public long Tamano { get; set; } = 0;

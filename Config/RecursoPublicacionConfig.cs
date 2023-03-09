@@ -13,6 +13,10 @@ internal class RecursoPublicacionConfig : IEntityTypeConfiguration<RecursoPublic
            .HasDefaultValueSql("newid()");
 
         builder
+           .Property(c => c.Secuencia)
+           .HasDefaultValueSql("1");
+
+        builder
            .Property(c => c.Fecha)
            .HasDefaultValueSql("getutcdate()");
 
@@ -21,24 +25,16 @@ internal class RecursoPublicacionConfig : IEntityTypeConfiguration<RecursoPublic
            .HasDefaultValueSql("1");
 
         builder
-           .Property(c => c.FechaExpiracion)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.Nombre)
+           .HasDefaultValueSql("''");
 
         builder
            .Property(c => c.Tamano)
            .HasDefaultValueSql("0");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)

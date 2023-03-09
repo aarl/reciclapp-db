@@ -9,6 +9,10 @@ internal class SecuenciaConfig : IEntityTypeConfiguration<Secuencia>
     public void Configure(EntityTypeBuilder<Secuencia> builder)
     {
         builder
+           .Property(c => c.Prefijo)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Serie)
            .HasDefaultValueSql("1");
 
@@ -17,16 +21,8 @@ internal class SecuenciaConfig : IEntityTypeConfiguration<Secuencia>
            .HasDefaultValueSql("1");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)

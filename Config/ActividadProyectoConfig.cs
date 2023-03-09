@@ -9,20 +9,16 @@ internal class ActividadProyectoConfig : IEntityTypeConfiguration<ActividadProye
     public void Configure(EntityTypeBuilder<ActividadProyecto> builder)
     {
         builder
-           .Property(c => c.FechaFinalizacion)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.Secuencia)
+           .HasDefaultValueSql("1");
 
         builder
-           .Property(c => c.IdEjecutor)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.Descripcion)
+           .HasDefaultValueSql("''");
 
         builder
-           .Property(c => c.IdRevisor)
-           .HasDefaultValueSql("NULL");
-
-        builder
-           .Property(c => c.IdRevisadaPor)
-           .HasDefaultValueSql("NULL");
+           .Property(c => c.FechaInicio)
+           .HasDefaultValueSql("getutcdate()");
 
         builder
            .Property(c => c.TiempoEstimado)
@@ -35,10 +31,6 @@ internal class ActividadProyectoConfig : IEntityTypeConfiguration<ActividadProye
         builder
            .Property(c => c.Evaluacion)
            .HasDefaultValueSql("0.0");
-
-        builder
-           .Property(c => c.FechaDisponible)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.TotalArticulos)
@@ -61,16 +53,8 @@ internal class ActividadProyectoConfig : IEntityTypeConfiguration<ActividadProye
            .HasDefaultValueSql("0.0");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -109,9 +93,15 @@ internal class ActividadProyectoConfig : IEntityTypeConfiguration<ActividadProye
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Creador)
+            .HasOne(p => p.Ejecutor)
             .WithMany()
-            .HasForeignKey(p => p.IdCreador)
+            .HasForeignKey(p => p.IdEjecutor)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.RevisadaPor)
+            .WithMany()
+            .HasForeignKey(p => p.IdRevisadaPor)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
@@ -127,15 +117,9 @@ internal class ActividadProyectoConfig : IEntityTypeConfiguration<ActividadProye
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Ejecutor)
+            .HasOne(p => p.Creador)
             .WithMany()
-            .HasForeignKey(p => p.IdEjecutor)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.RevisadaPor)
-            .WithMany()
-            .HasForeignKey(p => p.IdRevisadaPor)
+            .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

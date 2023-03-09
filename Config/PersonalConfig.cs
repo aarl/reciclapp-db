@@ -13,16 +13,8 @@ internal class PersonalConfig : IEntityTypeConfiguration<Personal>
            .HasDefaultValueSql("getutcdate()");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -43,9 +35,9 @@ internal class PersonalConfig : IEntityTypeConfiguration<Personal>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Creador)
+            .HasOne(p => p.Usuario)
             .WithMany()
-            .HasForeignKey(p => p.IdCreador)
+            .HasForeignKey(p => p.IdUsuario)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
@@ -55,9 +47,9 @@ internal class PersonalConfig : IEntityTypeConfiguration<Personal>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Usuario)
+            .HasOne(p => p.Creador)
             .WithMany()
-            .HasForeignKey(p => p.IdUsuario)
+            .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

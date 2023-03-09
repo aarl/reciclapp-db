@@ -16,6 +16,9 @@ public class Tabla : Entidad
 	[Column("descripcion")]
 	public string Descripcion { get; set; } = "";
 
+	[Column("es_generica")]
+	public bool? EsGenerica { get; set; } = false;
+
 
 
 }

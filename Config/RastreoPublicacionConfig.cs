@@ -17,28 +17,12 @@ internal class RastreoPublicacionConfig : IEntityTypeConfiguration<RastreoPublic
            .HasDefaultValueSql("0");
 
         builder
-           .Property(c => c.IdFaseAnterior)
-           .HasDefaultValueSql("NULL");
-
-        builder
-           .Property(c => c.IdFaseSiguiente)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.Comentarios)
            .HasDefaultValueSql("''");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -59,6 +43,12 @@ internal class RastreoPublicacionConfig : IEntityTypeConfiguration<RastreoPublic
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
+            .HasOne(p => p.Usuario)
+            .WithMany()
+            .HasForeignKey(p => p.IdUsuario)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
             .HasOne(p => p.Creador)
             .WithMany()
             .HasForeignKey(p => p.IdCreador)
@@ -71,21 +61,15 @@ internal class RastreoPublicacionConfig : IEntityTypeConfiguration<RastreoPublic
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Usuario)
+            .HasOne(p => p.FaseAnterior)
             .WithMany()
-            .HasForeignKey(p => p.IdUsuario)
+            .HasForeignKey(p => p.IdFaseAnterior)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasOne(p => p.FasePublicacion)
             .WithMany()
             .HasForeignKey(p => p.IdFasePublicacion)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.FaseAnterior)
-            .WithMany()
-            .HasForeignKey(p => p.IdFaseAnterior)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

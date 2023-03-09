@@ -21,31 +21,27 @@ public class Usuario : Entidad
 	public string Apellido { get; set; } = "";
 
 	[Column("segundo_nombre")]
-	[MaxLength(50)]
-	public string SegundoNombre { get; set; } = "";
+	public string? SegundoNombre { get; set; } = "";
 
 	[Column("segundo_apellido")]
-	[MaxLength(50)]
-	public string SegundoApellido { get; set; } = "";
+	public string? SegundoApellido { get; set; } = "";
 
 	[Column("perfil")]
-	[MaxLength(200)]
-	public string Perfil { get; set; } = "";
+	public string? Perfil { get; set; } = "";
 
 	[Column("direccion")]
 	[MaxLength(300)]
 	public string Direccion { get; set; } = "";
 
 	[Column("id_ciudad")]
-	public int? IdCiudad { get; set; }
+	public int IdCiudad { get; set; }
 
 	[Column("telefono")]
 	[MaxLength(20)]
 	public string Telefono { get; set; } = "";
 
 	[Column("telefono2")]
-	[MaxLength(20)]
-	public string Telefono2 { get; set; } = "";
+	public string? Telefono2 { get; set; } = "";
 
 	[Column("email")]
 	[MaxLength(300)]
@@ -56,31 +52,28 @@ public class Usuario : Entidad
 	public string Clave { get; set; } = "";
 
 	[Column("email2")]
-	[MaxLength(250)]
-	public string Email2 { get; set; } = "";
+	public string? Email2 { get; set; } = "";
 
 	[Column("id_profesion")]
-	public int? IdProfesion { get; set; } = null;
+	public int? IdProfesion { get; set; }
 
 	[Column("maximo_publicaciones")]
-	public int MaximoPublicaciones { get; set; } = 0;
+	public int? MaximoPublicaciones { get; set; } = 0;
 
 	[Column("id_grupo")]
-	public int? IdGrupo { get; set; }
+	public int IdGrupo { get; set; }
 
 	[Column("estatus")]
-	[MaxLength(2)]
-	public string Estatus { get; set; } = "";
+	public string? Estatus { get; set; } = "";
 
 	[Column("id_tipo_usuario")]
 	public int IdTipoUsuario { get; set; }
 
 	[Column("id_rol")]
-	public int? IdRol { get; set; } = null;
+	public int? IdRol { get; set; }
 
 	[Column("ultima_ip")]
-	[MaxLength(20)]
-	public string UltimaIp { get; set; } = "";
+	public string? UltimaIp { get; set; } = "";
 
 
 	[JsonIgnore]

@@ -21,11 +21,10 @@ public class Varios : Entidad
 	public string Descripcion { get; set; } = "";
 
 	[Column("referencia")]
-	[MaxLength(50)]
-	public string Referencia { get; set; } = "";
+	public string? Referencia { get; set; } = "";
 
 	[Column("id_padre")]
-	public int? IdPadre { get; set; } = null;
+	public int? IdPadre { get; set; }
 
 
 	[JsonIgnore]

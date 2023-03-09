@@ -13,8 +13,20 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
            .HasDefaultValueSql("newid()");
 
         builder
+           .Property(c => c.Titulo)
+           .HasDefaultValueSql("''");
+
+        builder
+           .Property(c => c.Descripcion)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Fecha)
            .HasDefaultValueSql("getutcdate()");
+
+        builder
+           .Property(c => c.Consecutivo)
+           .HasDefaultValueSql("1");
 
         builder
            .Property(c => c.Gustan)
@@ -25,20 +37,16 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
            .HasDefaultValueSql("0");
 
         builder
-           .Property(c => c.IdRevisadaPor)
-           .HasDefaultValueSql("NULL");
-
-        builder
-           .Property(c => c.IdImagenPrincipal)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.TiempoEstimado)
            .HasDefaultValueSql("0");
 
         builder
            .Property(c => c.Posicionamiento)
            .HasDefaultValueSql("0");
+
+        builder
+           .Property(c => c.Secuencia)
+           .HasDefaultValueSql("1");
 
         builder
            .Property(c => c.Vistas)
@@ -53,6 +61,10 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
            .HasDefaultValueSql("''");
 
         builder
+           .Property(c => c.Dispositivo)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Direccion)
            .HasDefaultValueSql("''");
 
@@ -61,16 +73,8 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
            .HasDefaultValueSql("''");
 
         builder
-           .Property(c => c.FechaDisponible)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.TotalArticulos)
            .HasDefaultValueSql("0");
-
-        builder
-           .Property(c => c.IdProyecto)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.CostoEstimado)
@@ -97,16 +101,8 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
            .HasDefaultValueSql("0.0");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)
@@ -145,18 +141,6 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Creador)
-            .WithMany()
-            .HasForeignKey(p => p.IdCreador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.Modificador)
-            .WithMany()
-            .HasForeignKey(p => p.IdModificador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.Publicador)
             .WithMany()
             .HasForeignKey(p => p.IdPublicador)
@@ -166,6 +150,18 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
             .HasOne(p => p.RevisadaPor)
             .WithMany()
             .HasForeignKey(p => p.IdRevisadaPor)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Creador)
+            .WithMany()
+            .HasForeignKey(p => p.IdCreador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Modificador)
+            .WithMany()
+            .HasForeignKey(p => p.IdModificador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

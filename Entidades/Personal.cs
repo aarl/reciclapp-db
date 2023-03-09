@@ -8,6 +8,10 @@ namespace Entidades;
 [Table("personal")]
 public class Personal : Entidad
 {
+	[Column("id")]
+	[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+	public long Id { get; set; }
+
 	[Column("id_publicacion")]
 	public Guid IdPublicacion { get; set; }
 
