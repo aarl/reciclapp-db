@@ -65,15 +65,15 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
            .HasDefaultValueSql("''");
 
         builder
-            .HasOne(p => p.Creador)
-            .WithMany()
-            .HasForeignKey(p => p.IdCreador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Creador)
+            .WithMany()
+            .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

@@ -17,16 +17,8 @@ internal class VersionApiConfig : IEntityTypeConfiguration<VersionApi>
            .HasDefaultValueSql("getutcdate()");
 
         builder
-           .Property(c => c.IdCreador)
-           .HasDefaultValueSql("NULL");
-
-        builder
            .Property(c => c.FechaCreacion)
            .HasDefaultValueSql("getutcdate()");
-
-        builder
-           .Property(c => c.IdModificador)
-           .HasDefaultValueSql("NULL");
 
         builder
            .Property(c => c.FechaModificacion)

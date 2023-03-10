@@ -2,11 +2,10 @@
 insert into administradores
     (nombre, apellido, telefono, email, clave)
 values
-    ('admin', 'admin', '04140593302', 'admin@reciclapp.com', '3b612c75a7b5048a435fb6ec81e52ff92d6d795a8b5a9c17070f6a63c97a53b2');
+    ('admin', 'admin', '555-555-5555', 'admin@reciclapp.com', '3b612c75a7b5048a435fb6ec81e52ff92d6d795a8b5a9c17070f6a63c97a53b2');
 
 declare @idusr uniqueidentifier;
-select @idusr = id
-from administradores;
+select @idusr = id from administradores;
 
 -- Tablas
 insert into tablas
@@ -66,6 +65,7 @@ select @idpais = id
 from varios
 where id_tabla = 'T-PAISES' and descripcion = 'Venezuela';
 
+-- Estados
 insert into varios
     (id_tabla, descripcion, id_padre, id_creador, id_modificador)
 values
@@ -95,33 +95,81 @@ values
     ('T-ESTADOS', 'Distrito Capital', @idpais, @idusr, @idusr);
 
 -- Ciudades
-insert into varios 
+insert into varios
     (id_tabla, descripcion, id_padre, id_creador, id_modificador)
 values
-	('T-CIUDADES', 'Puerto Ayacucho	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Amazonas'), @idusr, @idusr),
-    ('T-CIUDADES', 'Barcelona', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Anzoátegui'), @idusr, @idusr),
-    ('T-CIUDADES', 'San Fernando de Apure	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Apure'), @idusr, @idusr),
-    ('T-CIUDADES', 'Maracay	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Aragua'), @idusr, @idusr),
-    ('T-CIUDADES', 'Barinas	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Barinas'), @idusr, @idusr),
-    ('T-CIUDADES', 'Ciudad Bolívar	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Bolívar'), @idusr, @idusr),
-    ('T-CIUDADES', 'Valencia	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Carabobo'), @idusr, @idusr),
-    ('T-CIUDADES', 'San Carlos	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Cojedes'), @idusr, @idusr),
-    ('T-CIUDADES', 'Tucupita	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Delta Amacuro'), @idusr, @idusr),
-    ('T-CIUDADES', 'Caracas	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Distrito Capital'), @idusr, @idusr),
-    ('T-CIUDADES', 'Coro	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Falcón'), @idusr, @idusr),
-    ('T-CIUDADES', 'San Juan de los Morros	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Guárico'), @idusr, @idusr),
-    ('T-CIUDADES', 'La Guaira	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'La Guaira'), @idusr, @idusr),
-    ('T-CIUDADES', 'Barquisimeto	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Lara'), @idusr, @idusr),
-    ('T-CIUDADES', 'Mérida	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Mérida'), @idusr, @idusr),
-    ('T-CIUDADES', 'Los Teques	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Miranda'), @idusr, @idusr),
-    ('T-CIUDADES', 'Maturín	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Monagas'), @idusr, @idusr),
-    ('T-CIUDADES', 'La Asunción	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Nueva Esparta'), @idusr, @idusr),
-    ('T-CIUDADES', 'Guanare	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Portuguesa'), @idusr, @idusr),
-    ('T-CIUDADES', 'Cumaná	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Sucre'), @idusr, @idusr),
-    ('T-CIUDADES', 'San Cristóbal	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Táchira'), @idusr, @idusr),
-    ('T-CIUDADES', 'Trujillo	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Trujillo'), @idusr, @idusr),
-    ('T-CIUDADES', 'San Felipe	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Yaracuy'), @idusr, @idusr),
-    ('T-CIUDADES', 'Maracaibo	', (select id from varios where id_tabla = 'T-ESTADOS' and descripcion = 'Zulia'), @idusr, @idusr);
+    ('T-CIUDADES', 'Puerto Ayacucho	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Amazonas'), @idusr, @idusr),
+    ('T-CIUDADES', 'Barcelona', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Anzoátegui'), @idusr, @idusr),
+    ('T-CIUDADES', 'San Fernando de Apure	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Apure'), @idusr, @idusr),
+    ('T-CIUDADES', 'Maracay	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Aragua'), @idusr, @idusr),
+    ('T-CIUDADES', 'Barinas	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Barinas'), @idusr, @idusr),
+    ('T-CIUDADES', 'Ciudad Bolívar	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Bolívar'), @idusr, @idusr),
+    ('T-CIUDADES', 'Valencia	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Carabobo'), @idusr, @idusr),
+    ('T-CIUDADES', 'San Carlos	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Cojedes'), @idusr, @idusr),
+    ('T-CIUDADES', 'Tucupita	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Delta Amacuro'), @idusr, @idusr),
+    ('T-CIUDADES', 'Caracas	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Distrito Capital'), @idusr, @idusr),
+    ('T-CIUDADES', 'Coro	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Falcón'), @idusr, @idusr),
+    ('T-CIUDADES', 'San Juan de los Morros	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Guárico'), @idusr, @idusr),
+    ('T-CIUDADES', 'La Guaira	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'La Guaira'), @idusr, @idusr),
+    ('T-CIUDADES', 'Barquisimeto	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Lara'), @idusr, @idusr),
+    ('T-CIUDADES', 'Mérida	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Mérida'), @idusr, @idusr),
+    ('T-CIUDADES', 'Los Teques	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Miranda'), @idusr, @idusr),
+    ('T-CIUDADES', 'Maturín	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Monagas'), @idusr, @idusr),
+    ('T-CIUDADES', 'La Asunción	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Nueva Esparta'), @idusr, @idusr),
+    ('T-CIUDADES', 'Guanare	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Portuguesa'), @idusr, @idusr),
+    ('T-CIUDADES', 'Cumaná	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Sucre'), @idusr, @idusr),
+    ('T-CIUDADES', 'San Cristóbal	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Táchira'), @idusr, @idusr),
+    ('T-CIUDADES', 'Trujillo	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Trujillo'), @idusr, @idusr),
+    ('T-CIUDADES', 'San Felipe	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Yaracuy'), @idusr, @idusr),
+    ('T-CIUDADES', 'Maracaibo	', (select id
+        from varios
+        where id_tabla = 'T-ESTADOS' and descripcion = 'Zulia'), @idusr, @idusr);
 
 -- Grupos de usuarios
 insert into varios
@@ -132,7 +180,8 @@ values
 
 -- Usuarios
 insert into 
-    usuarios (nombre, apellido, email, id_ciudad, id_grupo, id_tipo_usuario, id_creador, id_modificador)
+    usuarios
+    (nombre, apellido, email, id_ciudad, id_grupo, id_tipo_usuario, id_creador, id_modificador)
 values
     ('Abraham', 'Simpson', 'abraham_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Agnes', 'Skinner', 'agnes_skinner@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
@@ -196,8 +245,14 @@ values
     ('Snake', 'Jailbird', 'snake_jailbird@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Timothy', 'Lovejoy', 'timothy_lovejoy@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Todd', 'Flanders', 'todd_flanders@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Tony', 'D''Amico',	'tony_damico@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
+    ('Tony', 'D''Amico', 'tony_damico@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Troy', 'McClure', 'troy_mcClure@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Üter', 'Zörker', 'ter_z@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Waylon', 'Smithers', 'waylon_smithers@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
     ('Willie', 'McDougall', 'willie_mcDougall@thesimpsons.com', 110, 99, 70, @idusr, @idusr);
+
+-- Monedas
+insert into monedas (id, nombre, simbolo, id_creador, id_modificador) values 
+    ('MXN', 'México Peso', '$', @idusr, @idusr),
+    ('USD', 'EE.UU. Dólar', 'US$', @idusr, @idusr);
+

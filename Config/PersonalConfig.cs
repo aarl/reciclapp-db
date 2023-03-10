@@ -29,15 +29,9 @@ internal class PersonalConfig : IEntityTypeConfiguration<Personal>
            .HasDefaultValueSql("''");
 
         builder
-            .HasOne(p => p.Publicacion)
+            .HasOne(p => p.Creador)
             .WithMany()
-            .HasForeignKey(p => p.IdPublicacion)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasOne(p => p.Usuario)
-            .WithMany()
-            .HasForeignKey(p => p.IdUsuario)
+            .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
@@ -47,9 +41,15 @@ internal class PersonalConfig : IEntityTypeConfiguration<Personal>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Creador)
+            .HasOne(p => p.Publicacion)
             .WithMany()
-            .HasForeignKey(p => p.IdCreador)
+            .HasForeignKey(p => p.IdPublicacion)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Usuario)
+            .WithMany()
+            .HasForeignKey(p => p.IdUsuario)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

@@ -33,9 +33,9 @@ internal class VariosConfig : IEntityTypeConfiguration<Varios>
            .HasDefaultValueSql("''");
 
         builder
-            .HasOne(p => p.Tabla)
+            .HasOne(p => p.Modificador)
             .WithMany()
-            .HasForeignKey(p => p.IdTabla)
+            .HasForeignKey(p => p.IdModificador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
@@ -45,9 +45,9 @@ internal class VariosConfig : IEntityTypeConfiguration<Varios>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Modificador)
+            .HasOne(p => p.Tabla)
             .WithMany()
-            .HasForeignKey(p => p.IdModificador)
+            .HasForeignKey(p => p.IdTabla)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
