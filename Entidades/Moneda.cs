@@ -17,6 +17,10 @@ public class Moneda : Entidad
 	[MaxLength(20)]
 	public string Nombre { get; set; } = "";
 
+	[Column("simbolo")]
+	[MaxLength(5)]
+	public string Simbolo { get; set; } = "";
+
 	[Column("tipo_cambio")]
 	[Precision(10, 2)]
 	public decimal TipoCambio { get; set; } = 0.0M;

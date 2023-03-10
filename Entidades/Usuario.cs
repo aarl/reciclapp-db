@@ -49,6 +49,7 @@ public class Usuario : Entidad
 
 	[Column("clave")]
 	[MaxLength(256)]
+	[IsProjected(false)]
 	public string Clave { get; set; } = "";
 
 	[Column("email2")]

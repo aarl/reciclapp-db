@@ -105,15 +105,15 @@ internal class ActividadProyectoConfig : IEntityTypeConfiguration<ActividadProye
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasOne(p => p.Modificador)
-            .WithMany()
-            .HasForeignKey(p => p.IdModificador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.Revisor)
             .WithMany()
             .HasForeignKey(p => p.IdRevisor)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Modificador)
+            .WithMany()
+            .HasForeignKey(p => p.IdModificador)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

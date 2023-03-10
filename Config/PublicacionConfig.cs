@@ -117,15 +117,15 @@ internal class PublicacionConfig : IEntityTypeConfiguration<Publicacion>
            .HasDefaultValueSql("''");
 
         builder
-            .HasOne(p => p.MonedaCostoEstimado)
-            .WithMany()
-            .HasForeignKey(p => p.IdMonedaCostoEstimado)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.MonedaCostoReal)
             .WithMany()
             .HasForeignKey(p => p.IdMonedaCostoReal)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.MonedaCostoEstimado)
+            .WithMany()
+            .HasForeignKey(p => p.IdMonedaCostoEstimado)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder

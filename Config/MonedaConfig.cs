@@ -13,6 +13,10 @@ internal class MonedaConfig : IEntityTypeConfiguration<Moneda>
            .HasDefaultValueSql("''");
 
         builder
+           .Property(c => c.Simbolo)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.TipoCambio)
            .HasDefaultValueSql("0.0");
 
@@ -37,15 +41,15 @@ internal class MonedaConfig : IEntityTypeConfiguration<Moneda>
            .HasDefaultValueSql("''");
 
         builder
-            .HasOne(p => p.Creador)
-            .WithMany()
-            .HasForeignKey(p => p.IdCreador)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
             .HasOne(p => p.Modificador)
             .WithMany()
             .HasForeignKey(p => p.IdModificador)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(p => p.Creador)
+            .WithMany()
+            .HasForeignKey(p => p.IdCreador)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

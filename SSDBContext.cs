@@ -9,6 +9,7 @@ public class SSDBContext : DbContext
 {
     public DbSet<ActividadProyecto> ActividadesProyectos { get; set; } = null!;
     public DbSet<ActividadRutaProyecto> ActividadesRutasProyectos { get; set; } = null!;
+    public DbSet<Administrador> Administradores { get; set; } = null!;
     public DbSet<BitacoraProyecto> BitacorasProyectos { get; set; } = null!;
     public DbSet<Chat> Chats { get; set; } = null!;
     public DbSet<Comentario> Comentarios { get; set; } = null!;
@@ -38,6 +39,12 @@ public class SSDBContext : DbContext
     {
         mb.Entity<ActividadRutaProyecto>()
             .HasIndex(p => p.Descripcion).IsUnique();
+
+        mb.Entity<Administrador>()
+            .HasIndex(p => new { p.Nombre, p.Apellido }).IsUnique();
+
+        mb.Entity<Administrador>()
+            .HasIndex(p => p.Email).IsUnique();
 
         mb.Entity<Chat>()
             .HasIndex(p => p.Titulo).IsUnique();
