@@ -5,7 +5,8 @@ values
     ('admin', 'admin', '555-555-5555', 'admin@reciclapp.com', '3b612c75a7b5048a435fb6ec81e52ff92d6d795a8b5a9c17070f6a63c97a53b2');
 
 declare @idusr uniqueidentifier;
-select @idusr = id from administradores;
+select @idusr = id
+from administradores;
 
 -- Tablas
 insert into tablas
@@ -44,6 +45,20 @@ values
     ('T-TIPOSUSR', 'Tabla de tipos de usuarios', @idusr, @idusr),
     ('T-USUARIOS', 'Tabla de usurios', @idusr, @idusr),
     ('T-VARIOS', 'Varias tablas con la misma estructura', @idusr, @idusr);
+
+-- Grupos de usuarios
+insert into varios
+    (id_tabla, descripcion, id_creador, id_modificador)
+values
+    ('T-GRPUSR', 'Administradores', @idusr, @idusr),
+    ('T-GRPUSR', 'Usuarios', @idusr, @idusr);
+
+declare @idgrpadmin int;
+select @idgrpadmin = id
+from varios
+where id_tabla = 'T-GRPUSR' and descripcion = 'Administradores';
+
+update administradores set id_grupo = @idgrpadmin where id = @idusr;
 
 -- Tipos de usuarios
 insert into varios
@@ -252,7 +267,9 @@ values
     ('Willie', 'McDougall', 'willie_mcDougall@thesimpsons.com', 110, 99, 70, @idusr, @idusr);
 
 -- Monedas
-insert into monedas (id, nombre, simbolo, id_creador, id_modificador) values 
+insert into monedas
+    (id, nombre, simbolo, id_creador, id_modificador)
+values
     ('MXN', 'México Peso', '$', @idusr, @idusr),
     ('USD', 'EE.UU. Dólar', 'US$', @idusr, @idusr);
 
