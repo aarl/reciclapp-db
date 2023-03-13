@@ -52,6 +52,9 @@ public class SSDBContext : DbContext
         mb.Entity<Moneda>()
             .HasIndex(p => p.Nombre).IsUnique();
 
+        mb.Entity<Moneda>()
+            .HasIndex(p => p.Simbolo).IsUnique();
+
         mb.Entity<Personal>()
            .HasIndex(c => new { c.IdPublicacion, c.IdUsuario }).IsUnique();
 

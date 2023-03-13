@@ -1,4 +1,106 @@
--- Admin123
+use reciclapp;
+GO
+
+-- Funcion para obtener la version vigente de la API
+drop function if exists  dbo.fn_ultima_version_api;
+GO
+
+create function fn_ultima_version_api() returns nvarchar(15) AS
+begin
+    declare @ver nvarchar(15);
+
+    select
+        @ver = coalesce(version, '1.0')
+    from
+        versiones_api
+    where 
+        vigente_desde = (
+            select
+        max(vigente_desde)
+    from
+        versiones_api
+        );
+
+    return @ver;
+end;
+
+GO
+
+-- Cambiar valores por defecto de la columna api_version en cata tabla
+declare cur1 cursor FOR
+    select 
+        st.name tabla, sdc.name restriccion
+    from 
+        sys.default_constraints sdc
+            join sys.columns sc ON
+                sdc.object_id = sc.default_object_id
+            join sys.tables st ON
+                sc.object_id = st.object_id
+    where 
+        st.name <> '__EFMigrationsHistory' AND
+        sc.name = 'version_api'
+    order BY
+        st.name;
+
+declare @tabla nvarchar(100), @restriccion nvarchar(100), @inst NVARCHAR(500);
+
+open cur1;
+FETCH next from cur1 into @tabla, @restriccion;
+
+while (@@fetch_status = 0)
+BEGIN 
+    set @inst = concat('alter table ', @tabla, ' drop constraint ', @restriccion);
+    exec(@inst);
+    FETCH next from cur1 into @tabla, @restriccion;
+END;
+
+close cur1
+DEALLOCATE cur1;
+
+declare cur2 cursor for
+    select 
+        table_name 
+    from 
+        INFORMATION_SCHEMA.TABLES 
+    where 
+        TABLE_NAME not in ('administradores', '__EFMigrationsHistory');
+
+open cur2;
+fetch next from cur2 into @tabla
+
+while (@@FETCH_STATUS = 0)
+begin
+    set @inst = concat('alter table ', @tabla, ' add constraint DF_', @tabla, '_version_api default (coalesce(dbo.fn_ultima_version_api(), ''1.0'')) for version_api');
+    exec(@inst);
+    fetch next from cur2 into @tabla;
+end;
+
+close cur2;
+deallocate cur2;
+
+GO
+
+-- Trigger para actualizar campo 'consecutivo' de la tabla publicaciones
+drop trigger if exists dbo.tr_actualizar_consecutivo;
+GO
+
+create trigger tr_actualizar_consecutivo on dbo.publicaciones after insert as
+begin
+    declare @sec bigint;
+
+    begin try
+        update secuencias set serie = serie + incremento where prefijo = 'PUB';
+        select @sec = coalesce(serie, 1) from secuencias where prefijo = 'PUB';
+        update publicaciones set consecutivo = @sec from inserted where publicaciones.id = inserted.id;
+    end try
+    begin catch
+        throw 60001, 'ERR_INSERT_PUBLICACION_ABORTADO', 1;
+    end catch;
+end;
+
+GO
+
+-- Crear usuario administrador. Admin123
 insert into administradores
     (nombre, apellido, telefono, email, clave)
 values
@@ -12,6 +114,7 @@ from administradores;
 insert into tablas
     (id, descripcion, id_creador, id_modificador)
 values
+    ('T-ADMINS', 'Tabla de administradores', @idusr, @idusr),
     ('T-ACTVPRY', 'Tabla de actividades por proyecto', @idusr, @idusr),
     ('T-ACTRTPRY', 'Tabla de actividades por ruta de proyecto', @idusr, @idusr),
     ('T-BITACPRY', 'Tabla de bitacora por proyecto', @idusr, @idusr),
@@ -186,90 +289,13 @@ values
         from varios
         where id_tabla = 'T-ESTADOS' and descripcion = 'Zulia'), @idusr, @idusr);
 
--- Grupos de usuarios
-insert into varios
-    (id_tabla, descripcion, id_creador, id_modificador)
-values
-    ('T-GRPUSR', 'Administradores', @idusr, @idusr),
-    ('T-GRPUSR', 'Usuarios', @idusr, @idusr);
-
--- Usuarios
-insert into 
-    usuarios
-    (nombre, apellido, email, id_ciudad, id_grupo, id_tipo_usuario, id_creador, id_modificador)
-values
-    ('Abraham', 'Simpson', 'abraham_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Agnes', 'Skinner', 'agnes_skinner@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Akira', 'Kurosawa', 'akira_kurosawa@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Apu', 'Nahasapeemapetilon', 'apu_nahasapeemapetilon@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Artie', 'Ziff', 'artie_ziff@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Barney', 'Gumble', 'barney_gumble@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Bart', 'Simpson', 'bart_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Bernice', 'Hibbert', 'bernice_hibbert@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Bob', 'Pati', 'bob_pati@thesimpsons.comño', 110, 99, 70, @idusr, @idusr),
-    ('Brandine', 'Spuckler', 'brandine_spuckler@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Carl', 'Carlson', 'carl_carlson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Montgomery', 'Burns', 'charlesmontgomery_burns@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Clancy', 'Wiggum', 'clancy_wiggum@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Cletus', 'Spuckler', 'cletus_spuckler@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Cookie', 'Kwan', 'cookie_kwan@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Dolph', 'Starbeam', 'dolph_starbeam@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Drederick', 'Tatum', 'drederick_tatum@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Edna', 'Krabappel', 'edna_krabappel@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Gary', 'Chalmers', 'gary_chalmers@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Gil', 'Gunderson', 'gil_gunderson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Helen', 'Lovejoy', 'helen_lovejoy@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Homer', 'Simpson', 'homer_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Hyman', 'Krustofsky', 'hyman_krustofsky@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Jacqueline', 'Bouvier', 'jacqueline_bouvier@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Jessica', 'Lovejoy', 'jessica_lovejoy@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Jimbo', 'Jones', 'jimbo_jones@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Joe', 'Quimby', 'joe_quimby@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Julius', 'Hibbert', 'julius_hibbert@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Kearney', 'Zzyzwicz', 'kearney_zzyzwicz@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Kent', 'Brockman', 'kent_brockman@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Kirk', 'Van', 'kirk_van@thesimpsons.com Houten', 110, 99, 70, @idusr, @idusr),
-    ('Lenny', 'Leonard', 'lenny_leonard@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Lindsey', 'Naegle', 'lindsey_naegle@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Lionel', 'Hutz', 'lionel_hutz@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Lisa', 'Simpson', 'lisa_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Luann', 'Van', 'luann_van@thesimpsons.com Houten', 110, 99, 70, @idusr, @idusr),
-    ('Luigi', 'Risotto', 'luigi_risotto@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Maggie', 'Simpson', 'maggie_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Manjula', 'Nahasapeemapetilon', 'manjula_nahasapeemapetilon@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Marge', 'Simpson', 'marge_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Martin', 'Prince', 'martin_prince@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Marvin', 'Monroe', 'marvin_monroe@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Maude', 'Flanders', 'maude_flanders@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Mel', 'Pati', 'mel_pati@thesimpsons.comño', 110, 99, 70, @idusr, @idusr),
-    ('Milhouse', 'Van', 'milhouse_van@thesimpsons.com Houten', 110, 99, 70, @idusr, @idusr),
-    ('Moe', 'Szyslak', 'moe_szyslak@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Mona', 'Simpson', 'mona_simpson@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Ned', 'Flanders', 'ned_flanders@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Nelson', 'Muntz', 'nelson_muntz@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Nick', 'Riviera', 'nick_riviera@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Otto', 'Mann', 'otto_mann@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Patty', 'Bouvier', 'patty_bouvier@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Jonathan', 'Frink', 'jonathan_frink@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Rainier', 'Wolfcastle', 'rainier_wolfcastle@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Ralph', 'Wiggum', 'ralph_wiggum@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Rod', 'Flanders', 'rod_flanders@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Sarah', 'Wiggum', 'sarah_wiggum@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Selma', 'Bouvier', 'selma_bouvier@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Seymour', 'Skinner', 'seymour_skinner@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Snake', 'Jailbird', 'snake_jailbird@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Timothy', 'Lovejoy', 'timothy_lovejoy@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Todd', 'Flanders', 'todd_flanders@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Tony', 'D''Amico', 'tony_damico@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Troy', 'McClure', 'troy_mcClure@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Üter', 'Zörker', 'ter_z@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Waylon', 'Smithers', 'waylon_smithers@thesimpsons.com', 110, 99, 70, @idusr, @idusr),
-    ('Willie', 'McDougall', 'willie_mcDougall@thesimpsons.com', 110, 99, 70, @idusr, @idusr);
-
 -- Monedas
 insert into monedas
     (id, nombre, simbolo, id_creador, id_modificador)
 values
     ('MXN', 'México Peso', '$', @idusr, @idusr),
     ('USD', 'EE.UU. Dólar', 'US$', @idusr, @idusr);
+
+-- Secuencias
+insert into secuencias (prefijo, id_creador, id_modificador) values ('PUB', @idusr, @idusr);
 

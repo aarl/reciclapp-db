@@ -13,6 +13,14 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
            .HasDefaultValueSql("newid()");
 
         builder
+           .Property(c => c.Nombre)
+           .HasDefaultValueSql("''");
+
+        builder
+           .Property(c => c.Apellido)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.SegundoNombre)
            .HasDefaultValueSql("''");
 
@@ -29,7 +37,19 @@ internal class UsuarioConfig : IEntityTypeConfiguration<Usuario>
            .HasDefaultValueSql("''");
 
         builder
+           .Property(c => c.Telefono)
+           .HasDefaultValueSql("''");
+
+        builder
            .Property(c => c.Telefono2)
+           .HasDefaultValueSql("''");
+
+        builder
+           .Property(c => c.Email)
+           .HasDefaultValueSql("''");
+
+        builder
+           .Property(c => c.Clave)
            .HasDefaultValueSql("''");
 
         builder

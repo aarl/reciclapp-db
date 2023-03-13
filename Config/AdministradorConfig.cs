@@ -29,6 +29,10 @@ internal class AdministradorConfig : IEntityTypeConfiguration<Administrador>
            .HasDefaultValueSql("''");
 
         builder
+           .Property(c => c.Clave)
+           .HasDefaultValueSql("''");
+
+        builder
             .HasOne(p => p.Grupo)
             .WithMany()
             .HasForeignKey(p => p.IdGrupo)
