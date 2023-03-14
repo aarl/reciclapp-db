@@ -17,7 +17,7 @@ public class Secuencia : Entidad
 	public string Prefijo { get; set; } = "";
 
 	[Column("serie")]
-	public long Serie { get; set; } = 1;
+	public long Serie { get; set; } = 0;
 
 	[Column("incremento")]
 	public int Incremento { get; set; } = 1;

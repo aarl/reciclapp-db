@@ -14,7 +14,7 @@ internal class SecuenciaConfig : IEntityTypeConfiguration<Secuencia>
 
         builder
            .Property(c => c.Serie)
-           .HasDefaultValueSql("1");
+           .HasDefaultValueSql("0");
 
         builder
            .Property(c => c.Incremento)
