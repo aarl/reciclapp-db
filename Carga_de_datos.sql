@@ -78,24 +78,22 @@ end;
 close cur2;
 deallocate cur2;
 
-GO
-
--- Trigger para actualizar campo 'consecutivo' de la tabla publicaciones
+-- Elimina trigger para actualizar campo 'consecutivo' de la tabla publicaciones
 drop trigger if exists dbo.tr_actualizar_consecutivo;
 GO
 
-create trigger tr_actualizar_consecutivo on dbo.publicaciones after insert as
+create procedure fn_actualizar_consecutivo_publicacion(@id uniqueidentifier)  AS
 begin
     declare @sec bigint;
 
-    begin try
-        update secuencias set serie = serie + incremento where prefijo = 'PUB';
-        select @sec = coalesce(serie, 1) from secuencias where prefijo = 'PUB';
-        update publicaciones set consecutivo = @sec from inserted where publicaciones.id = inserted.id;
-    end try
-    begin catch
-        throw 60001, 'ERR_INSERT_PUBLICACION_ABORTADO', 1;
-    end catch;
+    begin tran
+
+    select @sec = serie from secuencias where prefijo = 'PUB';
+    set @sec = @sec + 1;
+    update secuencias set serie = @sec where prefijo = 'PUB';
+    update publicaciones set consecutivo = @sec where id = @id;
+
+    commit tran;
 end;
 
 GO
