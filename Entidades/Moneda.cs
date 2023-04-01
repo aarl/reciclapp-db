@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("monedas")]
-public class Moneda : Entidad
+public class Moneda : EntidadAdmin
 {
 	[Column("id")]
 	[Key]

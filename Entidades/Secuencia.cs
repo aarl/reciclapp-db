@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("secuencias")]
-public class Secuencia : Entidad
+public class Secuencia : EntidadAdmin
 {
 	[Column("id")]
 	[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

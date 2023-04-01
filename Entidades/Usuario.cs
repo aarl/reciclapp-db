@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("usuarios")]
-public class Usuario : Entidad
+public class Usuario : EntidadAdmin
 {
 	[Column("id")]
 	[Key]

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("versiones_api")]
-public class VersionApi : Entidad
+public class VersionApi : EntidadAdmin
 {
 	[Column("id")]
 	[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Entidades;
 
 [Table("varios")]
-public class Varios : Entidad
+public class Varios : EntidadAdmin
 {
 	[Column("id")]
 	[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
